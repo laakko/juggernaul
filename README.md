@@ -1,9 +1,8 @@
 Task list
 ======
 
-
 ## Misc
-- [ ] Kehitysympäristöt pystyyn ja projektin stubi GitLabiin
+- [ ] **Kehitysympäristöt pystyyn ja projektin stubi GitLabiin**
 - [ ] Ryhmän jakaminen uniikilla QR-koodilla
     - [ ] QR-koodin jakaminen esim. sähköpostilla, whatsappilla, telegramilla...
 
@@ -14,7 +13,6 @@ Task list
     - [ ] Päänäkymä taulukko, jossa taskien sorttaus
     - [ ] Yksittäisen taskin avaaminen näyttää relevantit tiedot, jotka `TodoItem`illä on
     - [ ] Aikajananäkymä, johon tulee pallurat/palkit oikeille päivämäärille. Näytetäänkö `TodoItem`lle varattu "In progress" -aika, eli esim. 2vk aikajanalla jotenkin?
-    - [ ] 
 
 ## Back-end
-- [ ] SQLite, joka hostaa ryhmät ja niiden datan. @jahnukj2 hoitaa tämän osuuden
+- [ ] SQLite kanta, joka hostaa ryhmät ja niiden datan. @jahnukj2 osaa

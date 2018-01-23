@@ -1,5 +1,3 @@
-Hello ilmari
-
 Task list
 ======
 

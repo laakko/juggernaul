@@ -2,7 +2,7 @@ Task list
 ======
 
 ## Misc
-- [ ] **Kehitysympäristöt pystyyn ja projektin stubi GitLabiin. Projektin nimi on Juggernaul Ⓡ .**
+- [x] **Kehitysympäristöt pystyyn ja projektin stubi GitLabiin. Projektin nimi on Juggernaul Ⓡ .**
 - [ ] Ryhmän jakaminen uniikilla QR-koodilla
     - [ ] QR-koodin jakaminen esim. sähköpostilla, whatsappilla, telegramilla...
 

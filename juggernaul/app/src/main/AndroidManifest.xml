@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tab1" />
-        <activity android:name=".tab2" />
-        <activity android:name=".tab3"></activity>
+        <activity android:name=".HomeTab" />
+        <activity android:name=".ListTab" />
+        <activity android:name=".GraphTab"></activity>
     </application>
 
 </manifest>

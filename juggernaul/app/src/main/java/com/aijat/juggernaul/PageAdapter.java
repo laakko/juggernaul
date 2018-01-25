@@ -22,14 +22,14 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                tab1 tab1 = new tab1();
-                return tab1;
+                HomeTab homeTab = new HomeTab();
+                return homeTab;
             case 1:
-                tab2 tab2 = new tab2();
-                return tab2;
+                ListTab listTab = new ListTab();
+                return listTab;
             case 2:
-                tab3 tab3 = new tab3();
-                return tab3;
+                GraphTab graphTab = new GraphTab();
+                return graphTab;
             default:
                 return null;
         }

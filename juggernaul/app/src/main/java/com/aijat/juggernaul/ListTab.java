@@ -11,7 +11,7 @@
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-    public class tab2 extends Fragment {
+    public class ListTab extends Fragment {
 
         private PopupWindow popup;
         @Override
@@ -19,7 +19,7 @@
 
             //return inflater.inflate(R.layout.fragment2, container, false);
 
-            View view = inflater.inflate(R.layout.fragment2, container, false);
+            View view = inflater.inflate(R.layout.fragment_list, container, false);
 
             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {

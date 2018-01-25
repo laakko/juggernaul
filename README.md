@@ -8,7 +8,7 @@ Task list
 
 ## Front-end
 - [ ] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)
-- [ ] `Task`illä pitää olla seuraavat statukset: todo, in progress, done, deleted. Yksilötilassa in progress ei ole tarpeen
+- [x] `Task`illä pitää olla seuraavat statukset: todo, in progress, done, deleted. Yksilötilassa in progress ei ole tarpeen
 - [x] Tee runko UI:lle. @laakkoj2 tietää miten XML-hommat hoituu
     - [ ] Päänäkymä taulukko, jossa taskien sorttaus  - In progress (@laakkoj2)
     - [ ] Asetukset - näkymä

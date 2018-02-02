@@ -11,7 +11,8 @@ Task list
 - [ ] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)
 - [x] `Task`illä pitää olla seuraavat statukset: todo, in progress, done, deleted. Yksilötilassa in progress ei ole tarpeen
 - [x] Tee runko UI:lle. @laakkoj2 tietää miten XML-hommat hoituu
-    - [ ] Päänäkymä taulukko, jossa taskien sorttaus  - In progress (@laakkoj2)
+    - [ ] Päänäkymä taulukko- In progress (@laakkoj2)
+    - [ ] Taskien sorttaus (aika, prioriteetti, status, aakkosjärjestys tms)
     - [ ] Asetukset - näkymä
     - [ ] Yksittäisen taskin avaaminen näyttää relevantit tiedot, jotka `Task`illä on  - In progress (@laakkoj2)
     - [ ] Listaan palkki joka pienenee deadlinen lähestyessä (jollain pygame-tyylisellä piirtämiskirjastolla hoituisi helposti)

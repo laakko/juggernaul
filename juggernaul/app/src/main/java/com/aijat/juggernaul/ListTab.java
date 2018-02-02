@@ -1,5 +1,6 @@
     package com.aijat.juggernaul;
 
+    import android.content.Intent;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@
     import android.view.MotionEvent;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
     import android.widget.EditText;
@@ -24,7 +26,7 @@
 
         private PopupWindow popup;
         private ListView list;
-
+        static String temp_title;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +46,19 @@
             list.setAdapter(arrayAdapter);
 
 
+            // Click on an item to open it into a new view for modification
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    // TODO: Figure out how to get all the item contents as parameter into the TaskActivity class
+                    temp_title = (String) adapterView.getItemAtPosition(i);
+                    startActivity(new Intent(getActivity(), TaskActivity.class));
+                }
+            });
+
+
+            // Add new items
             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,6 +79,7 @@
                         @Override
                         public void onClick(View view) {
 
+                            // TODO add deadline, priority, and other information to list/array as well
                             items_list.add(txtPop.getText().toString());
                             arrayAdapter.notifyDataSetChanged();
 

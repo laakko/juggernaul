@@ -22,6 +22,7 @@
         <activity android:name=".HomeTab" />
         <activity android:name=".ListTab" />
         <activity android:name=".GraphTab" />
+        <activity android:name=".TaskActivity"></activity>
     </application>
 
 </manifest>

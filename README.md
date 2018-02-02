@@ -14,6 +14,7 @@ Task list
     - [ ] Päänäkymä taulukko, jossa taskien sorttaus  - In progress (@laakkoj2)
     - [ ] Asetukset - näkymä
     - [ ] Yksittäisen taskin avaaminen näyttää relevantit tiedot, jotka `Task`illä on  - In progress (@laakkoj2)
+    - [ ] Listaan palkki joka pienenee deadlinen lähestyessä (jollain pygame-tyylisellä piirtämiskirjastolla hoituisi helposti)
     - [ ] Aikajananäkymä, johon tulee pallurat/palkit oikeille päivämäärille. Näytetäänkö `Task`lle varattu "In progress" -aika, eli esim. 2vk aikajanalla jotenkin?
 
 ## Back-end

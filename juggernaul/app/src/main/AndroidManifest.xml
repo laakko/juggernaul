@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".HomeTab" />
         <activity android:name=".ListTab" />
-        <activity android:name=".GraphTab"></activity>
+        <activity android:name=".GraphTab" />
     </application>
 
 </manifest>

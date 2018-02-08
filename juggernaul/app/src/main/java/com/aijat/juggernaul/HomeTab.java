@@ -37,7 +37,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         chkBx.setText("Jees");
         Date date = new Date();
-        Task testiTask = new Task("Tämä on title", "Tämä on description", Task.Priority.LOW, date, Task.Status.TODO, "Ilmari", "Ryhmärämä");
+        Task testiTask = new Task("Tämä on title", "Tämä on description", Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "Ilmari", "Ryhmärämä");
         Log.i("json", testiTask.JSONify().toString());
     }
 

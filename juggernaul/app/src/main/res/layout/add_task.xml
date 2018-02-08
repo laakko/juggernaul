@@ -16,7 +16,7 @@
         android:inputType="textPersonName" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/taskPriority"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView4"
@@ -49,13 +49,22 @@
         android:layout_marginTop="24dp"
         android:text="DL:" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_below="@+id/taskDL"
+        android:layout_marginTop="26dp"
+        android:text="Category:" />
+
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/taskDL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignStart="@+id/seekBar"
+        android:layout_alignStart="@+id/taskPriority"
         android:ems="10"
         android:inputType="date" />
 
@@ -74,10 +83,19 @@
         android:id="@+id/btnCreateTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editText7"
+        android:layout_alignEnd="@+id/taskDL"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="13dp"
         android:background="@color/colorAccent"
         android:text="Create" />
+
+    <EditText
+        android:id="@+id/taskCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/taskDL"
+        android:layout_toEndOf="@+id/textView4"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

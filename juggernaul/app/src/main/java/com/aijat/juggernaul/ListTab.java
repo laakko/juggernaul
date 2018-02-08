@@ -17,6 +17,7 @@
     import android.widget.ImageView;
     import android.widget.ListView;
     import android.widget.PopupWindow;
+    import android.widget.SeekBar;
     import android.widget.TextView;
 
     import java.util.ArrayList;
@@ -78,7 +79,19 @@
 
                     // Add items - action
                     Button btnPop = (Button)layout.findViewById(R.id.btnCreateTask);
+
+                    // Title
                     final EditText txtPop = (EditText) layout.findViewById(R.id.taskName);
+
+                    // Deadline
+                    final EditText txtDeadline = (EditText) layout.findViewById(R.id.taskDL);
+
+                    // Priority
+                    final SeekBar sbPriority = (SeekBar) layout.findViewById(R.id.taskPriority);
+
+                    // Category
+                    final EditText txtCategory = (EditText) layout.findViewById(R.id.taskCategory);
+
                     btnPop.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

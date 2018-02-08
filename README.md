@@ -8,7 +8,7 @@ Task list
 - [ ] Värimaailma, kuvakkeet
 
 ## Front-end
-- [ ] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)
+- [x] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)
 - [x] `Task`illä pitää olla seuraavat statukset: todo, in progress, done, deleted. Yksilötilassa in progress ei ole tarpeen
     - [ ] 'Task'in statuksen vaihtaminen swipellä listassa. Vasemmalle poistaa ja oikealle vaihtaa todo -> in progress -> done
 - [ ] Taskien (listan) tallentaminen lokaalisti

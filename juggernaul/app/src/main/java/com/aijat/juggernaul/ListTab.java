@@ -2,9 +2,11 @@
 
     import android.content.Context;
     import android.content.Intent;
+    import android.graphics.Color;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
+    import android.util.Log;
     import android.view.Gravity;
     import android.view.LayoutInflater;
     import android.view.MotionEvent;
@@ -20,8 +22,11 @@
     import android.widget.SeekBar;
     import android.widget.TextView;
 
+    import org.json.JSONObject;
+
     import java.util.ArrayList;
     import java.util.Arrays;
+    import java.util.Date;
     import java.util.List;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -30,7 +35,8 @@
 
         private PopupWindow popup;
         private ListView list;
-        static String temp_title;
+        static String test_title;
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +48,8 @@
             // Initialize list view
             list = (ListView) view.findViewById(R.id.taskList);
 
+
+
             String[] items = new String[] {
                     "add tasks:"
             };
@@ -51,11 +59,17 @@
             list.setAdapter(arrayAdapter);
 
 
+
+            // TODO: parse the big JSON-file here and add to list adapter
+
+            //list.setAdapter(new listview_adapter(getContext(), titlelist, deadlinelist, categorylist, prioritylist));
+
+
             // Click on an item to open it into a new view for modification
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    temp_title = (String) adapterView.getItemAtPosition(i);
+                    test_title = (String) adapterView.getItemAtPosition(i);
                     startActivity(new Intent(getActivity(), TaskActivity.class));
                 }
             });
@@ -72,7 +86,7 @@
                             (ViewGroup) view.findViewById(R.id.tab1_main_layout));
 
 
-                    popup = new PopupWindow(layout, 1080, 900, true); // TODO: make it scalable, now its for full hd screens only
+                    popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
                     //popup.setAnimationStyle(R.anim.fadein);
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);
 
@@ -92,16 +106,37 @@
                     // Category
                     final EditText txtCategory = (EditText) layout.findViewById(R.id.taskCategory);
 
+                    // Description (optional)
+                    final EditText txtDescription = (EditText) layout.findViewById(R.id.taskDescription);
+
+
                     btnPop.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
+                            // Get all user-added parameters
+                            String temp_title = txtPop.getText().toString();
+                            String temp_deadline = txtDeadline.getText().toString();
+                            String temp_category = txtCategory.getText().toString();
+                            String temp_description = txtDescription.getText().toString();
+                            int temp_priority = sbPriority.getProgress();
+
+                            // TODO: Create a json
+                            /*
+                            Date date = new Date(temp_deadline);
+                            Task task1 = new Task(temp_title, date, "mä");
+                            JSONObject json_file =  task1.JSONify();
+                            */
+                            // TODO: write to file here
+
+
                             items_list.add(txtPop.getText().toString());
 
-                            // Create json -> add to json list
 
                             arrayAdapter.notifyDataSetChanged();
 
+                            // Close popup window
+                            popup.dismiss();
                         }
                     });
 
@@ -116,19 +151,27 @@
 
 
 
-
         // This is for creating a custom list item (e.g. our task-item)
         public class listview_adapter extends ArrayAdapter {
             private Context context;
             private LayoutInflater inflater;
 
-            private String[] json_task;
+            private String[] titles;
+            private String[] deadlines;
+            private String[] categories;
+            private int[] priorities;
 
-            // Constructor, adapter takes JSON of a task as input
-            public listview_adapter(Context context, String[] json_task) {
+
+            // Constructor
+            public listview_adapter(Context context, String titles[], String[] deadlines, String[] categories, int[] priorities) {
                 super(context, R.layout.layout_task); // Use the custom layout_task xml
                 this.context = context;
-                this.json_task = json_task;
+
+
+                this.titles = titles;
+                this.deadlines = deadlines;
+                this.categories = categories;
+                this.priorities = priorities;
 
                 inflater = LayoutInflater.from(context); // Inflate the task
             }
@@ -144,18 +187,49 @@
 
                 // Set title
                 TextView listTaskTitle = (TextView) convertView.findViewById(R.id.listTaskTitle);
+                listTaskTitle.setText(titles[position]);
 
                 // Set deadline
                 TextView listTaskDeadline = (TextView) convertView.findViewById(R.id.listTaskDeadline);
+                listTaskDeadline.setText(deadlines[position]);
 
                 // Set category
                 TextView listTaskCategory = (TextView) convertView.findViewById(R.id.listTaskCategory);
+                listTaskCategory.setText(categories[position]);
 
-                // Set status image
-                ImageView listTaskStatus = (ImageView) convertView.findViewById(R.id.listTaskStatus);
+
+                // TODO: set status image
+               //  ImageView listTaskStatus = (ImageView) convertView.findViewById(R.id.listTaskStatus);
+
+                // Set priority color
+                priority_color(priorities[position], convertView);
 
                 return convertView;
 
+            }
+
+        }
+
+        /*
+        public parse_JSON() {
+
+        }
+        */
+
+
+        // Function to change task color based on priority
+        public void priority_color(int priority_value, View convertView) {
+
+
+            // Temp, change to actual colors: green -> red
+            if(priority_value < 10) {
+                convertView.setBackgroundColor(Color.CYAN);
+            } else if(priority_value < 20) {
+                convertView.setBackgroundColor(Color.GRAY);
+            } else if(priority_value < 30) {
+                convertView.setBackgroundColor(Color.GREEN);
+            } else {
+                convertView.setBackgroundColor(Color.RED);
             }
 
         }

@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import static com.aijat.juggernaul.ListTab.temp_title;
+import static com.aijat.juggernaul.ListTab.test_title;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class TaskActivity extends AppCompatActivity {
 
         txtTaskTitle = (TextView)findViewById(R.id.txtTaskTitle);
 
-        txtTaskTitle.setText(temp_title);
+        txtTaskTitle.setText(test_title);
 
 
     }

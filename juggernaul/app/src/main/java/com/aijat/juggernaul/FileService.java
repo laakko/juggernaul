@@ -16,12 +16,13 @@ import java.io.InputStreamReader;
 
 public class FileService {
 
-    public static void renameFile(Context ctx, String oldName, String newName) {
+    public static boolean renameFile(Context ctx, String oldName, String newName) {
         String oldPath = ctx.getFilesDir().getAbsolutePath() + "/" + oldName;
         String newPath = ctx.getFilesDir().getAbsolutePath() + "/" + newName;
         File before = new File(oldPath);
         File after = new File(newPath);
-        before.renameTo(after);
+
+        return(before.renameTo(after));
     }
 
     public static String readFile(Context ctx, String fileName) {

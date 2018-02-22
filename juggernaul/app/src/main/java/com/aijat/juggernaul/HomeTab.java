@@ -37,37 +37,29 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    // This checkbox is for the sake of verifying that the Task class works as intended.
     @Override
     public void onClick(View v) {
         chkBx.setText("Jees");
         Date date = new Date();
-        Task testiTask = new Task("Tämä on title", "Tämä on description", Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "Ilmari", "Ryhmärämä");
-        // Log.i("json", testiTask.JSONify().toString());
+        Task testiTask = new Task(  "Tämä on title",
+                                    "Tämä on description",
+                                    Task.Priority.LOW,
+                                    date,
+                                    Task.TaskCategory.OTHER,
+                                    Task.Status.TODO,
+                                    "Ilmari",
+                                    "Ryhmärämä");
 
+        TaskService.ResetEverything(getActivity().getApplicationContext());
+        JSONObject json = TaskService.ReadTasks(getActivity().getApplicationContext());
+        TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
+        JSONObject json2 = TaskService.ReadTasks(getActivity().getApplicationContext());
 
-        Gson gson = new Gson();
-
-        boolean deleted = FileService.deleteStorageFile(getActivity().getApplicationContext());
-        Log.i("deleted", Boolean.toString(deleted));
-
-        boolean created = FileService.createStorageFile(getActivity().getApplicationContext(), testiTask.JSONify().toString());
-        Log.i("created", Boolean.toString(created));
-        JSONObject jepajson = FileService.loadStorageJSON(getActivity().getApplicationContext());
-
-        Log.i("ekajson", gson.toJson(testiTask).toString());
-
-        Task testiTask2 = new Task("123", "aaa", Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "Ilmari", "Ryhmärämä");
-        FileService.saveStorageJSON(getActivity().getApplicationContext(), testiTask2.JSONify());
-        JSONObject jepajson2 = FileService.loadStorageJSON(getActivity().getApplicationContext());
-
-        Log.i("overridden", gson.toJson(testiTask2).toString());
-
-        Task testiTask3 = new Task("456", "abc", Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "Ilmari", "Ryhmärämä");
-        FileService.appendToStorageFile(getActivity().getApplicationContext(), testiTask3.JSONify().toString());
-        JSONObject jepajson3 = FileService.loadStorageJSON(getActivity().getApplicationContext());
-
-        Log.i("overriddenAndAppended", gson.toJson(testiTask3).toString());
+        for (int i = 0; i<15; i++) {
+            TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
+        }
+        JSONObject json3 = TaskService.ReadTasks(getActivity().getApplicationContext());
+        Log.i("afterBatch", json3.toString());
     }
 
 }

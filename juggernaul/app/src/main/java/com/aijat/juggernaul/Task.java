@@ -98,6 +98,7 @@ public class Task {
 
     // The full constructor
     public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
+        this.id = -1;
         this.title = title;
         this.description = desc;
         this.priority = pri;
@@ -110,6 +111,7 @@ public class Task {
 
     // The base constructor (optional data is null or empty)
     public Task(String title, Priority pri, Date dl, TaskCategory cat, Status status, String user) {
+        this.id = -1;
         this.title = title;
         this.description = "";
         this.priority = pri;
@@ -123,6 +125,7 @@ public class Task {
     public JSONObject JSONify() {
         JSONObject json = new JSONObject();
         try {
+            json.put("id", this.id);
             json.put("title", this.title);
             json.put("description", this.description);
             json.put("priority", this.priority.toString());

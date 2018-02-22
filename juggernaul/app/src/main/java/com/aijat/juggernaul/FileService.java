@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 
 public class FileService {
 
-    public static boolean renameFile(Context ctx, String oldName, String newName) {
+    protected static boolean renameFile(Context ctx, String oldName, String newName) {
         String oldPath = ctx.getFilesDir().getAbsolutePath() + "/" + oldName;
         String newPath = ctx.getFilesDir().getAbsolutePath() + "/" + newName;
         File before = new File(oldPath);
@@ -25,7 +25,7 @@ public class FileService {
         return(before.renameTo(after));
     }
 
-    public static String readFile(Context ctx, String fileName) {
+    protected static String readFile(Context ctx, String fileName) {
         try {
             FileInputStream fis = ctx.openFileInput(fileName);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -44,7 +44,7 @@ public class FileService {
     }
 
 
-    public static boolean createFile(Context ctx, String jsonString, String fileName) {
+    protected static boolean createFile(Context ctx, String jsonString, String fileName) {
         if (FileService.isFilePresent(ctx, fileName)) {
             return false;
         }
@@ -68,7 +68,7 @@ public class FileService {
         return file.exists();
     }
 
-    public static boolean deleteFile(Context ctx, String fileName) {
+    protected static boolean deleteFile(Context ctx, String fileName) {
         String path = ctx.getFilesDir().getAbsolutePath() + "/" + fileName;
         File fileToBeDeleted = new File(path);
         boolean deleted = fileToBeDeleted.delete();

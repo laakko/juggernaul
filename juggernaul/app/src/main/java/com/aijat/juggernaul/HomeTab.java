@@ -51,11 +51,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                                     "Ryhmärämä");
 
         TaskService.ResetEverything(getActivity().getApplicationContext());
-        List<Task> shouldBeEmpty = TaskService.GetAllTasks(getActivity().getApplicationContext());
         TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
         List<Task> shouldHaveOne = TaskService.GetAllTasks(getActivity().getApplicationContext());
+        Log.i("one", shouldHaveOne.get(1).JSONify().toString());
 
-        for (int i = 0; i<15; i++) {
+        for (int i = 0; i < 15; i++) {
             boolean created = TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
             if (!created) {
                 Log.i("TaskCreationError", "Could not create a task.");
@@ -64,7 +64,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         }
 
         List<Task> allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-        for (int i = 0; i<allTasks.size(); i++) {
+        for (int i = 0; i < allTasks.size(); i++) {
             Log.i("task", allTasks.get(i).JSONify().toString());
         }
     }

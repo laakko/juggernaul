@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class TaskService {
+public class TaskService extends FileService {
 
     public static boolean ResetEverything(Context ctx) {
         FileService.deleteFile(ctx, "tasks.json");

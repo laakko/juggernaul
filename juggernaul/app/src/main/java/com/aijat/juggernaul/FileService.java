@@ -16,12 +16,13 @@ import java.io.InputStreamReader;
 
 public class FileService {
 
-    public static void renameFile(Context ctx, String oldName, String newName) {
+    public static boolean renameFile(Context ctx, String oldName, String newName) {
         String oldPath = ctx.getFilesDir().getAbsolutePath() + "/" + oldName;
         String newPath = ctx.getFilesDir().getAbsolutePath() + "/" + newName;
         File before = new File(oldPath);
         File after = new File(newPath);
-        before.renameTo(after);
+
+        return(before.renameTo(after));
     }
 
     public static String readFile(Context ctx, String fileName) {
@@ -44,6 +45,9 @@ public class FileService {
 
 
     public static boolean createFile(Context ctx, String jsonString, String fileName) {
+        if (FileService.isFilePresent(ctx, fileName)) {
+            return false;
+        }
         try {
             FileOutputStream fos = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
             if (jsonString != null) {

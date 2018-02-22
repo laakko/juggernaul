@@ -53,7 +53,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         JSONObject json2 = TaskService.ReadTasks(getActivity().getApplicationContext());
 
         for (int i = 0; i<15; i++) {
-            TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
+            boolean created = TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
+            if (!created) {
+                Log.i("TaskCreationError", "Could not create a task.");
+                return;
+            }
         }
         JSONObject json3 = TaskService.ReadTasks(getActivity().getApplicationContext());
         Log.i("afterBatch", json3.toString());

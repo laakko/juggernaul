@@ -19,25 +19,35 @@ public class TaskService {
     }
 
     public static boolean CreateTask(Context ctx, Task task) {
-        JSONObject tasks = TaskService.ReadTasks(ctx);
+        JSONObject currentTasks = TaskService.ReadTasks(ctx);
         JSONObject newTask = task.JSONify();
         try {
             int newTaskId = Integer.parseInt(newTask.get("id").toString());
             if (newTaskId == -1) {
-                newTaskId = TaskService.getNextId(tasks);
+                newTaskId = TaskService.getNextId(currentTasks);
                 newTask.put("id", newTaskId);
+                currentTasks.accumulate("tasks", newTask);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        try {
-            tasks.accumulate("tasks", newTask);
-        } catch (JSONException e) {
+            return false;
+        } catch (NumberFormatException e) {
             e.printStackTrace();
+            return false;
         }
-        FileService.createFile(ctx, tasks.toString(), "temp.json");
-        FileService.deleteFile(ctx, "tasks.json");
-        FileService.renameFile(ctx, "temp.json", "tasks.json");
+        boolean created, deleted, renamed = false;
+        created = FileService.createFile(ctx, currentTasks.toString(), "temp.json");
+        if (created) {
+            deleted = FileService.deleteFile(ctx, "tasks.json");
+        } else {
+            return false;
+        }
+        if (deleted) {
+            renamed = FileService.renameFile(ctx, "temp.json", "tasks.json");
+            if (renamed) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -47,8 +57,8 @@ public class TaskService {
             return(new JSONObject(stuff));
         } catch (JSONException e) {
             e.printStackTrace();
+            return new JSONObject();
         }
-        return new JSONObject();
     }
 
     public static boolean UpdateTask(Context ctx) {

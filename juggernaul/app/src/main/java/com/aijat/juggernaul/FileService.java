@@ -45,6 +45,9 @@ public class FileService {
 
 
     public static boolean createFile(Context ctx, String jsonString, String fileName) {
+        if (FileService.isFilePresent(ctx, fileName)) {
+            return false;
+        }
         try {
             FileOutputStream fos = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
             if (jsonString != null) {

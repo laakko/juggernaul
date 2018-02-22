@@ -2,7 +2,6 @@ package com.aijat.juggernaul;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -96,7 +95,20 @@ public class Task {
     private String user; // TODO: Create a User class
     private String group; // TODO: Create a Group class
 
-    // The full constructor
+    // The full constructor with id
+    public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
+        this.id = id;
+        this.title = title;
+        this.description = desc;
+        this.priority = pri;
+        this.deadline = dl;
+        this.category = cat;
+        this.status = status;
+        this.user = user;
+        this.group = group;
+    }
+
+    // The full constructor without id
     public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
         this.id = -1;
         this.title = title;

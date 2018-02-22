@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.List;
 
 // This is the home view!
 
@@ -48,9 +51,9 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                                     "Ryhmärämä");
 
         TaskService.ResetEverything(getActivity().getApplicationContext());
-        JSONObject json = TaskService.ReadTasks(getActivity().getApplicationContext());
+        List<Task> shouldBeEmpty = TaskService.GetAllTasks(getActivity().getApplicationContext());
         TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
-        JSONObject json2 = TaskService.ReadTasks(getActivity().getApplicationContext());
+        List<Task> shouldHaveOne = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
         for (int i = 0; i<15; i++) {
             boolean created = TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
@@ -59,8 +62,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                 return;
             }
         }
-        JSONObject json3 = TaskService.ReadTasks(getActivity().getApplicationContext());
-        Log.i("afterBatch", json3.toString());
+
+        List<Task> allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+        for (int i = 0; i<allTasks.size(); i++) {
+            Log.i("task", allTasks.get(i).JSONify().toString());
+        }
     }
 
 }

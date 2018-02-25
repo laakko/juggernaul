@@ -1,5 +1,6 @@
 package com.aijat.juggernaul;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -8,6 +9,15 @@ import org.json.JSONObject;
 import java.util.Date;
 
 public class Task {
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Priority getPriority() {
         return priority;
     }
@@ -68,6 +78,18 @@ public class Task {
 
     public void setCategory(TaskCategory category) {this.category = category; }
 
+    public boolean SaveToFile(Context ctx) {
+        if (this.id == -1) {
+            return TaskService.CreateNewTask(ctx, this);
+        } else {
+            return TaskService.UpdateTaskToFile(ctx, this);
+        }
+    }
+
+    public void Print() {
+        Log.i("task" + Integer.toString(this.id), this.JSONify().toString());
+    }
+
     public enum Priority {
         LOW,
         MEDIUM,
@@ -93,7 +115,7 @@ public class Task {
     private TaskCategory category;
     private Status status;
     private String user; // TODO: Create a User class
-    private String group; // TODO: Create a Group class
+    private String group; // TODO: Create a Group
 
     // The full constructor with id
     public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
@@ -108,7 +130,7 @@ public class Task {
         this.group = group;
     }
 
-    // The full constructor without id
+    // The full constructor with default id
     public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
         this.id = -1;
         this.title = title;

@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -39,35 +36,34 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        chkBx.setText("Jees");
-        Date date = new Date();
+        chkBx.setText("Debug button");
+
         Task testiTask = new Task(  "Tämä on title",
                                     "Tämä on description",
                                     Task.Priority.LOW,
-                                    date,
+                                    new Date(),
                                     Task.TaskCategory.OTHER,
                                     Task.Status.TODO,
                                     "Ilmari",
                                     "Ryhmärämä");
 
         TaskService.ResetEverything(getActivity().getApplicationContext());
-        TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
-        List<Task> shouldHaveOne = TaskService.GetAllTasks(getActivity().getApplicationContext());
-        Log.i("one", shouldHaveOne.get(1).JSONify().toString());
+        testiTask.saveToFile(getActivity().getApplicationContext());
+        List<Task> allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
-        for (int i = 0; i < 15; i++) {
-            boolean created = TaskService.CreateTask(getActivity().getApplicationContext(), testiTask);
-            if (!created) {
-                Log.i("TaskCreationError", "Could not create a task.");
-                return;
-            }
+        for (Task task : allTasks) {
+            task.print();
         }
 
-        List<Task> allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-        for (int i = 0; i < allTasks.size(); i++) {
-            Log.i("task", allTasks.get(i).JSONify().toString());
+        allTasks.get(1).setStatus(Task.Status.DELETED);
+        allTasks.get(1).setTitle("Uusi title");
+        allTasks.get(1).setDescription("Ja uutta descriptiota");
+        allTasks.get(1).saveToFile(getActivity().getApplicationContext());
+        allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+
+        for (Task task : allTasks) {
+            task.print();
         }
     }
-
 }
 

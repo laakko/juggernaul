@@ -19,8 +19,8 @@ public class TaskService extends FileService {
         return(TaskService.initialize(ctx));
     }
 
-    public static boolean CreateTask(Context ctx, Task task) {
-        JSONArray allTasks = TaskService.ReadTasks(ctx);
+    public static boolean CreateNewTask(Context ctx, Task task) {
+        JSONArray allTasks = TaskService.readTasks(ctx);
         JSONObject newTask = task.JSONify();
         JSONObject newObject = new JSONObject();
         if (allTasks.length() == 0) {
@@ -55,29 +55,52 @@ public class TaskService extends FileService {
         return false;
     }
 
-    public static boolean UpdateTask(Context ctx) {
+    public static boolean UpdateTaskToFile(Context ctx, Task updatedTask) {
+        JSONArray allTasksArray = TaskService.readTasks(ctx);
+        JSONObject updatedOneTaskJson = updatedTask.JSONify();
+        JSONObject updatedAllTasksJson = new JSONObject();
+
+        try {
+            JSONObject old = allTasksArray.getJSONObject(updatedTask.getId());
+            int targetId = old.getInt("id");
+            allTasksArray.put(targetId, updatedOneTaskJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            updatedAllTasksJson.put("tasks", allTasksArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        boolean created, deleted;
+        created = FileService.createFile(ctx, updatedAllTasksJson.toString(), "temp.json");
+        if (created) {
+            deleted = FileService.deleteFile(ctx, "tasks.json");
+        } else {
+            return false;
+        }
+        if (deleted) {
+            return FileService.renameFile(ctx, "temp.json", "tasks.json");
+        }
         return false;
     }
 
-    public static boolean DeleteTask(Context ctx, Task task) { return false; }
-
     public static List<Task> GetAllTasks(Context ctx) {
-        List<Task> allTasks = new ArrayList<Task>();
-        JSONArray allArrays = TaskService.ReadTasks(ctx);
-        for (int i=0; i<allArrays.length(); i++) {
+        List<Task> allTasksList = new ArrayList<Task>();
+        JSONArray allTasksJson = TaskService.readTasks(ctx);
+        for (int i=0; i < allTasksJson.length(); i++) {
             try {
-                JSONObject oneTask = allArrays.getJSONObject(i);
-                Task task = ConvertJsonObjectToTask(oneTask);
-                allTasks.add(task);
-
+                JSONObject oneTask = allTasksJson.getJSONObject(i);
+                Task task = convertJsonObjectToTask(oneTask);
+                allTasksList.add(task);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return allTasks;
+        return allTasksList;
     }
 
-    public static JSONArray ReadTasks(Context ctx) {
+    private static JSONArray readTasks(Context ctx) {
         String stuff = FileService.readFile(ctx, "tasks.json");
         try {
             JSONObject object = new JSONObject(stuff);
@@ -88,7 +111,7 @@ public class TaskService extends FileService {
         }
     }
 
-    private static Task ConvertJsonObjectToTask(JSONObject json) {
+    private static Task convertJsonObjectToTask(JSONObject json) {
         try {
             int id = Integer.parseInt(json.getString("id"));
             String title = json.getString("title");

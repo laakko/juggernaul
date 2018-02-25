@@ -22,6 +22,8 @@
     import android.widget.SeekBar;
     import android.widget.TextView;
 
+    import org.json.JSONArray;
+    import org.json.JSONException;
     import org.json.JSONObject;
 
     import java.util.ArrayList;
@@ -53,16 +55,34 @@
             String[] items = new String[] {
                     "add tasks:"
             };
-            final List<String> items_list = new ArrayList<String>(Arrays.asList(items));
-            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                    (view.getContext(), android.R.layout.simple_list_item_1, items_list);
-            list.setAdapter(arrayAdapter);
 
 
+            // final List<String> items_list = new ArrayList<String>(Arrays.asList(items));
 
             // TODO: parse the big JSON-file here and add to list adapter
 
-            //list.setAdapter(new listview_adapter(getContext(), titlelist, deadlinelist, categorylist, prioritylist));
+            // Get all tasks
+
+            ArrayList<String> tasks = new ArrayList<String>();
+            JSONArray jArray  = TaskService.ReadTasks(getActivity().getApplicationContext());
+
+            for(int i=0; i< jArray.length() ; i++) {
+
+                try {
+                    String name = jArray.getJSONObject(i).getString("title");
+                    tasks.add(name);
+                } catch (JSONException e) {
+
+                }
+            }
+
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(),
+                    android.R.layout.simple_list_item_1, tasks);
+            list.setAdapter(arrayAdapter);
+
+
+           //  list.setAdapter(new listview_adapter(getActivity().getApplicationContext(), jArray));
+
 
 
             // Click on an item to open it into a new view for modification
@@ -121,19 +141,11 @@
                             String temp_description = txtDescription.getText().toString();
                             int temp_priority = sbPriority.getProgress();
 
-                            // TODO: Create a json
-                            /*
-                            Date date = new Date(temp_deadline);
-                            Task task1 = new Task(temp_title, date, "mä");
-                            JSONObject json_file =  task1.JSONify();
-                            */
-                            // TODO: write to file here
+
+                          //  items_list.add(txtPop.getText().toString());
 
 
-                            items_list.add(txtPop.getText().toString());
-
-
-                            arrayAdapter.notifyDataSetChanged();
+                            //arrayAdapter.notifyDataSetChanged();
 
                             // Close popup window
                             popup.dismiss();
@@ -151,27 +163,21 @@
 
 
 
+        //-------------- (NOT DONE YET) ---------------------------------------------
         // This is for creating a custom list item (e.g. our task-item)
         public class listview_adapter extends ArrayAdapter {
             private Context context;
             private LayoutInflater inflater;
 
-            private String[] titles;
-            private String[] deadlines;
-            private String[] categories;
-            private int[] priorities;
+            private JSONArray jArray;
 
 
             // Constructor
-            public listview_adapter(Context context, String titles[], String[] deadlines, String[] categories, int[] priorities) {
+            public listview_adapter(Context context, JSONArray jArray) {
                 super(context, R.layout.layout_task); // Use the custom layout_task xml
                 this.context = context;
+                this.jArray = jArray;
 
-
-                this.titles = titles;
-                this.deadlines = deadlines;
-                this.categories = categories;
-                this.priorities = priorities;
 
                 inflater = LayoutInflater.from(context); // Inflate the task
             }
@@ -185,10 +191,27 @@
 
                 // Set task parameters here
 
-                // Set title
-                TextView listTaskTitle = (TextView) convertView.findViewById(R.id.listTaskTitle);
-                listTaskTitle.setText(titles[position]);
+                final String titles_list[] = new String[jArray.length()];
 
+                for(int i=0; i< jArray.length() ; i++) {
+
+                    try {
+                        titles_list[i] = jArray.getJSONObject(i).getString("title");
+
+                        // Set title
+                        TextView listTaskTitle = (TextView) convertView.findViewById(R.id.listTaskTitle);
+                        listTaskTitle.setText(titles_list[i]);
+
+                    } catch (JSONException e) {
+
+                    }
+                }
+
+
+
+
+
+                /*
                 // Set deadline
                 TextView listTaskDeadline = (TextView) convertView.findViewById(R.id.listTaskDeadline);
                 listTaskDeadline.setText(deadlines[position]);
@@ -203,6 +226,7 @@
 
                 // Set priority color
                 priority_color(priorities[position], convertView);
+                */
 
                 return convertView;
 
@@ -215,6 +239,7 @@
 
         }
         */
+
 
 
         // Function to change task color based on priority

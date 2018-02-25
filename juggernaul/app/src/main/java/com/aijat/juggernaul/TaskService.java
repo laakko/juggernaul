@@ -77,7 +77,7 @@ public class TaskService extends FileService {
         return allTasks;
     }
 
-    private static JSONArray ReadTasks(Context ctx) {
+    public static JSONArray ReadTasks(Context ctx) {
         String stuff = FileService.readFile(ctx, "tasks.json");
         try {
             JSONObject object = new JSONObject(stuff);

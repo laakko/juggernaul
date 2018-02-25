@@ -2,13 +2,11 @@ package com.aijat.juggernaul;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -48,21 +46,21 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                                     "Ryhmärämä");
 
         TaskService.ResetEverything(getActivity().getApplicationContext());
-        testiTask.saveToFile(getActivity().getApplicationContext());
+        testiTask.SaveToFile(getActivity().getApplicationContext());
         List<Task> allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
         for (Task task : allTasks) {
-            task.print();
+            task.Print();
         }
 
         allTasks.get(1).setStatus(Task.Status.DELETED);
         allTasks.get(1).setTitle("Uusi title");
         allTasks.get(1).setDescription("Ja uutta descriptiota");
-        allTasks.get(1).saveToFile(getActivity().getApplicationContext());
+        allTasks.get(1).SaveToFile(getActivity().getApplicationContext());
         allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
         for (Task task : allTasks) {
-            task.print();
+            task.Print();
         }
     }
 }

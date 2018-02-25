@@ -39,51 +39,27 @@
         private ListView list;
         static String test_title;
 
+        public static List<Task> allTasks;
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View view = inflater.inflate(R.layout.fragment_list, container, false);
 
+            // Initialize list view(
+            list = view.findViewById(R.id.taskList);
 
+            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
-            // Initialize list view
-            list = (ListView) view.findViewById(R.id.taskList);
-
-
-
-            String[] items = new String[] {
-                    "add tasks:"
-            };
-
-
-            // final List<String> items_list = new ArrayList<String>(Arrays.asList(items));
-
-            // TODO: parse the big JSON-file here and add to list adapter
-
-            // Get all tasks
-
-            ArrayList<String> tasks = new ArrayList<String>();
-            JSONArray jArray  = TaskService.ReadTasks(getActivity().getApplicationContext());
-
-            for(int i=0; i< jArray.length() ; i++) {
-
-                try {
-                    String name = jArray.getJSONObject(i).getString("title");
-                    tasks.add(name);
-                } catch (JSONException e) {
-
-                }
+            ArrayList<String> titles = new ArrayList<String>();
+            for (Task task : allTasks) {
+                titles.add(task.getTitle());
             }
 
             final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(),
-                    android.R.layout.simple_list_item_1, tasks);
+                    android.R.layout.simple_list_item_1, titles);
             list.setAdapter(arrayAdapter);
-
-
-           //  list.setAdapter(new listview_adapter(getActivity().getApplicationContext(), jArray));
-
-
 
             // Click on an item to open it into a new view for modification
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,7 +69,6 @@
                     startActivity(new Intent(getActivity(), TaskActivity.class));
                 }
             });
-
 
             // Add new items
             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -141,18 +116,26 @@
                             String temp_description = txtDescription.getText().toString();
                             int temp_priority = sbPriority.getProgress();
 
+                            Task newTask = new Task();
+                            newTask.setTitle(temp_title);
+                            newTask.setDescription(temp_description);
+                            newTask.setPriority(Task.Priority.HIGH);
+                            newTask.setDeadline(new Date());
+                            newTask.setCategory(Task.TaskCategory.OTHER);
+                            newTask.setStatus(Task.Status.TODO);
+                            newTask.setUser("user");
+                            newTask.setGroup("group");
 
-                          //  items_list.add(txtPop.getText().toString());
+                            TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
+                            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
 
 
-                            //arrayAdapter.notifyDataSetChanged();
+                            arrayAdapter.notifyDataSetChanged();
 
                             // Close popup window
                             popup.dismiss();
                         }
                     });
-
-
                 }
             });
 

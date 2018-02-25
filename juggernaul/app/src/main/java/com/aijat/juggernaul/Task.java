@@ -156,6 +156,10 @@ public class Task {
         this.group = "";
     }
 
+    public Task() {
+        this.id = -1;
+    }
+
     public JSONObject JSONify() {
         JSONObject json = new JSONObject();
         try {

@@ -41,7 +41,6 @@
 
         public static List<Task> allTasks;
 
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,15 +49,14 @@
             // Initialize list view(
             list = view.findViewById(R.id.taskList);
 
-            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-
-            ArrayList<String> titles = new ArrayList<String>();
-            for (Task task : allTasks) {
-                titles.add(task.getTitle());
-            }
-
             final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(),
-                    android.R.layout.simple_list_item_1, titles);
+                    android.R.layout.simple_list_item_1);
+
+            // Populate arrayAdapter. Stupid but works, for now.
+            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            for (Task task : allTasks) {
+                arrayAdapter.add(task.getTitle());
+            }
             list.setAdapter(arrayAdapter);
 
             // Click on an item to open it into a new view for modification
@@ -80,11 +78,9 @@
                     View layout = inflater.inflate(R.layout.add_task,
                             (ViewGroup) view.findViewById(R.id.tab1_main_layout));
 
-
                     popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
                     //popup.setAnimationStyle(R.anim.fadein);
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);
-
 
                     // Add items - action
                     Button btnPop = (Button)layout.findViewById(R.id.btnCreateTask);
@@ -104,7 +100,6 @@
                     // Description (optional)
                     final EditText txtDescription = (EditText) layout.findViewById(R.id.taskDescription);
 
-
                     btnPop.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -119,17 +114,15 @@
                             Task newTask = new Task();
                             newTask.setTitle(temp_title);
                             newTask.setDescription(temp_description);
-                            newTask.setPriority(Task.Priority.HIGH);
-                            newTask.setDeadline(new Date());
-                            newTask.setCategory(Task.TaskCategory.OTHER);
-                            newTask.setStatus(Task.Status.TODO);
-                            newTask.setUser("user");
-                            newTask.setGroup("group");
 
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
+
+                            // Hack: Refresh the whole arrayAdapter. Stupid but works, for now.
                             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-
-
+                            arrayAdapter.clear();
+                            for (Task task : allTasks) {
+                                arrayAdapter.add(task.getTitle());
+                            }
                             arrayAdapter.notifyDataSetChanged();
 
                             // Close popup window
@@ -138,12 +131,8 @@
                     });
                 }
             });
-
-
             return view;
-
         }
-
 
 
         //-------------- (NOT DONE YET) ---------------------------------------------

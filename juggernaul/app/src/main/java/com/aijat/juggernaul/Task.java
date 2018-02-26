@@ -158,6 +158,14 @@ public class Task {
 
     public Task() {
         this.id = -1;
+        this.title = "";
+        this.description = "";
+        this.priority = Priority.LOW;
+        this.deadline = new Date();
+        this.category = TaskCategory.OTHER;
+        this.status = Status.TODO;
+        this.user = "";
+        this.group = "";
     }
 
     public JSONObject JSONify() {

@@ -147,7 +147,7 @@ public class TaskService extends FileService {
     }
 
     private static boolean initialize(Context ctx) {
-        String initialString = "{'tasks':[{'id':0,'title':'Placeholder','description':'Placeholder','priority':'LOW','deadline':'Thu Feb 22 15:57:42 UTC 2018','category':'OTHER','status':'DELETED','user':'A','group':'B'}]}";
+        String initialString = "{'tasks':[{'id':-1,'title':'Placeholder','description':'Placeholder','priority':'LOW','deadline':'Thu Feb 22 15:57:42 UTC 2018','category':'OTHER','status':'DELETED','user':'A','group':'B'}]}";
         boolean created = FileService.createFile(ctx, initialString, "tasks.json");
         return created;
     }

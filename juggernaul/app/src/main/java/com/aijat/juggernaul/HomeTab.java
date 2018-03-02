@@ -7,20 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-// This is the home view!
-
-/*
-
-TODO
-
- */
-
 
 public class HomeTab extends Fragment implements View.OnClickListener {
 
@@ -54,9 +44,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     public void generateMockDataButtonClicked(View v) {
         TaskService.ResetEverything(v, getActivity().getApplicationContext());
-        List<Task> mockTasks = new ArrayList<Task>();
+        List<Task> mockTasks = new ArrayList<>();
         for (int i = 1; i < 26; i++) {
-            Task newTask = new Task("Title" + Integer.toString(i), "Description" + Integer.toString(i), Task.Priority.HIGH, new Date(), Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(i), "Group" + Integer.toString(i));
+            int realIndex = i-1;
+            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.HIGH, new Date(), Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex));
             mockTasks.add(newTask);
         }
         for (Task task : mockTasks) {

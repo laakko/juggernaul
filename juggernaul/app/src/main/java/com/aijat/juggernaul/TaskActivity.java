@@ -5,12 +5,11 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 
-import static com.aijat.juggernaul.ListTab.test_title;
+import java.util.List;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -25,17 +24,22 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        txtTaskTitle = (TextView) findViewById(R.id.txtTaskTitle);
+        int taskId = getIntent().getIntExtra("taskId", -1);
+
+        List<Task> allTasks = TaskService.GetAllTasks(getApplication().getApplicationContext());
 
         // Temp ----------------------
         rect = (View) findViewById(R.id.rectPriority);
         rect.setBackgroundColor(Color.rgb(137, 244, 66));
-        txtTaskTitle.setText(test_title);
 
+
+        txtTaskTitle = (TextView) findViewById(R.id.txtTaskTitle);
         txtTaskDeadline = (TextView) findViewById(R.id.txtTaskDeadline);
-        txtTaskDeadline.setText("15 Days left");
         txtTaskStatus = (TextView) findViewById(R.id.txtTaskStatus);
-        txtTaskStatus.setText("In progress");
+
+        txtTaskTitle.setText(allTasks.get(taskId).getTitle());
+        txtTaskDeadline.setText("DL: " + allTasks.get(taskId).getDeadline().toString());
+        txtTaskStatus.setText("Status: " + allTasks.get(taskId).getStatus().toString());
 
         // -----------------------------
 
@@ -43,9 +47,7 @@ public class TaskActivity extends AppCompatActivity {
         sharebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startActivity(new Intent(TaskActivity.this, ShareActivity.class));
-
             }
         });
     }

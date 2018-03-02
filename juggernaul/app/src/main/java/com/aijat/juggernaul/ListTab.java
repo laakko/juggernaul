@@ -52,7 +52,10 @@
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     test_title = (String) adapterView.getItemAtPosition(i);
-                    startActivity(new Intent(getActivity(), TaskActivity.class));
+                    Task selectedTask = allTasks.get(i);
+                    Intent intent = new Intent(getActivity(), TaskActivity.class);
+                    intent.putExtra("taskId", i);
+                    startActivity(intent);
                 }
             });
 
@@ -159,9 +162,6 @@
             }
 
         }
-
-
-
     }
 
 

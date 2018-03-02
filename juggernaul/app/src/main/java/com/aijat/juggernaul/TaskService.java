@@ -89,7 +89,8 @@ public class TaskService extends FileService {
     public static List<Task> GetAllTasks(Context ctx) {
         List<Task> allTasksList = new ArrayList<Task>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
-        for (int i=0; i < allTasksJson.length(); i++) {
+        // Get all tasks but not the first (placeholder)
+        for (int i=1; i < allTasksJson.length(); i++) {
             try {
                 JSONObject oneTask = allTasksJson.getJSONObject(i);
                 Task task = convertJsonObjectToTask(oneTask);

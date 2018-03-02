@@ -27,16 +27,7 @@
         private PopupWindow popup;
         private ListView list;
         static String test_title;
-
         public static List<Task> allTasks;
-
-        /*
-        @Override
-        public void onResume() {
-            super.onResume();
-
-        }
-        */
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

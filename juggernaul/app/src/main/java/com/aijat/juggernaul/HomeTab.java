@@ -55,7 +55,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     public void generateMockDataButtonClicked(View v) {
         TaskService.ResetEverything(v, getActivity().getApplicationContext());
         List<Task> mockTasks = new ArrayList<Task>();
-        for (int i = 0; i < 25; i++) {
+        for (int i = 1; i < 26; i++) {
             Task newTask = new Task("Title" + Integer.toString(i), "Description" + Integer.toString(i), Task.Priority.HIGH, new Date(), Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(i), "Group" + Integer.toString(i));
             mockTasks.add(newTask);
         }

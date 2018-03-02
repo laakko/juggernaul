@@ -86,10 +86,6 @@ public class Task {
         }
     }
 
-    public void Print() {
-        Log.i("task" + Integer.toString(this.id), this.JSONify().toString());
-    }
-
     public enum Priority {
         LOW,
         MEDIUM,

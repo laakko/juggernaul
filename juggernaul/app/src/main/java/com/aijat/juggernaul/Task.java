@@ -92,43 +92,15 @@ public class Task {
     }
 
     public enum Priority {
-        LOW {
-            public String prettify() {
-                return "Low";
-            }
-        },
-        MEDIUM {
-            public String prettify() {
-                return "Medium";
-            }
-        },
-        HIGH {
-            public String prettify() {
-                return "High";
-            }
-        }
+        LOW ,
+        MEDIUM,
+        HIGH
     }
     public enum Status {
-        TODO {
-            public String prettify() {
-                return "Todo";
-            }
-        },
-        INPROGRESS {
-            public String prettify() {
-                return "In progress";
-            }
-        },
-        DONE {
-            public String prettify() {
-                return "Done";
-            }
-        },
-        DELETED {
-            public String prettify() {
-                return "Deleted";
-            }
-        }
+        TODO,
+        INPROGRESS,
+        DONE,
+        DELETED
     }
     public enum TaskCategory {
         SCHOOL,

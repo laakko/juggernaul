@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,8 +39,8 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     public void resetButtonClicked(View v) {
         TaskService.ResetEverything(getActivity().getApplicationContext());
-        Snackbar resetNotification = Snackbar.make(v, "App reset successful!", Snackbar.LENGTH_SHORT);
-        resetNotification.show();
+        Toast toast = Toast.makeText(getContext().getApplicationContext(), "App reset successful!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void generateMockDataButtonClicked(View v) {
@@ -53,8 +54,8 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         for (Task task : mockTasks) {
             task.SaveToFile(getActivity().getApplicationContext());
         }
-        Snackbar loadMockDataNotification = Snackbar.make(v, "Mock data loaded!", Snackbar.LENGTH_SHORT);
-        loadMockDataNotification.show();
+        Toast toast = Toast.makeText(getContext().getApplicationContext(), "Mock data loaded!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void onClick(View v) {

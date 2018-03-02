@@ -169,6 +169,18 @@ public class Task {
         this.group = "";
     }
 
+    public void Assign(Task other) {
+        this.id = other.id;
+        this.title = other.title;
+        this.description = other.description;
+        this.priority = other.priority;
+        this.deadline = other.deadline;
+        this.category = other.category;
+        this.status = other.status;
+        this.user = other.user;
+        this.group = other.group;
+    }
+
     public JSONObject JSONify() {
         JSONObject json = new JSONObject();
         try {

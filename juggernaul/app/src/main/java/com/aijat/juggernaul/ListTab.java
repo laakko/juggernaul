@@ -31,23 +31,15 @@
         public static List<Task> allTasks;
 
         @Override
-        public void onResume() {
-            super.onResume();
-            refreshContent();
-        }
-
-        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-            // Initialize list view(
             list = view.findViewById(R.id.taskList);
 
-            arrayAdapter = new ArrayAdapter<String>(view.getContext(),
+            arrayAdapter = new ArrayAdapter<>(view.getContext(),
                     android.R.layout.simple_list_item_1);
 
-            // Populate arrayAdapter. Stupid but works, for now.
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
             for (Task task : allTasks) {
                 arrayAdapter.add(task.getTitle());
@@ -77,7 +69,7 @@
             );
 
             // Add new items
-            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+            FloatingActionButton fab = view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -87,26 +79,14 @@
                             (ViewGroup) view.findViewById(R.id.tab1_main_layout));
 
                     popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
-                    //popup.setAnimationStyle(R.anim.fadein);
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);
 
-                    // Add items - action
-                    Button btnPop = (Button)layout.findViewById(R.id.btnCreateTask);
-
-                    // Title
-                    final EditText txtPop = (EditText) layout.findViewById(R.id.taskName);
-
-                    // Deadline
-                    final EditText txtDeadline = (EditText) layout.findViewById(R.id.taskDL);
-
-                    // Priority
-                    final SeekBar sbPriority = (SeekBar) layout.findViewById(R.id.taskPriority);
-
-                    // Category
-                    final EditText txtCategory = (EditText) layout.findViewById(R.id.taskCategory);
-
-                    // Description (optional)
-                    final EditText txtDescription = (EditText) layout.findViewById(R.id.taskDescription);
+                    Button btnPop = layout.findViewById(R.id.btnCreateTask);
+                    final EditText txtPop = layout.findViewById(R.id.taskName);
+                    final EditText txtDeadline = layout.findViewById(R.id.taskDL);
+                    final SeekBar sbPriority = layout.findViewById(R.id.taskPriority);
+                    final EditText txtCategory = layout.findViewById(R.id.taskCategory);
+                    final EditText txtDescription = layout.findViewById(R.id.taskDescription);
 
                     btnPop.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -124,10 +104,8 @@
                             newTask.setDescription(temp_description);
 
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
-
                             refreshContent();
 
-                            // Close popup window
                             popup.dismiss();
                         }
                     });
@@ -136,7 +114,7 @@
             return view;
         }
 
-        private void refreshContent() {
+        public void refreshContent() {
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
             arrayAdapter.clear();
             for (Task task : allTasks) {

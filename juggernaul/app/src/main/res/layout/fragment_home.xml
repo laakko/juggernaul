@@ -38,4 +38,17 @@
         android:backgroundTint="@android:color/background_dark"
         android:text="Reset" />
 
+    <Button
+        android:id="@+id/loadMockButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/resetButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/background_dark"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Load mock data" />
+
 </RelativeLayout>

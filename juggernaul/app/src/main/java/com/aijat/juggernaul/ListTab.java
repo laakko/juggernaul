@@ -1,34 +1,23 @@
     package com.aijat.juggernaul;
 
-    import android.content.Context;
     import android.content.Intent;
     import android.graphics.Color;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
-    import android.util.Log;
+    import android.support.v4.widget.SwipeRefreshLayout;
     import android.view.Gravity;
     import android.view.LayoutInflater;
-    import android.view.MotionEvent;
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
     import android.widget.EditText;
-    import android.widget.ImageView;
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.SeekBar;
-    import android.widget.TextView;
 
-    import org.json.JSONArray;
-    import org.json.JSONException;
-    import org.json.JSONObject;
-
-    import java.util.ArrayList;
-    import java.util.Arrays;
-    import java.util.Date;
     import java.util.List;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -40,6 +29,14 @@
         static String test_title;
 
         public static List<Task> allTasks;
+
+        /*
+        @Override
+        public void onResume() {
+            super.onResume();
+
+        }
+        */
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +64,16 @@
                     startActivity(new Intent(getActivity(), TaskActivity.class));
                 }
             });
+
+            final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeRefresh);
+            swipe.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            refreshContentWithSwipe(arrayAdapter, swipe);
+                        }
+                    }
+            );
 
             // Add new items
             FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -117,13 +124,7 @@
 
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
 
-                            // Hack: Refresh the whole arrayAdapter. Stupid but works, for now.
-                            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-                            arrayAdapter.clear();
-                            for (Task task : allTasks) {
-                                arrayAdapter.add(task.getTitle());
-                            }
-                            arrayAdapter.notifyDataSetChanged();
+                            refreshContent(arrayAdapter);
 
                             // Close popup window
                             popup.dismiss();
@@ -134,90 +135,27 @@
             return view;
         }
 
-
-        //-------------- (NOT DONE YET) ---------------------------------------------
-        // This is for creating a custom list item (e.g. our task-item)
-        public class listview_adapter extends ArrayAdapter {
-            private Context context;
-            private LayoutInflater inflater;
-
-            private JSONArray jArray;
-
-
-            // Constructor
-            public listview_adapter(Context context, JSONArray jArray) {
-                super(context, R.layout.layout_task); // Use the custom layout_task xml
-                this.context = context;
-                this.jArray = jArray;
-
-
-                inflater = LayoutInflater.from(context); // Inflate the task
+        private void refreshContent(ArrayAdapter arrayAdapter) {
+            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            arrayAdapter.clear();
+            for (Task task : allTasks) {
+                arrayAdapter.add(task.getTitle());
             }
-
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (null == convertView) {
-                    convertView = inflater.inflate(R.layout.layout_task, parent, false);
-                }
-
-                // Set task parameters here
-
-                final String titles_list[] = new String[jArray.length()];
-
-                for(int i=0; i< jArray.length() ; i++) {
-
-                    try {
-                        titles_list[i] = jArray.getJSONObject(i).getString("title");
-
-                        // Set title
-                        TextView listTaskTitle = (TextView) convertView.findViewById(R.id.listTaskTitle);
-                        listTaskTitle.setText(titles_list[i]);
-
-                    } catch (JSONException e) {
-
-                    }
-                }
-
-
-
-
-
-                /*
-                // Set deadline
-                TextView listTaskDeadline = (TextView) convertView.findViewById(R.id.listTaskDeadline);
-                listTaskDeadline.setText(deadlines[position]);
-
-                // Set category
-                TextView listTaskCategory = (TextView) convertView.findViewById(R.id.listTaskCategory);
-                listTaskCategory.setText(categories[position]);
-
-
-                // TODO: set status image
-               //  ImageView listTaskStatus = (ImageView) convertView.findViewById(R.id.listTaskStatus);
-
-                // Set priority color
-                priority_color(priorities[position], convertView);
-                */
-
-                return convertView;
-
-            }
-
+            arrayAdapter.notifyDataSetChanged();
         }
 
-        /*
-        public parse_JSON() {
-
+        private void refreshContentWithSwipe(ArrayAdapter arrayAdapter, SwipeRefreshLayout swipe) {
+            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            arrayAdapter.clear();
+            for (Task task : allTasks) {
+                arrayAdapter.add(task.getTitle());
+            }
+            arrayAdapter.notifyDataSetChanged();
+            swipe.setRefreshing(false);
         }
-        */
-
-
 
         // Function to change task color based on priority
         public void priority_color(int priority_value, View convertView) {
-
-
             // Temp, change to actual colors: green -> red
             if(priority_value < 10) {
                 convertView.setBackgroundColor(Color.CYAN);

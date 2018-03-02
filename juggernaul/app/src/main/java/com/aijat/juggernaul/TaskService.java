@@ -1,6 +1,8 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,8 +16,10 @@ import java.util.List;
 
 public class TaskService extends FileService {
 
-    public static boolean ResetEverything(Context ctx) {
+    public static boolean ResetEverything(View v, Context ctx) {
         FileService.deleteFile(ctx, "tasks.json");
+        Snackbar resetNotification = Snackbar.make(v, "App reset successful!", Snackbar.LENGTH_LONG);
+        resetNotification.show();
         return(TaskService.initialize(ctx));
     }
 

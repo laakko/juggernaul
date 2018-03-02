@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
@@ -32,6 +33,10 @@ public class Task {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public String getDeadlinePretty() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(this.deadline);
     }
 
     public Status getStatus() {
@@ -87,15 +92,43 @@ public class Task {
     }
 
     public enum Priority {
-        LOW,
-        MEDIUM,
-        HIGH
+        LOW {
+            public String prettify() {
+                return "Low";
+            }
+        },
+        MEDIUM {
+            public String prettify() {
+                return "Medium";
+            }
+        },
+        HIGH {
+            public String prettify() {
+                return "High";
+            }
+        }
     }
     public enum Status {
-        TODO,
-        INPROGRESS,
-        DONE,
-        DELETED
+        TODO {
+            public String prettify() {
+                return "Todo";
+            }
+        },
+        INPROGRESS {
+            public String prettify() {
+                return "In progress";
+            }
+        },
+        DONE {
+            public String prettify() {
+                return "Done";
+            }
+        },
+        DELETED {
+            public String prettify() {
+                return "Deleted";
+            }
+        }
     }
     public enum TaskCategory {
         SCHOOL,

@@ -27,7 +27,14 @@
         private PopupWindow popup;
         private ListView list;
         static String test_title;
+        ArrayAdapter<String> arrayAdapter;
         public static List<Task> allTasks;
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            refreshContent();
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +44,7 @@
             // Initialize list view(
             list = view.findViewById(R.id.taskList);
 
-            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(),
+            arrayAdapter = new ArrayAdapter<String>(view.getContext(),
                     android.R.layout.simple_list_item_1);
 
             // Populate arrayAdapter. Stupid but works, for now.
@@ -52,9 +59,9 @@
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     test_title = (String) adapterView.getItemAtPosition(i);
-                    Task selectedTask = allTasks.get(i);
+                    int selectedTaskId = allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
-                    intent.putExtra("taskId", i);
+                    intent.putExtra("taskId", selectedTaskId);
                     startActivity(intent);
                 }
             });
@@ -64,7 +71,7 @@
                     new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            refreshContentWithSwipe(arrayAdapter, swipe);
+                            refreshContentWithSwipe(swipe);
                         }
                     }
             );
@@ -118,7 +125,7 @@
 
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
 
-                            refreshContent(arrayAdapter);
+                            refreshContent();
 
                             // Close popup window
                             popup.dismiss();
@@ -129,7 +136,7 @@
             return view;
         }
 
-        private void refreshContent(ArrayAdapter arrayAdapter) {
+        private void refreshContent() {
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
             arrayAdapter.clear();
             for (Task task : allTasks) {
@@ -138,7 +145,7 @@
             arrayAdapter.notifyDataSetChanged();
         }
 
-        private void refreshContentWithSwipe(ArrayAdapter arrayAdapter, SwipeRefreshLayout swipe) {
+        private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
             arrayAdapter.clear();
             for (Task task : allTasks) {

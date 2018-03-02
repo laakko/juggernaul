@@ -37,13 +37,13 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     }
 
     public void resetButtonClicked(View v) {
-        TaskService.ResetEverything(v, getActivity().getApplicationContext());
+        TaskService.ResetEverything(getActivity().getApplicationContext());
         Snackbar resetNotification = Snackbar.make(v, "App reset successful!", Snackbar.LENGTH_SHORT);
         resetNotification.show();
     }
 
     public void generateMockDataButtonClicked(View v) {
-        TaskService.ResetEverything(v, getActivity().getApplicationContext());
+        TaskService.ResetEverything(getActivity().getApplicationContext());
         List<Task> mockTasks = new ArrayList<>();
         for (int i = 1; i < 26; i++) {
             int realIndex = i-1;

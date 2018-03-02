@@ -1,7 +1,6 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class TaskService extends FileService {
 
-    public static boolean ResetEverything(View v, Context ctx) {
+    public static boolean ResetEverything(Context ctx) {
         FileService.deleteFile(ctx, "tasks.json");
         return(TaskService.initialize(ctx));
     }
@@ -24,9 +23,7 @@ public class TaskService extends FileService {
         JSONArray allTasks = TaskService.readTasks(ctx);
         JSONObject newTask = task.JSONify();
         JSONObject newObject = new JSONObject();
-        if (allTasks.length() == 0) {
-            return false;
-        }
+
         try {
             int newTaskId = Integer.parseInt(newTask.get("id").toString());
             if (newTaskId == -1) {
@@ -89,8 +86,7 @@ public class TaskService extends FileService {
     public static List<Task> GetAllTasks(Context ctx) {
         List<Task> allTasksList = new ArrayList<Task>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
-        // Get all tasks but not the first (placeholder)
-        for (int i=1; i < allTasksJson.length(); i++) {
+        for (int i=0; i < allTasksJson.length(); i++) {
             try {
                 JSONObject oneTask = allTasksJson.getJSONObject(i);
                 Task task = convertJsonObjectToTask(oneTask);
@@ -137,6 +133,9 @@ public class TaskService extends FileService {
     private static int getNextId(JSONArray currentTasks) {
         int lastId = -1;
         try {
+            if (currentTasks.length() == 0) {
+                return 0;
+            }
             JSONObject ju = currentTasks.getJSONObject(currentTasks.length()-1);
             lastId = Integer.parseInt(ju.getString("id"));
             lastId += 1;
@@ -147,7 +146,7 @@ public class TaskService extends FileService {
     }
 
     private static boolean initialize(Context ctx) {
-        String initialString = "{'tasks':[{'id':-1,'title':'Placeholder','description':'Placeholder','priority':'LOW','deadline':'Thu Feb 22 15:57:42 UTC 2018','category':'OTHER','status':'DELETED','user':'A','group':'B'}]}";
+        String initialString = "{'tasks':[]}";
         boolean created = FileService.createFile(ctx, initialString, "tasks.json");
         return created;
     }

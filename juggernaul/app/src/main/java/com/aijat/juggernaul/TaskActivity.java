@@ -41,16 +41,16 @@ public class TaskActivity extends AppCompatActivity {
 
         final int taskId = getIntent().getIntExtra("taskId", -1);
 
-        final Task copyTask = allTasks.get(taskId);
+        final Task taskInEditing = allTasks.get(taskId);
 
         rect = (View) findViewById(R.id.rectPriority);
         rect.setBackgroundColor(Color.rgb(137, 244, 66));
 
         txtTaskTitle = findViewById(R.id.txtTaskTitle);
-        txtTaskTitle.setText(copyTask.getTitle());
+        txtTaskTitle.setText(taskInEditing.getTitle());
 
         txtDescription = findViewById(R.id.txtDescription);
-        txtDescription.setText(copyTask.getDescription());
+        txtDescription.setText(taskInEditing.getDescription());
         txtDescription.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -58,20 +58,20 @@ public class TaskActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                copyTask.setDescription(editable.toString());
+                taskInEditing.setDescription(editable.toString());
             }
         });
 
         txtTaskDeadline = findViewById(R.id.txtTaskDeadline);
-        txtTaskDeadline.setText("Deadline:\n" + copyTask.getDeadlinePretty().toString());
+        txtTaskDeadline.setText("Deadline:\n" + taskInEditing.getDeadlinePretty().toString());
 
         statusSpinner = findViewById(R.id.statusSpinner);
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Task.Status selectedStatus = Task.Status.values()[i];
-                if (selectedStatus != copyTask.getStatus()) {
-                    copyTask.setStatus(selectedStatus);
+                if (selectedStatus != taskInEditing.getStatus()) {
+                    taskInEditing.setStatus(selectedStatus);
                 }
             }
 
@@ -91,7 +91,7 @@ public class TaskActivity extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-                boolean saved = copyTask.SaveToFile(getApplication().getApplicationContext());
+                boolean saved = taskInEditing.SaveToFile(getApplication().getApplicationContext());
                 if (saved) {
                     Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully saved!", Toast.LENGTH_SHORT);
                     toast.show();
@@ -109,7 +109,7 @@ public class TaskActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                copyTask.Assign(allTasks.get(taskId));
+                taskInEditing.Assign(allTasks.get(taskId));
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

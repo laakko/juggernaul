@@ -83,8 +83,8 @@ public class TaskService extends FileService {
         return false;
     }
 
-    public static List<Task> GetAllTasks(Context ctx) {
-        List<Task> allTasksList = new ArrayList<Task>();
+    public static ArrayList<Task> GetAllTasks(Context ctx) {
+        ArrayList<Task> allTasksList = new ArrayList<Task>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
         for (int i=0; i < allTasksJson.length(); i++) {
             try {

@@ -11,46 +11,40 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.AdapterView;
-    import android.widget.ArrayAdapter;
     import android.widget.Button;
     import android.widget.EditText;
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.SeekBar;
 
-    import java.util.List;
+    import java.util.ArrayList;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
     public class ListTab extends Fragment {
 
         private PopupWindow popup;
-        private ListView list;
-        static String test_title;
-        ArrayAdapter<String> arrayAdapter;
-        public static List<Task> allTasks;
+        private ListView listView;
+        TaskArrayAdapter taskArrayAdapter;
+        public static ArrayList<Task> allTasks;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-            list = view.findViewById(R.id.taskList);
-
-            arrayAdapter = new ArrayAdapter<>(view.getContext(),
-                    android.R.layout.simple_list_item_1);
-
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-            for (Task task : allTasks) {
-                arrayAdapter.add(task.getTitle());
-            }
-            list.setAdapter(arrayAdapter);
+
+            taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
+            taskArrayAdapter.addAll(allTasks);
+
+            listView = view.findViewById(R.id.taskList);
+            listView.setAdapter(taskArrayAdapter);
 
             // Click on an item to open it into a new view for modification
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    test_title = (String) adapterView.getItemAtPosition(i);
                     int selectedTaskId = allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
@@ -122,20 +116,16 @@
 
         public void refreshContent() {
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-            arrayAdapter.clear();
-            for (Task task : allTasks) {
-                arrayAdapter.add(task.getTitle());
-            }
-            arrayAdapter.notifyDataSetChanged();
+            taskArrayAdapter.clear();
+            taskArrayAdapter.addAll(allTasks);
+            taskArrayAdapter.notifyDataSetChanged();
         }
 
         private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
             allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
-            arrayAdapter.clear();
-            for (Task task : allTasks) {
-                arrayAdapter.add(task.getTitle());
-            }
-            arrayAdapter.notifyDataSetChanged();
+            taskArrayAdapter.clear();
+            taskArrayAdapter.addAll(allTasks);
+            taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);
         }
 

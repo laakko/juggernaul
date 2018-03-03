@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,21 +15,24 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+
+import java.util.Calendar;
 
 import static com.aijat.juggernaul.ListTab.allTasks;
 
 public class TaskActivity extends AppCompatActivity {
 
-    private TextView txtTaskTitle;
+    private EditText txtTaskTitle;
     private EditText txtDescription;
     private View rect;
-    private TextView txtTaskDeadline;
+    private EditText txtTaskDeadline;
+    private Calendar calendar;
     private Spinner statusSpinner;
     private Button saveButton;
     private Button cancelButton;
@@ -38,33 +42,53 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-
         final int taskId = getIntent().getIntExtra("taskId", -1);
 
         final Task taskInEditing = allTasks.get(taskId);
 
-        rect = (View) findViewById(R.id.rectPriority);
-        rect.setBackgroundColor(Color.rgb(137, 244, 66));
-
+        // Title
         txtTaskTitle = findViewById(R.id.txtTaskTitle);
         txtTaskTitle.setText(taskInEditing.getTitle());
-
-        txtDescription = findViewById(R.id.txtDescription);
-        txtDescription.setText(taskInEditing.getDescription());
-        txtDescription.addTextChangedListener(new TextWatcher() {
+        txtTaskTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                taskInEditing.setDescription(editable.toString());
+                taskInEditing.setTitle(editable.toString());
             }
         });
 
+        // Deadline
+        calendar = Calendar.getInstance();
         txtTaskDeadline = findViewById(R.id.txtTaskDeadline);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                taskInEditing.setDeadline(calendar.getTime());
+                txtTaskDeadline.setText("Deadline:\n" + taskInEditing.getDeadlinePretty().toString());
+            }
+        };
+        txtTaskDeadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(TaskActivity.this, date, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
         txtTaskDeadline.setText("Deadline:\n" + taskInEditing.getDeadlinePretty().toString());
 
+        // Priority
+        rect = findViewById(R.id.rectPriority);
+        rect.setBackgroundColor(Color.rgb(137, 244, 66));
+
+        // Status
         statusSpinner = findViewById(R.id.statusSpinner);
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,6 +107,21 @@ public class TaskActivity extends AppCompatActivity {
         statusSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Task.Status.values()));
         statusSpinner.setSelection(allTasks.get(taskId).getStatus().ordinal()); // Get status value from task and update spinner accordingly
 
+        // Description
+        txtDescription = findViewById(R.id.txtDescription);
+        txtDescription.setText(taskInEditing.getDescription());
+        txtDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                taskInEditing.setDescription(editable.toString());
+            }
+        });
+
+        // Save button
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +143,7 @@ public class TaskActivity extends AppCompatActivity {
         });
         saveButton.setEnabled(true);
 
+        // Cancel button
         cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setEnabled(true);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +159,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
-
+        // Share button
         sharebutton = findViewById(R.id.fab_share);
         sharebutton.setOnClickListener(new View.OnClickListener() {
             @Override

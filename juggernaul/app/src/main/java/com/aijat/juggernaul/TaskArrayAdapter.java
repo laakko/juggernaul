@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TaskArrayAdapter extends ArrayAdapter<Task> {
@@ -36,7 +37,10 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         titleTextView.setText(currentTask.getTitle());
 
         TextView deadlineTextView = listItem.findViewById(R.id.listTaskDeadline);
-        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty());
+        Date now = new Date();
+        float diff = currentTask.getDeadline().getTime() - now.getTime();
+        int diffInDays = (int) (diff / (1000*60*60*24));
+        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + diffInDays + " days left");
 
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());

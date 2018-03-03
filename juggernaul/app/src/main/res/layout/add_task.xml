@@ -64,11 +64,13 @@
         android:id="@+id/taskDL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="false"
+        android:inputType="date"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
         android:layout_alignStart="@+id/taskPriority"
-        android:ems="10"
-        android:inputType="date" />
+        android:ems="10" />
 
     <TextView
         android:id="@+id/textView7"

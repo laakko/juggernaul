@@ -198,6 +198,4 @@ public class Task {
         }
         return json;
     }
-
-
 }

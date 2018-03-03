@@ -54,7 +54,7 @@
                     int selectedTaskId = allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
-                    startActivity(intent);
+                    startActivityForResult(intent, 0);
                 }
             });
 
@@ -112,6 +112,12 @@
                 }
             });
             return view;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            refreshContent();
         }
 
         public void refreshContent() {

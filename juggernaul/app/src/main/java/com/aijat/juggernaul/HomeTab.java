@@ -47,7 +47,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         List<Task> mockTasks = new ArrayList<>();
         for (int i = 1; i < 26; i++) {
             int realIndex = i-1;
-            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.HIGH, new Date(), Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex));
+            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.HIGH, new Date(), Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
             mockTasks.add(newTask);
         }
         for (Task task : mockTasks) {

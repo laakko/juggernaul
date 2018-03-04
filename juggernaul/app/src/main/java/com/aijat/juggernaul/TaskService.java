@@ -120,8 +120,9 @@ public class TaskService extends FileService {
             Task.Status status = Task.Status.valueOf(json.getString("status"));
             String user = json.getString("user");
             String group = json.getString("group");
+            Boolean deleted = Boolean.getBoolean(json.getString("deleted"));
 
-            return new Task(id, title, desc, pri, dl, cat, status, user, group);
+            return new Task(id, title, desc, pri, dl, cat, status, user, group, deleted);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {

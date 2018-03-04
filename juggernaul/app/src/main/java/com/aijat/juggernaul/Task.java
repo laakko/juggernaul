@@ -91,6 +91,14 @@ public class Task {
         }
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public enum Priority {
         LOW ,
         MEDIUM,
@@ -99,8 +107,7 @@ public class Task {
     public enum Status {
         TODO,
         INPROGRESS,
-        DONE,
-        DELETED
+        DONE
     }
     public enum TaskCategory {
         SCHOOL,
@@ -117,9 +124,10 @@ public class Task {
     private Status status;
     private String user; // TODO: Create a User class
     private String group; // TODO: Create a Group
+    private boolean deleted;
 
     // The full constructor with id
-    public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
+    public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted) {
         this.id = id;
         this.title = title;
         this.description = desc;
@@ -129,10 +137,11 @@ public class Task {
         this.status = status;
         this.user = user;
         this.group = group;
+        this.deleted = deleted;
     }
 
     // The full constructor with default id
-    public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group) {
+    public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted) {
         this.id = -1;
         this.title = title;
         this.description = desc;
@@ -142,10 +151,11 @@ public class Task {
         this.status = status;
         this.user = user;
         this.group = group;
+        this.deleted = deleted;
     }
 
     // The base constructor (optional data is null or empty)
-    public Task(String title, Priority pri, Date dl, TaskCategory cat, Status status, String user) {
+    public Task(String title, Priority pri, Date dl, TaskCategory cat, Status status, String user, Boolean deleted) {
         this.id = -1;
         this.title = title;
         this.description = "";
@@ -155,6 +165,7 @@ public class Task {
         this.status = status;
         this.user = user;
         this.group = "";
+        this.deleted = deleted;
     }
 
     public Task() {
@@ -167,6 +178,7 @@ public class Task {
         this.status = Status.TODO;
         this.user = "";
         this.group = "";
+        this.deleted = false;
     }
 
     public void Assign(Task other) {
@@ -179,6 +191,7 @@ public class Task {
         this.status = other.status;
         this.user = other.user;
         this.group = other.group;
+        this.deleted = other.deleted;
     }
 
     public JSONObject JSONify() {
@@ -193,6 +206,7 @@ public class Task {
             json.put("status", this.status.toString());
             json.put("user", this.user);
             json.put("group", this.group);
+            json.put("deleted", this.deleted);
         } catch (JSONException e) {
             Log.i("JSONError", "Could not form JSON");
         }

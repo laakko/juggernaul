@@ -34,6 +34,7 @@ public class TaskActivity extends AppCompatActivity {
     private EditText txtTaskDeadline;
     private Calendar calendar;
     private Spinner statusSpinner;
+    private Spinner categorySpinner;
     private Button saveButton;
     private Button cancelButton;
     private FloatingActionButton sharebutton;
@@ -106,6 +107,25 @@ public class TaskActivity extends AppCompatActivity {
         });
         statusSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Task.Status.values()));
         statusSpinner.setSelection(allTasks.get(taskId).getStatus().ordinal()); // Get status value from task and update spinner accordingly
+
+        // Category
+        categorySpinner = findViewById(R.id.categorySpinner );
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Task.TaskCategory selectedCategory = Task.TaskCategory.values()[i];
+                if (selectedCategory != taskInEditing.getCategory()) {
+                    taskInEditing.setCategory(selectedCategory);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.i("Error", "You must select something from the category list");
+            }
+        });
+        categorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Task.TaskCategory.values()));
+        categorySpinner.setSelection(allTasks.get(taskId).getCategory().ordinal()); // Get status value from task and update spinner accordingly
 
         // Description
         txtDescription = findViewById(R.id.txtDescription);

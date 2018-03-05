@@ -1,8 +1,10 @@
 package com.aijat.juggernaul;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,7 @@ public class TaskActivity extends AppCompatActivity {
     private Button saveButton;
     private Button cancelButton;
     private FloatingActionButton sharebutton;
+    private FloatingActionButton deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,5 +190,58 @@ public class TaskActivity extends AppCompatActivity {
                 startActivity(new Intent(TaskActivity.this, ShareActivity.class));
             }
         });
+
+        // Delete button
+        deleteButton = findViewById(R.id.fab_delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*
+                taskInEditing.setDeleted(true);
+                if(taskInEditing.isDeleted()) {
+                    Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                taskInEditing.Assign(allTasks.get(taskId));
+                setResult(Activity.RESULT_OK);
+                finish();
+                */
+
+                // Prompt user about task deletion
+               delete_alert("Are you sure you want to delete this Task?", "Yes", "No", taskInEditing);
+
+            }
+        });
+
+
+    }
+
+    public void delete_alert(String message, String positive_value, String negative_value, final Task task) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(positive_value, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Delete the task and go back to MainMenu
+                        task.setDeleted(true);
+                        if(task.isDeleted()) {
+                            Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        setResult(Activity.RESULT_OK);
+                        finish();
+
+                    }
+                })
+                .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

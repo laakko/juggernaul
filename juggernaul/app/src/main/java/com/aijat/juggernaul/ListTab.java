@@ -37,7 +37,7 @@
 
             View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
 
             taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
             taskArrayAdapter.addAll(allTasks);
@@ -151,14 +151,14 @@
         }
 
         public void refreshContent() {
-            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
             taskArrayAdapter.notifyDataSetChanged();
         }
 
         private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
-            allTasks = TaskService.GetAllTasks(getActivity().getApplicationContext());
+            allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
             taskArrayAdapter.notifyDataSetChanged();

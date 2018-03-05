@@ -19,6 +19,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        TaskService.ResetEverything(getContext().getApplicationContext());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         resetBtn = view.findViewById(R.id.resetButton);

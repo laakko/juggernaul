@@ -27,6 +27,9 @@ import com.github.clans.fab.FloatingActionButton;
 import java.util.Calendar;
 
 import static com.aijat.juggernaul.ListTab.allTasks;
+import static com.aijat.juggernaul.Task.Priority.HIGH;
+import static com.aijat.juggernaul.Task.Priority.LOW;
+import static com.aijat.juggernaul.Task.Priority.MEDIUM;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -90,7 +93,14 @@ public class TaskActivity extends AppCompatActivity {
 
         // Priority
         rect = findViewById(R.id.rectPriority);
-        rect.setBackgroundColor(Color.rgb(137, 244, 66));
+        if(taskInEditing.getPriority() == LOW) {
+            rect.setBackgroundColor(Color.parseColor("#66bb6a"));
+        } else if (taskInEditing.getPriority() == MEDIUM) {
+            rect.setBackgroundColor(Color.parseColor("#ffa726"));
+        } else if (taskInEditing.getPriority() == HIGH) {
+            rect.setBackgroundColor(Color.parseColor("#bf360c"));
+        }
+
 
         // Status
         statusSpinner = findViewById(R.id.statusSpinner);
@@ -203,13 +213,14 @@ public class TaskActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                taskInEditing.Assign(allTasks.get(taskId));
+                boolean saved = taskInEditing.SaveToFile(getApplication().getApplicationContext());
+                Log.i("saved", Boolean.toString(saved));
                 setResult(Activity.RESULT_OK);
                 finish();
                 */
 
                 // Prompt user about task deletion
-               delete_alert("Are you sure you want to delete this Task?", "Yes", "No", taskInEditing);
+                delete_alert("Are you sure you want to delete this Task?", "Yes", "No", taskInEditing);
 
             }
         });
@@ -230,6 +241,7 @@ public class TaskActivity extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
                             toast.show();
                         }
+                        task.SaveToFile(getApplication().getApplicationContext());
 
                         setResult(Activity.RESULT_OK);
                         finish();

@@ -165,20 +165,7 @@
             swipe.setRefreshing(false);
         }
 
-        // Function to change task color based on priority
-        public void priority_color(int priority_value, View convertView) {
-            // Temp, change to actual colors: green -> red
-            if(priority_value < 10) {
-                convertView.setBackgroundColor(Color.CYAN);
-            } else if(priority_value < 20) {
-                convertView.setBackgroundColor(Color.GRAY);
-            } else if(priority_value < 30) {
-                convertView.setBackgroundColor(Color.GREEN);
-            } else {
-                convertView.setBackgroundColor(Color.RED);
-            }
 
-        }
     }
 
 

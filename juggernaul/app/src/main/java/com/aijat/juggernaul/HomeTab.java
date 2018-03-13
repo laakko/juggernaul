@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.aijat.juggernaul.ListTab.allTasks;
+
 public class HomeTab extends Fragment implements View.OnClickListener {
 
     private Button resetBtn;

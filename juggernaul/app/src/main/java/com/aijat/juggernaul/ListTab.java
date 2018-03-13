@@ -9,6 +9,9 @@
     import android.support.v4.widget.SwipeRefreshLayout;
     import android.view.Gravity;
     import android.view.LayoutInflater;
+    import android.view.Menu;
+    import android.view.MenuInflater;
+    import android.view.MenuItem;
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.AdapterView;
@@ -21,6 +24,8 @@
 
     import java.util.ArrayList;
     import java.util.Calendar;
+    import java.util.Collections;
+    import java.util.Comparator;
     import java.util.Date;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -31,12 +36,13 @@
         private ListView listView;
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
+        public boolean titlesort, dlsort;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View view = inflater.inflate(R.layout.fragment_list, container, false);
-
+            setHasOptionsMenu(true);
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
 
             taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
@@ -46,15 +52,16 @@
             listView.setAdapter(taskArrayAdapter);
 
             taskArrayAdapter.notifyDataSetChanged();
-
             // Click on an item to open it into a new view for modification
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    int selectedTaskId = allTasks.get(i).getId();
+                    int selectedTaskId = taskArrayAdapter.getItem(i).getId();
+                    //int selectedTaskId = taskArrayAdapter.allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
                     startActivityForResult(intent, 0);
+
                 }
             });
 
@@ -144,23 +151,95 @@
             return view;
         }
 
+
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
             refreshContent();
         }
 
+
+        // Handle action menu
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.menu, menu);
+            super.onCreateOptionsMenu(menu, inflater);
+        } @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+
+            switch(item.getItemId()) {
+
+                case R.id.settings:
+                    startActivity(new Intent(getActivity(), SettingsActivity.class));
+                case R.id.sort1:
+                    // Sort listview by title
+                    sortByTitle();
+                    titlesort = true;
+                    dlsort = false;
+                    return true;
+
+                case R.id.sort2:
+                    // Sort listview by DL
+                    sortByDeadline();
+                    dlsort = true;
+                    titlesort = false;
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+
+        }
+
+
+        public void sortByTitle() {
+            taskArrayAdapter.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+                    return task.getTitle().toString().compareTo(t1.getTitle().toString());
+                }
+            });
+            taskArrayAdapter.notifyDataSetChanged();
+        }
+
+        public void sortByDeadline() {
+            taskArrayAdapter.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+                    return task.getDeadline().compareTo(t1.getDeadline());
+                }
+            });
+            taskArrayAdapter.notifyDataSetChanged();
+
+        }
+
+
+
         public void refreshContent() {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
+            // Stupid workaround but it works
+            if(titlesort){
+                sortByTitle();
+            }
+            if(dlsort) {
+                sortByDeadline();
+            }
             taskArrayAdapter.notifyDataSetChanged();
+
         }
 
         private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
+            // Stupid workaround but it works
+            if(titlesort){
+                sortByTitle();
+            }
+            if(dlsort) {
+                sortByDeadline();
+            }
             taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);
         }

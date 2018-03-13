@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
         return listItem;
     }
+
 
 
     // Function to change task color based on priority

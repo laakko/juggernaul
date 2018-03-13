@@ -23,6 +23,7 @@
         <activity android:name=".ListTab" />
         <activity android:name=".GraphTab" />
         <activity android:name=".TaskActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".ShareActivity"></activity>
     </application>
 

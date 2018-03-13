@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Settings" android:id="@+id/settings"></item>
-    <item android:title="Sort by Title" android:id="@+id/sort1"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Settings"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/sort1"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="Sort by Title"></item>
     <item android:title="Sort by DL" android:id="@+id/sort2"></item>
     <item android:title="Sort by PRIO" android:id="@+id/sort3"></item>
 </menu>

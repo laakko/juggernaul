@@ -46,7 +46,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
         TextView deadlineTextView = listItem.findViewById(R.id.listTaskDeadline);
 
-        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.DaysUntilDeadline() + " days left");
+        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.daysUntilDeadline() + " days left");
 
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());

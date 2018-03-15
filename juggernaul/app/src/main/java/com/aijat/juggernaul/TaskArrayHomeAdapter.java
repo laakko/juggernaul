@@ -45,10 +45,8 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
         titleTextView.setText(currentTask.getTitle());
 
         TextView deadlineTextView = listItem.findViewById(R.id.listTaskDeadline);
-        Date now = new Date();
-        float diff = currentTask.getDeadline().getTime() - now.getTime();
-        int diffInDays = (int) (diff / (1000*60*60*24));
-        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + diffInDays + " days left");
+
+        deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.daysUntilDeadline() + " days left");
 
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());

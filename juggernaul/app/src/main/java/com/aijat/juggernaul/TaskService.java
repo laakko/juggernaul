@@ -100,7 +100,6 @@ public class TaskService extends FileService {
 
     public static ArrayList<Task> GetImportantTasks(Context ctx) {
         ArrayList<Task> importantTasks = new ArrayList<>();
-        Date now = new Date();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
         for (int i=0; i < allTasksJson.length(); i++) {
             try {

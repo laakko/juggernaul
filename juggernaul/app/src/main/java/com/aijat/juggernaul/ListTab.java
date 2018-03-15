@@ -2,12 +2,10 @@
 
     import android.app.DatePickerDialog;
     import android.content.Intent;
-    import android.graphics.Color;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
     import android.support.v4.widget.SwipeRefreshLayout;
-    import android.util.Log;
     import android.view.Gravity;
     import android.view.LayoutInflater;
     import android.view.Menu;
@@ -25,7 +23,6 @@
 
     import java.util.ArrayList;
     import java.util.Calendar;
-    import java.util.Collections;
     import java.util.Comparator;
     import java.util.Date;
 
@@ -35,7 +32,7 @@
 
         private PopupWindow popup;
         private ListView listView;
-        TaskArrayAdapter taskArrayAdapter;
+        TaskArrayHomeAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
         public boolean titlesort, dlsort, priosort, statussort;
         public boolean titleasc, dlasc, prioasc, statusasc;
@@ -47,7 +44,7 @@
             setHasOptionsMenu(true);
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
 
-            taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
+            taskArrayAdapter = new TaskArrayHomeAdapter(view.getContext(), allTasks);
             taskArrayAdapter.addAll(allTasks);
 
             listView = view.findViewById(R.id.taskList);

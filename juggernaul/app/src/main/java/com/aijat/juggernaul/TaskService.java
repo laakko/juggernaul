@@ -98,6 +98,26 @@ public class TaskService extends FileService {
         return allTasksList;
     }
 
+    public static ArrayList<Task> GetImportantTasks(Context ctx) {
+        ArrayList<Task> importantTasks = new ArrayList<>();
+        Date now = new Date();
+        JSONArray allTasksJson = TaskService.readTasks(ctx);
+        for (int i=0; i < allTasksJson.length(); i++) {
+            try {
+                JSONObject oneTask = allTasksJson.getJSONObject(i);
+                Task task = convertJsonObjectToTask(oneTask);
+                float diff = task.getDeadline().getTime() - now.getTime();
+                int diffInDays = (int) (diff / (1000*60*60*24));
+                if (diffInDays < 3) {
+                    importantTasks.add(task);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return importantTasks;
+    }
+
     public static ArrayList<Task> GetAllNotDeletedTasks(Context ctx) {
         ArrayList<Task> allTasksList = new ArrayList<Task>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);

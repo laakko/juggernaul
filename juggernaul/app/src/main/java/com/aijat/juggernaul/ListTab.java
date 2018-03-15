@@ -32,7 +32,7 @@
 
         private PopupWindow popup;
         private ListView listView;
-        TaskArrayHomeAdapter taskArrayAdapter;
+        TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
         public boolean titlesort, dlsort, priosort, statussort;
         public boolean titleasc, dlasc, prioasc, statusasc;
@@ -44,7 +44,7 @@
             setHasOptionsMenu(true);
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
 
-            taskArrayAdapter = new TaskArrayHomeAdapter(view.getContext(), allTasks);
+            taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
             taskArrayAdapter.addAll(allTasks);
 
             listView = view.findViewById(R.id.taskList);

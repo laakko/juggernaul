@@ -54,8 +54,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         priority_color(currentTask.getPriority(), titleTextView);
 
         ImageView statusImageView = listItem.findViewById(R.id.listTaskStatus);
-        // TODO find good icons for status
-        // status_image(currentTask.getStatus(), statusImageView);
+        status_image(currentTask.getStatus(), statusImageView);
 
         return listItem;
     }
@@ -79,11 +78,11 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
     // Function to change task status image
     public void status_image(Task.Status status, ImageView img) {
         if(status == Task.Status.TODO) {
-            // img.setImageBitmap()
+            img.setImageResource(R.drawable.open);
         } else if(status == INPROGRESS) {
-            // img.setImageBitmap();
+            img.setImageResource(R.drawable.inprog2);
         } else if(status == DONE) {
-            // img.setImageBitmap();
+            img.setImageResource(R.drawable.done);
         }
 
     }

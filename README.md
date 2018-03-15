@@ -19,11 +19,11 @@ Task list
 - [ ] Erilliset listat eri kategorioille (Niinkuin siinä Ilmarin käyttämässä ToDo appissa)
 - [x] Tee runko UI:lle. @laakkoj2 tietää miten XML-hommat hoituu
     - [x] Päänäkymä taulukko
-    - [ ] Taskien sorttaus (aika, prioriteetti, status, aakkosjärjestys tms)
-    - [ ] Asetukset - näkymä
+    - [x] Taskien sorttaus (aika, prioriteetti, status, aakkosjärjestys tms)
+    - [x] Asetukset - näkymä
     - [ ] Kirjautumis näkymä
     - [x] Yksittäisen taskin avaaminen näyttää relevantit tiedot, jotka `Task`illä on
-    - [ ] Taskin värin vaihtuminen prioriteetin mukaan
+    - [x] Taskin värin vaihtuminen prioriteetin mukaan
     - [ ] Aikajananäkymä, johon tulee pallurat/palkit oikeille päivämäärille. Näytetäänkö `Task`lle varattu "In progress" -aika, eli esim. 2vk aikajanalla jotenkin?
     - [ ] Tehdyt taskit eroteltu tekemättömistä
 

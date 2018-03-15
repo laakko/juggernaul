@@ -181,6 +181,11 @@ public class Task {
         this.deleted = false;
     }
 
+    public int DaysUntilDeadline() {
+        float diff = this.getDeadline().getTime() - new Date().getTime();
+        return (int) (diff / (1000*60*60*24));
+    }
+
     public void Assign(Task other) {
         this.id = other.id;
         this.title = other.title;

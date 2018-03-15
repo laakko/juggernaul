@@ -106,9 +106,7 @@ public class TaskService extends FileService {
             try {
                 JSONObject oneTask = allTasksJson.getJSONObject(i);
                 Task task = convertJsonObjectToTask(oneTask);
-                float diff = task.getDeadline().getTime() - now.getTime();
-                int diffInDays = (int) (diff / (1000*60*60*24));
-                if (diffInDays < 3) {
+                if (task.DaysUntilDeadline() < 3) {
                     importantTasks.add(task);
                 }
             } catch (JSONException e) {

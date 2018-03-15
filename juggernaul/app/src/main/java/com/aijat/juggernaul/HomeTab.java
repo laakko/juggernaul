@@ -15,8 +15,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         GridView gridView = view.findViewById(R.id.gridview);
-
-        //ArrayList<Task> tasks = TaskService.GetAllTasks(getActivity().getApplication());
+        
         ArrayList<Task> tasks = TaskService.GetImportantTasks(getActivity().getApplication());
 
         TaskArrayHomeAdapter taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), tasks);

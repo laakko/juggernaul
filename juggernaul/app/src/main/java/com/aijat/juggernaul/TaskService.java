@@ -122,7 +122,7 @@ public class TaskService extends FileService {
             try {
                 JSONObject oneTask = allTasksJson.getJSONObject(i);
                 Task task = convertJsonObjectToTask(oneTask);
-                if (!task.isDeleted()) {
+                if (task.isDeleted() == false) {
                     allTasksList.add(task);
                 }
             } catch (JSONException e) {

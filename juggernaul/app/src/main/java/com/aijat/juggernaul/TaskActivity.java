@@ -208,22 +208,8 @@ public class TaskActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*
-                taskInEditing.setDeleted(true);
-                if(taskInEditing.isDeleted()) {
-                    Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                boolean saved = taskInEditing.SaveToFile(getApplication().getApplicationContext());
-                Log.i("saved", Boolean.toString(saved));
-                setResult(Activity.RESULT_OK);
-                finish();
-                */
-
                 // Prompt user about task deletion
                 delete_alert("Are you sure you want to delete this Task?", "Yes", "No", taskInEditing);
-
             }
         });
 

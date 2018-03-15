@@ -162,6 +162,8 @@ public class TaskActivity extends AppCompatActivity {
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
                 boolean saved = taskInEditing.SaveToFile(getApplication().getApplicationContext());
                 if (saved) {

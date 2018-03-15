@@ -37,8 +37,8 @@
         private ListView listView;
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
-        public boolean titlesort, dlsort, priosort;
-        public boolean titleasc, dlasc, prioasc;
+        public boolean titlesort, dlsort, priosort, statussort;
+        public boolean titleasc, dlasc, prioasc, statusasc;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -185,6 +185,7 @@
                     }
                     titlesort = true;
                     dlsort = false;
+                    statussort = false;
                     priosort = false;
                     return true;
 
@@ -199,6 +200,7 @@
                     }
                     dlsort = true;
                     titlesort = false;
+                    statussort = false;
                     priosort = false;
                     return true;
                 case R.id.sort3:
@@ -212,7 +214,22 @@
                     }
                     titlesort = false;
                     dlsort = false;
+                    statussort = false;
                     priosort = true;
+                    return true;
+                case R.id.sort4:
+                    // Sort listview by Status
+                    if(statusasc) {
+                        statusasc = false;
+                        sortByStatus();
+                    } else {
+                        statusasc = true;
+                        sortByStatus();
+                    }
+                    titlesort = false;
+                    dlsort = false;
+                    priosort = false;
+                    statussort = true;
                     return true;
 
                 default:
@@ -268,6 +285,22 @@
 
         }
 
+        public void sortByStatus() {
+            taskArrayAdapter.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+                    if(statusasc) {
+                        return task.getStatus().compareTo(t1.getStatus());
+                    } else {
+                        return t1.getStatus().compareTo(task.getStatus());
+                    }
+
+                }
+            });
+            taskArrayAdapter.notifyDataSetChanged();
+
+        }
+
 
         public void refreshContent() {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
@@ -282,6 +315,9 @@
             }
             if(priosort) {
                 sortByPriority();
+            }
+            if(statussort) {
+                sortByStatus();
             }
             taskArrayAdapter.notifyDataSetChanged();
 
@@ -300,6 +336,9 @@
             }
             if(priosort) {
                 sortByPriority();
+            }
+            if(statussort) {
+                sortByStatus();
             }
             taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);

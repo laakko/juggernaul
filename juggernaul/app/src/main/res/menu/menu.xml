@@ -12,4 +12,5 @@
         android:title="Sort by Title"></item>
     <item android:title="Sort by DL" android:id="@+id/sort2"></item>
     <item android:title="Sort by PRIO" android:id="@+id/sort3"></item>
+    <item android:title="Sort by Status" android:id="@+id/sort4"></item>
 </menu>

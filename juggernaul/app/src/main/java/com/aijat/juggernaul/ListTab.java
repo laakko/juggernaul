@@ -7,6 +7,7 @@
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
     import android.support.v4.widget.SwipeRefreshLayout;
+    import android.util.Log;
     import android.view.Gravity;
     import android.view.LayoutInflater;
     import android.view.Menu;
@@ -36,7 +37,8 @@
         private ListView listView;
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
-        public boolean titlesort, dlsort;
+        public boolean titlesort, dlsort, priosort;
+        public boolean titleasc, dlasc, prioasc;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,17 +175,46 @@
                     startActivity(new Intent(getActivity(), SettingsActivity.class));
                 case R.id.sort1:
                     // Sort listview by title
-                    sortByTitle();
+
+                    if(titleasc) {
+                        titleasc = false;
+                        sortByTitle();
+                    } else {
+                        titleasc = true;
+                        sortByTitle();
+                    }
                     titlesort = true;
                     dlsort = false;
+                    priosort = false;
                     return true;
 
                 case R.id.sort2:
                     // Sort listview by DL
-                    sortByDeadline();
+                    if(dlasc) {
+                        dlasc = false;
+                        sortByDeadline();
+                    } else {
+                        dlasc = true;
+                        sortByDeadline();
+                    }
                     dlsort = true;
                     titlesort = false;
+                    priosort = false;
                     return true;
+                case R.id.sort3:
+                    // Sort listview by Prio
+                    if(prioasc) {
+                        prioasc = false;
+                        sortByPriority();
+                    } else {
+                        prioasc = true;
+                        sortByPriority();
+                    }
+                    titlesort = false;
+                    dlsort = false;
+                    priosort = true;
+                    return true;
+
                 default:
                     return super.onOptionsItemSelected(item);
             }
@@ -195,7 +226,12 @@
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    return task.getTitle().toString().compareTo(t1.getTitle().toString());
+                    if(titleasc){
+                        return task.getTitle().toString().compareTo(t1.getTitle().toString());
+                    } else {
+                        return t1.getTitle().toString().compareTo(task.getTitle().toString());
+                    }
+
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
@@ -205,13 +241,32 @@
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    return task.getDeadline().compareTo(t1.getDeadline());
+                    if(dlasc) {
+                        return task.getDeadline().compareTo(t1.getDeadline());
+                    } else {
+                        return t1.getDeadline().compareTo(task.getDeadline());
+                    }
+
+                }
+            });
+            taskArrayAdapter.notifyDataSetChanged();
+        }
+
+        public void sortByPriority() {
+            taskArrayAdapter.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+                    if(prioasc) {
+                        return task.getPriority().compareTo(t1.getPriority());
+                    } else {
+                        return t1.getPriority().compareTo(task.getPriority());
+                    }
+
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
 
         }
-
 
 
         public void refreshContent() {
@@ -224,6 +279,9 @@
             }
             if(dlsort) {
                 sortByDeadline();
+            }
+            if(priosort) {
+                sortByPriority();
             }
             taskArrayAdapter.notifyDataSetChanged();
 
@@ -239,6 +297,9 @@
             }
             if(dlsort) {
                 sortByDeadline();
+            }
+            if(priosort) {
+                sortByPriority();
             }
             taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);

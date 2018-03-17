@@ -5,7 +5,11 @@
         android:id="@+id/settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Settings"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/joingroup"
+        android:title="Join Group"
+        app:showAsAction="always"></item>
     <item
         android:id="@+id/sort1"
         android:icon="@android:drawable/ic_menu_sort_alphabetically"

@@ -14,6 +14,7 @@
     import android.view.MenuItem;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.view.animation.AnimationUtils;
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
@@ -90,6 +91,8 @@
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
                     View layout = inflater.inflate(R.layout.add_task,
                             (ViewGroup) view.findViewById(R.id.tab1_main_layout));
+                    layout.setAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_scale_up));
+
                     // New task
                     popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);

@@ -6,6 +6,7 @@
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
     import android.support.v4.widget.SwipeRefreshLayout;
+    import android.util.Log;
     import android.view.Gravity;
     import android.view.LayoutInflater;
     import android.view.Menu;
@@ -14,17 +15,20 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.AdapterView;
+    import android.widget.ArrayAdapter;
     import android.widget.Button;
     import android.widget.DatePicker;
     import android.widget.EditText;
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.SeekBar;
+    import android.widget.Spinner;
 
     import java.util.ArrayList;
     import java.util.Calendar;
     import java.util.Comparator;
     import java.util.Date;
+    import java.util.List;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -34,8 +38,11 @@
         private ListView listView;
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
+        private Spinner categorySpinner, prioritySpinner;
         public boolean titlesort, dlsort, priosort, statussort;
         public boolean titleasc, dlasc, prioasc, statusasc;
+        public Task.TaskCategory temp_category;
+        public Task.Priority temp_priority;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +90,6 @@
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
                     View layout = inflater.inflate(R.layout.add_task,
                             (ViewGroup) view.findViewById(R.id.tab1_main_layout));
-
                     // New task
                     popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);
@@ -115,10 +121,36 @@
                     });
 
                     // Priority
-                    final SeekBar sbPriority = layout.findViewById(R.id.taskPriority);
+                    prioritySpinner = layout.findViewById(R.id.prioritySpinner);
+                    prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            temp_priority = Task.Priority.values()[i];
+
+                        }   @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            Log.i("Error", "You must select something from the category list");
+                        }
+                    });
+
+                    prioritySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.Priority.values()));
+
 
                     // Category
-                    final EditText txtCategory = layout.findViewById(R.id.taskCategory);
+                    categorySpinner = layout.findViewById(R.id.categorySpinner );
+                    categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            temp_category = Task.TaskCategory.values()[i];
+
+                        }   @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            Log.i("Error", "You must select something from the category list");
+                        }
+                    });
+
+                    categorySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.TaskCategory.values()));
+
 
                     // Description
                     final EditText txtDescription = layout.findViewById(R.id.taskDescription);
@@ -130,15 +162,14 @@
                             // Get all user-added parameters
                             String temp_title = txtTitle.getText().toString();
                             Date temp_deadline = calendar.getTime();
-                            String temp_category = txtCategory.getText().toString();
                             String temp_description = txtDescription.getText().toString();
-                            int temp_priority = sbPriority.getProgress();
 
                             Task newTask = new Task();
                             newTask.setTitle(temp_title);
                             newTask.setDescription(temp_description);
                             newTask.setDeadline(temp_deadline);
-
+                            newTask.setCategory(temp_category);
+                            newTask.setPriority(temp_priority);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
 

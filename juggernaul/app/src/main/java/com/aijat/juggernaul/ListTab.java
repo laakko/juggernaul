@@ -222,7 +222,11 @@
             switch(item.getItemId()) {
 
                 case R.id.settings:
+                    // Go to Settings View
                     startActivity(new Intent(getActivity(), SettingsActivity.class));
+                case R.id.joingroup:
+                    // Go to Join Group View
+                    startActivity(new Intent(getActivity(), JoinGroupActivity.class));
                 case R.id.sort1:
                     // Sort listview by title
 
@@ -366,6 +370,7 @@
                                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
                                 toast.show();
                             }
+                            task.SaveToFile(getActivity().getApplicationContext());
                             taskArrayAdapter.notifyDataSetChanged();
                         }
                     })
@@ -377,6 +382,9 @@
                                 task.setStatus(Task.Status.DONE);
                             else
                                 task.setStatus(Task.Status.TODO);
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            task.SaveToFile(getActivity().getApplicationContext());
                             taskArrayAdapter.notifyDataSetChanged();
                         }
                     });

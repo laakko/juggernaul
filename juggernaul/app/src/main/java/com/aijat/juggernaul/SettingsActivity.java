@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        getSupportActionBar().setTitle("Juggernaul - Settings");
         resetBtn = findViewById(R.id.resetButton);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

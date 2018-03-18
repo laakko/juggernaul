@@ -18,7 +18,7 @@
         android:clickable="true"
         android:src="@drawable/fab_add"
         android:focusable="auto"
-        app:backgroundTint="@android:color/holo_red_dark" />
+        app:backgroundTint="@color/colorAccent" />
 
 
     <android.support.v4.widget.SwipeRefreshLayout

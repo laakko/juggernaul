@@ -16,6 +16,7 @@ public class TaskService extends FileService {
 
     public static boolean ResetEverything(Context ctx) {
         FileService.deleteFile(ctx, "tasks.json");
+        FileService.deleteFile(ctx, "temp.json");
         return(TaskService.initialize(ctx));
     }
 
@@ -138,6 +139,9 @@ public class TaskService extends FileService {
             JSONObject object = new JSONObject(stuff);
             return(object.getJSONArray("tasks"));
         } catch (JSONException e) {
+            e.printStackTrace();
+            return new JSONArray();
+        } catch (NullPointerException e) {
             e.printStackTrace();
             return new JSONArray();
         }

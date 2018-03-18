@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Settings"
-        app:showAsAction="always"></item>
+        app:showAsAction="always|collapseActionView"></item>
     <item
         android:id="@+id/joingroup"
         android:title="Join Group"
@@ -17,4 +18,25 @@
     <item android:title="Sort by DL" android:id="@+id/sort2"></item>
     <item android:title="Sort by PRIO" android:id="@+id/sort3"></item>
     <item android:title="Sort by Status" android:id="@+id/sort4"></item>
+    <item
+        android:id="@+id/checkOther"
+        app:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        android:checked="true"
+        android:title="Show Other-category"
+        android:visible="true"></item>
+    <item
+        android:id="@+id/checkSchool"
+        app:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        android:checked="true"
+        android:title="Show School-category"
+        android:visible="true"></item>
+    <item
+        android:id="@+id/checkWork"
+        app:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"
+        android:checked="true"
+        android:title="Show Work-category"
+        android:visible="true"></item>
 </menu>

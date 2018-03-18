@@ -225,6 +225,15 @@
                     // Go to Settings View
                     startActivity(new Intent(getActivity(), SettingsActivity.class));
                     return true;
+                case R.id.checkOther:
+                    item.setChecked(!item.isChecked());
+                    return true;
+                case R.id.checkSchool:
+                    item.setChecked(!item.isChecked());
+                    return true;
+                case R.id.checkWork:
+                    item.setChecked(!item.isChecked());
+                    return true;
                 case R.id.joingroup:
                     // Go to Join Group View
                     startActivity(new Intent(getActivity(), JoinGroupActivity.class));

@@ -93,6 +93,14 @@ public class TaskActivity extends AppCompatActivity {
 
         // Priority
         rect = findViewById(R.id.rectPriority);
+        rect.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View v) {
+            priority_dialog(taskInEditing);
+        }
+    });
+
+
         if(taskInEditing.getPriority() == LOW) {
             rect.setBackgroundColor(Color.parseColor("#66bb6a"));
         } else if (taskInEditing.getPriority() == MEDIUM) {
@@ -214,6 +222,37 @@ public class TaskActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public void priority_dialog(final Task task) {
+        final String[] items = new String[] {
+                "Low", "Medium", "High"
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose a new priority").setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(items[i] == "Low")
+                    task.setPriority(LOW);
+                else if(items[i] == "Medium")
+                    task.setPriority(MEDIUM);
+                else
+                    task.setPriority(HIGH);
+
+                if(task.getPriority() == LOW) {
+                    rect.setBackgroundColor(Color.parseColor("#66bb6a"));
+                } else if (task.getPriority() == MEDIUM) {
+                    rect.setBackgroundColor(Color.parseColor("#ffa726"));
+                } else if (task.getPriority() == HIGH) {
+                    rect.setBackgroundColor(Color.parseColor("#bf360c"));
+                }
+                task.SaveToFile(getApplication().getApplicationContext());
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void delete_alert(String message, String positive_value, String negative_value, final Task task) {

@@ -215,7 +215,7 @@
         fab:menu_animationDelayPerItem="55"
         fab:menu_backgroundColor="@android:color/transparent"
         fab:menu_buttonSpacing="0dp"
-        fab:menu_colorRipple="#99d4d4d4"
+        fab:menu_colorRipple="@color/colorAccent"
         fab:menu_fab_label="Choose action"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"

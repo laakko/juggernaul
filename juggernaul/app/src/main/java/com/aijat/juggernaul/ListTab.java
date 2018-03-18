@@ -373,7 +373,7 @@
                                 toast.show();
                             }
                             task.SaveToFile(getActivity().getApplicationContext());
-                            taskArrayAdapter.notifyDataSetChanged();
+                            refreshContent();
                         }
                     })
                     .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {
@@ -387,7 +387,7 @@
                             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
                             toast.show();
                             task.SaveToFile(getActivity().getApplicationContext());
-                            taskArrayAdapter.notifyDataSetChanged();
+                            refreshContent();
                         }
                     });
             AlertDialog alert = builder.create();

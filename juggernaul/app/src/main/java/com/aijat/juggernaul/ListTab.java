@@ -224,9 +224,11 @@
                 case R.id.settings:
                     // Go to Settings View
                     startActivity(new Intent(getActivity(), SettingsActivity.class));
+                    return true;
                 case R.id.joingroup:
                     // Go to Join Group View
                     startActivity(new Intent(getActivity(), JoinGroupActivity.class));
+                    return true;
                 case R.id.sort1:
                     // Sort listview by title
 

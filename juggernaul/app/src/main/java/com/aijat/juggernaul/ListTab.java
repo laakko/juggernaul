@@ -1,6 +1,9 @@
     package com.aijat.juggernaul;
 
+    import android.app.Activity;
+    import android.app.AlertDialog;
     import android.app.DatePickerDialog;
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
@@ -24,6 +27,7 @@
     import android.widget.PopupWindow;
     import android.widget.SeekBar;
     import android.widget.Spinner;
+    import android.widget.Toast;
 
     import java.util.ArrayList;
     import java.util.Calendar;
@@ -63,7 +67,7 @@
 
             listView = view.findViewById(R.id.taskList);
             listView.setAdapter(taskArrayAdapter);
-
+            listView.setLongClickable(true);
             taskArrayAdapter.notifyDataSetChanged();
             // Click on an item to open it into a new view for modification
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,6 +79,15 @@
                     intent.putExtra("taskId", selectedTaskId);
                     startActivityForResult(intent, 0);
 
+                }
+            });
+
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    long_click_alert("Choose Action", "Delete Task", "Change Status", taskArrayAdapter.getItem(i));
+                    return true;
                 }
             });
 
@@ -338,6 +351,38 @@
 
         }
 
+
+        // Popup for long click of a list item
+        public void long_click_alert(String message, String positive_value, String negative_value, final Task task) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(message)
+                    .setCancelable(true)
+                    .setPositiveButton(positive_value, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Delete the task and go back to MainMenu
+                            task.setDeleted(true);
+                            if(task.isDeleted()) {
+                                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                            taskArrayAdapter.notifyDataSetChanged();
+                        }
+                    })
+                    .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            if(task.getStatus() == Task.Status.TODO)
+                                task.setStatus(Task.Status.INPROGRESS);
+                            else if(task.getStatus() == Task.Status.INPROGRESS)
+                                task.setStatus(Task.Status.DONE);
+                            else
+                                task.setStatus(Task.Status.TODO);
+                            taskArrayAdapter.notifyDataSetChanged();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
 
         public void refreshContent() {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());

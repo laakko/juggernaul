@@ -114,7 +114,9 @@ public class TaskService extends FileService {
         ArrayList<Task> importantTasks = GetAllNotDeletedTasks(ctx);
         ArrayList<Task> importantNotDeletedTasks = new ArrayList<>();
         for (Task oneTask : importantTasks) {
-            if (oneTask.daysUntilDeadline() < 4) {
+            if (    oneTask.daysUntilDeadline() < 3 ||
+                    oneTask.getPriority() == Task.Priority.HIGH ||
+                    oneTask.getPriority() == Task.Priority.MEDIUM) {
                 importantNotDeletedTasks.add(oneTask);
             }
         }

@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -42,7 +43,6 @@ public class JoinGroupActivity extends AppCompatActivity {
                         .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
                         .build();
         if(!detector.isOperational()){
-            // Add toast "could not set up barcode detector)
             return;
         }
 
@@ -50,9 +50,7 @@ public class JoinGroupActivity extends AppCompatActivity {
         final CameraSource cameraSource = new CameraSource
                 .Builder(this, detector)
                 .setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1280, 720)
                 .build();
-
 
         // Set up camera view, check for permission
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -100,8 +98,6 @@ public class JoinGroupActivity extends AppCompatActivity {
                     Barcode QRCode = found_barcodes.valueAt(0);
                     QRString = QRCode.rawValue;
 
-                    Toast toast = Toast.makeText(getApplication().getApplicationContext(), "QR-Code found:" + QRString, Toast.LENGTH_LONG);
-                    toast.show();
                     startActivity(new Intent(JoinGroupActivity.this, MainActivity.class));
 
                     // TODO Call backend API here with the access token (?) gotten from QR-code

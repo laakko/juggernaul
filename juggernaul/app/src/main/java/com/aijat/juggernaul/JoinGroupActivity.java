@@ -48,6 +48,7 @@ public class JoinGroupActivity extends AppCompatActivity {
         // Set up camera into the surface view (Google Mobile Vision API)
         final CameraSource cameraSource = new CameraSource
                 .Builder(this, detector)
+                .setAutoFocusEnabled(true)
                 .setRequestedPreviewSize(1280, 720)
                 .build();
 

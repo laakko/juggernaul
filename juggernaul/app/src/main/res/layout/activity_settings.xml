@@ -15,8 +15,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="120dp"
-        android:background="@android:color/background_dark"
-        android:backgroundTint="@android:color/background_dark"
         android:text="Reset" />
 
     <Button
@@ -27,7 +25,6 @@
         android:layout_above="@+id/resetButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@android:color/background_dark"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Load mock data" />

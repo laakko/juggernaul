@@ -48,13 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
         darkSwitch = findViewById(R.id.switchDark);
 
         // Save background color state
-       // SharedPreferences sharedPrefs = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE);
-        darkSwitch.setChecked(sharedPrefs.getBoolean("dark", false));
-        if (sharedPrefs.getBoolean("dark",true)) {
-            SettingsActivity.this.setTheme(R.style.Dark);
-        } else {
-            SettingsActivity.this.setTheme(R.style.AppTheme);
-        }
+        darkSwitch.setChecked(sharedPrefs.getBoolean("dark", true));
+
 
         // Set app background to dark
         darkSwitch.setOnClickListener(new View.OnClickListener() {

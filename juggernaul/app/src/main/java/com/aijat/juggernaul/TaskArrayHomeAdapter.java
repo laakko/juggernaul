@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.aijat.juggernaul.Task.Priority.HIGH;
 import static com.aijat.juggernaul.Task.Priority.LOW;
 import static com.aijat.juggernaul.Task.Priority.MEDIUM;
@@ -47,6 +49,7 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
         TextView deadlineTextView = listItem.findViewById(R.id.listTaskDeadline);
 
         deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.daysUntilDeadline() + " days left");
+        deadlineTextView.setTextColor(Color.DKGRAY);
 
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());

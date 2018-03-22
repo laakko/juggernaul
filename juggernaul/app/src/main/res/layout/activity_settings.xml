@@ -32,4 +32,13 @@
         android:paddingRight="10dp"
         android:text="Load mock data" />
 
+    <Switch
+        android:id="@+id/switchDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/resetButton"
+        android:layout_marginTop="77dp"
+        android:text="Dark Mode" />
+
 </RelativeLayout>

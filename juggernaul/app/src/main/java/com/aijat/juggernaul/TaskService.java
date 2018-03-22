@@ -99,7 +99,7 @@ public class TaskService extends FileService {
         return allTasksList;
     }
 
-    public static ArrayList<Task> GetImportantTasks(Context ctx) {
+    public static ArrayList<Task> GetImportantNotDeletedTasks(Context ctx) {
         ArrayList<Task> importantTasks = new ArrayList<>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
         for (int i=0; i < allTasksJson.length(); i++) {

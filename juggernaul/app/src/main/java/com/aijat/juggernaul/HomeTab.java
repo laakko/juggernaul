@@ -29,12 +29,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         GridView gridView = view.findViewById(R.id.gridview);
 
-
-        importantTasks = TaskService.GetImportantTasks(getActivity().getApplication());
+        importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
 
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
         gridView.setAdapter(taskArrayHomeAdapter);
-
 
         return view;
     }
@@ -74,7 +72,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     }
 
     public void refreshContent() {
-        importantTasks = TaskService.GetImportantTasks(getActivity().getApplicationContext());
+        importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplicationContext());
         taskArrayHomeAdapter.clear();
         taskArrayHomeAdapter.addAll(importantTasks);
         taskArrayHomeAdapter.notifyDataSetChanged();
@@ -82,7 +80,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
 
     public void onClick(View v) {
-
     }
 }
 

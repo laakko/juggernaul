@@ -1,5 +1,6 @@
 package com.aijat.juggernaul;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
@@ -101,6 +102,7 @@ public class JoinGroupActivity extends AppCompatActivity {
 
                     Toast toast = Toast.makeText(getApplication().getApplicationContext(), "QR-Code found:" + QRString, Toast.LENGTH_LONG);
                     toast.show();
+                    startActivity(new Intent(JoinGroupActivity.this, MainActivity.class));
 
                     // TODO Call backend API here with the access token (?) gotten from QR-code
 

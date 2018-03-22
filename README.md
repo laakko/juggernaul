@@ -12,11 +12,11 @@ Task list
 ## Front-end
 - [x] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)
 - [x] `Task`illä pitää olla seuraavat statukset: todo, in progress, done, deleted. Yksilötilassa in progress ei ole tarpeen
-    - [ ] 'Task'in statuksen vaihtaminen swipellä listassa. Vasemmalle poistaa ja oikealle vaihtaa todo -> in progress -> done
+    - [x] 'Task'in statuksen vaihtaminen long pressillä listassa. 
 - [x] Taskien (listan) tallentaminen lokaalisti
 - [ ] Kirjautumis toiminnallisuus (Sposti, salasana)
-- [ ] Taskien ehdottaminen HomeTabissa
-- [ ] Erilliset listat eri kategorioille (Niinkuin siinä Ilmarin käyttämässä ToDo appissa)
+- [x] Taskien ehdottaminen HomeTabissa
+- [ ] Erilliset listat eri kategorioille (Niinkuin siinä Ilmarin käyttämässä ToDo appissa). Vai subheaderit? 
 - [x] Tee runko UI:lle. @laakkoj2 tietää miten XML-hommat hoituu
     - [x] Päänäkymä taulukko
     - [x] Taskien sorttaus (aika, prioriteetti, status, aakkosjärjestys tms)
@@ -26,6 +26,9 @@ Task list
     - [x] Taskin värin vaihtuminen prioriteetin mukaan
     - [ ] Aikajananäkymä, johon tulee pallurat/palkit oikeille päivämäärille. Näytetäänkö `Task`lle varattu "In progress" -aika, eli esim. 2vk aikajanalla jotenkin?
     - [ ] Tehdyt taskit eroteltu tekemättömistä
+    - [ ] Pin as notificatin -ominaisuus taskille
+    - [ ] Muistutus notskut
+        - [ ] Asetuksiin toggle notskuille
 
 ## Back-end
 

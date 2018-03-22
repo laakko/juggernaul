@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -49,6 +50,7 @@ public class JoinGroupActivity extends AppCompatActivity {
                 .Builder(this, detector)
                 .setRequestedPreviewSize(1280, 720)
                 .build();
+
 
         // Set up camera view, check for permission
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {

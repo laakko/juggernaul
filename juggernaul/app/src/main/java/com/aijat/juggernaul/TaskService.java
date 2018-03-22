@@ -120,24 +120,7 @@ public class TaskService extends FileService {
         }
         return importantNotDeletedTasks;
     }
-/*
-    public static ArrayList<Task> GetAllNotDeletedTasks(Context ctx) {
-        ArrayList<Task> allTasksList = new ArrayList<Task>();
-        JSONArray allTasksJson = TaskService.readTasks(ctx);
-        for (int i=0; i < allTasksJson.length(); i++) {
-            try {
-                JSONObject oneTask = allTasksJson.getJSONObject(i);
-                Task task = convertJsonObjectToTask(oneTask);
-                if (task.isDeleted() == false) {
-                    allTasksList.add(task);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return allTasksList;
-    }
-*/
+
     private static JSONArray readTasks(Context ctx) {
         String stuff = FileService.readFile(ctx, "tasks.json");
         try {

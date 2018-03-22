@@ -39,6 +39,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/resetButton"
         android:layout_marginTop="77dp"
+        android:checked="false"
         android:text="Dark Mode" />
 
 </RelativeLayout>

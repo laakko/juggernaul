@@ -1,5 +1,6 @@
 package com.aijat.juggernaul;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,12 @@ public class ShareActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPrefs = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE);
+        if (sharedPrefs.getBoolean("dark",true)) {
+            ShareActivity.this.setTheme(R.style.Dark);
+        } else {
+            ShareActivity.this.setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.activity_share);
 
 

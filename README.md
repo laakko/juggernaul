@@ -7,7 +7,7 @@ Task list
     - [x] QR-koodin generointi
     - [ ] QR-koodissa backendin luoma tokeni
     - [ ] QR-koodin jakaminen esim. sähköpostilla, whatsappilla, telegramilla...
-- [ ] Värimaailma, kuvakkeet
+- [x] Värimaailma, kuvakkeet
 
 ## Front-end
 - [x] Rakenna luokka `Task` yhdelle todo itemille, joka sisältää kaikki tarvittavat kentät: priority, DL, status, title, owner, ja vaihtoehtoiset kentät group, description  - In progress (@vikstri1)

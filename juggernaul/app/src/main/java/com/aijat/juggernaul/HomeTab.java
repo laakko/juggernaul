@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -30,8 +31,18 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         GridView gridView = view.findViewById(R.id.gridview);
 
         importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
-
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int selectedTaskId = taskArrayHomeAdapter.getItem(i).getId();
+                Intent intent = new Intent(getActivity(), TaskActivity.class);
+                intent.putExtra("taskId", selectedTaskId);
+                startActivityForResult(intent, 0);
+            }
+        });
+        
         gridView.setAdapter(taskArrayHomeAdapter);
 
         return view;

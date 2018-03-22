@@ -51,7 +51,14 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         final int taskId = getIntent().getIntExtra("taskId", -1);
 
-        final Task taskInEditing = allTasks.get(taskId);
+        int taskIndex = 0;
+        for (Task oneTask : allTasks) {
+            if (oneTask.getId() == taskId) {
+                taskIndex = allTasks.indexOf(oneTask);
+            }
+        }
+
+        final Task taskInEditing = allTasks.get(taskIndex);
 
         // Title
         txtTaskTitle = findViewById(R.id.txtTaskTitle);

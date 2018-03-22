@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
             c.setTime(new Date());
             c.add(Calendar.WEEK_OF_MONTH, 1);
             Date date = c.getTime();
-            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.HIGH, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
+            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
             mockTasks.add(newTask);
         }
         for (Task task : mockTasks) {

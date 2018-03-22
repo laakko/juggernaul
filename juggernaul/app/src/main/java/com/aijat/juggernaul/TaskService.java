@@ -84,7 +84,7 @@ public class TaskService extends FileService {
         return false;
     }
 
-    public static ArrayList<Task> GetAllTasks(Context ctx) {
+    private static ArrayList<Task> GetAllTasks(Context ctx) {
         ArrayList<Task> allTasksList = new ArrayList<Task>();
         JSONArray allTasksJson = TaskService.readTasks(ctx);
         for (int i=0; i < allTasksJson.length(); i++) {
@@ -99,38 +99,28 @@ public class TaskService extends FileService {
         return allTasksList;
     }
 
-    public static ArrayList<Task> GetImportantTasks(Context ctx) {
-        ArrayList<Task> importantTasks = new ArrayList<>();
-        JSONArray allTasksJson = TaskService.readTasks(ctx);
-        for (int i=0; i < allTasksJson.length(); i++) {
-            try {
-                JSONObject oneTask = allTasksJson.getJSONObject(i);
-                Task task = convertJsonObjectToTask(oneTask);
-                if (task.daysUntilDeadline() < 3) {
-                    importantTasks.add(task);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public static ArrayList<Task> GetAllNotDeletedTasks(Context ctx) {
+        ArrayList<Task> allTasksList = GetAllTasks(ctx);
+        ArrayList<Task> notDeletedTasksList = new ArrayList<>();
+        for (Task oneTask : allTasksList) {
+            if (!oneTask.isDeleted()) {
+                notDeletedTasksList.add(oneTask);
             }
         }
-        return importantTasks;
+        return notDeletedTasksList;
     }
 
-    public static ArrayList<Task> GetAllNotDeletedTasks(Context ctx) {
-        ArrayList<Task> allTasksList = new ArrayList<Task>();
-        JSONArray allTasksJson = TaskService.readTasks(ctx);
-        for (int i=0; i < allTasksJson.length(); i++) {
-            try {
-                JSONObject oneTask = allTasksJson.getJSONObject(i);
-                Task task = convertJsonObjectToTask(oneTask);
-                if (task.isDeleted() == false) {
-                    allTasksList.add(task);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public static ArrayList<Task> GetImportantNotDeletedTasks(Context ctx) {
+        ArrayList<Task> importantTasks = GetAllNotDeletedTasks(ctx);
+        ArrayList<Task> importantNotDeletedTasks = new ArrayList<>();
+        for (Task oneTask : importantTasks) {
+            if (    oneTask.daysUntilDeadline() < 3 ||
+                    oneTask.getPriority() == Task.Priority.HIGH ||
+                    oneTask.getPriority() == Task.Priority.MEDIUM) {
+                importantNotDeletedTasks.add(oneTask);
             }
         }
-        return allTasksList;
+        return importantNotDeletedTasks;
     }
 
     private static JSONArray readTasks(Context ctx) {

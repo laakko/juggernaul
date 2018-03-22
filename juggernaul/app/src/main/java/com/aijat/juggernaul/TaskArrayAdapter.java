@@ -72,7 +72,6 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         } else {
             title.setBackgroundColor(Color.GRAY);
         }
-
     }
 
     // Function to change task status image

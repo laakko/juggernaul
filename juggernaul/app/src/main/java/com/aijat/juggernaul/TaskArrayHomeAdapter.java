@@ -51,8 +51,21 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());
 
+        priority_color(currentTask.getPriority(), titleTextView);
 
         return listItem;
     }
 
+    // Function to change task color based on priority
+    public void priority_color(Task.Priority priority, TextView title) {
+        if (priority == LOW) {
+            title.setTextColor(Color.parseColor("#66bb6a"));
+        } else if (priority == MEDIUM) {
+            title.setTextColor(Color.parseColor("#ffa726"));
+        } else if (priority == HIGH) {
+            title.setTextColor(Color.parseColor("#bf360c"));
+        } else {
+            title.setBackgroundColor(Color.GRAY);
+        }
+    }
 }

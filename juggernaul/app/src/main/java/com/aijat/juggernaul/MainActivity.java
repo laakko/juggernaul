@@ -1,6 +1,8 @@
 package com.aijat.juggernaul;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -22,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Handle color theme
+        SharedPreferences sharedPrefs = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE);
+        if (sharedPrefs.getBoolean("dark",true)) {
+            MainActivity.this.setTheme(R.style.Dark);
+        } else {
+            MainActivity.this.setTheme(R.style.AppTheme);
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("List"));
         tabLayout.addTab(tabLayout.newTab().setText("Graph"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 
         final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PageAdapter

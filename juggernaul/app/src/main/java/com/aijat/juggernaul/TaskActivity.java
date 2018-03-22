@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,12 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPrefs = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE);
+        if (sharedPrefs.getBoolean("dark",true)) {
+            TaskActivity.this.setTheme(R.style.Dark);
+        } else {
+            TaskActivity.this.setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.activity_task);
         final int taskId = getIntent().getIntExtra("taskId", -1);
 

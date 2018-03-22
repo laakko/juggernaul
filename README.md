@@ -16,7 +16,7 @@ Task list
 - [x] Taskien (listan) tallentaminen lokaalisti
 - [ ] Kirjautumis toiminnallisuus (Sposti, salasana)
 - [x] Taskien ehdottaminen HomeTabissa
-- [ ] Erilliset listat eri kategorioille (Niinkuin siinä Ilmarin käyttämässä ToDo appissa). Vai subheaderit? 
+- [ ] Erilliset listat eri kategorioille (Niinkuin siinä Ilmarin käyttämässä ToDo appissa). Vai subheaderit?
 - [x] Tee runko UI:lle. @laakkoj2 tietää miten XML-hommat hoituu
     - [x] Päänäkymä taulukko
     - [x] Taskien sorttaus (aika, prioriteetti, status, aakkosjärjestys tms)
@@ -29,6 +29,7 @@ Task list
     - [ ] Pin as notificatin -ominaisuus taskille
     - [ ] Muistutus notskut
         - [ ] Asetuksiin toggle notskuille
+    - [ ] Deadlineen myös tunnit mukaan
 
 ## Back-end
 

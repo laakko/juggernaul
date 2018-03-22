@@ -31,7 +31,7 @@ public class JoinGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_group);
-        getSupportActionBar().setTitle("Looking for QR-codes...");
+        setTitle("Looking for QR-codes...");
 
         cameraView = (SurfaceView) findViewById(R.id.cameraView);
 

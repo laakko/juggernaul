@@ -107,7 +107,9 @@ public class TaskService extends FileService {
                 JSONObject oneTask = allTasksJson.getJSONObject(i);
                 Task task = convertJsonObjectToTask(oneTask);
                 if (task.daysUntilDeadline() < 3) {
-                    importantTasks.add(task);
+                    if (task.isDeleted() == false) {
+                        importantTasks.add(task);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

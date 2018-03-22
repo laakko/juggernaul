@@ -14,6 +14,15 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 public class HomeTab extends Fragment implements View.OnClickListener {
+
+    public static ArrayList<Task> importantTasks;
+    TaskArrayHomeAdapter taskArrayHomeAdapter;
+
+    public void onResume() {
+        super.onResume();
+        refreshContent();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -21,9 +30,9 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         GridView gridView = view.findViewById(R.id.gridview);
 
 
-        ArrayList<Task> tasks = TaskService.GetImportantTasks(getActivity().getApplication());
+        importantTasks = TaskService.GetImportantTasks(getActivity().getApplication());
 
-        TaskArrayHomeAdapter taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), tasks);
+        taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
         gridView.setAdapter(taskArrayHomeAdapter);
 
 
@@ -62,6 +71,13 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public void refreshContent() {
+        importantTasks = TaskService.GetImportantTasks(getActivity().getApplicationContext());
+        taskArrayHomeAdapter.clear();
+        taskArrayHomeAdapter.addAll(importantTasks);
+        taskArrayHomeAdapter.notifyDataSetChanged();
     }
 
 

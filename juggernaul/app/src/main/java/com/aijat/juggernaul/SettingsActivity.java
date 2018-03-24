@@ -2,12 +2,8 @@ package com.aijat.juggernaul;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -73,8 +69,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-
         resetBtn = findViewById(R.id.resetButton);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -104,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
             c.setTime(new Date());
             c.add(Calendar.WEEK_OF_MONTH, 1);
             Date date = c.getTime();
-            Task newTask = new Task("Title" + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
+            Task newTask = new Task("Mock data title no. " + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
             mockTasks.add(newTask);
         }
         for (Task task : mockTasks) {

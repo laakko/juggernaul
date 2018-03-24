@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.aijat.juggernaul.Task.Priority.HIGH;
@@ -51,10 +51,13 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         TextView categoryTextView = listItem.findViewById(R.id.listTaskCategory);
         categoryTextView.setText(currentTask.getCategory().toString());
 
-        priority_color(currentTask.getPriority(), titleTextView);
+        ImageView categoryImageView = listItem.findViewById(R.id.listTaskCategoryImage);
+        setCategoryImage(currentTask.getCategory(), categoryImageView);
+
+        setPriorityColor(currentTask.getPriority(), titleTextView);
 
         ImageView statusImageView = listItem.findViewById(R.id.listTaskStatus);
-        status_image(currentTask.getStatus(), statusImageView);
+        setStatusImage(currentTask.getStatus(), statusImageView);
 
         return listItem;
     }
@@ -62,7 +65,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
 
     // Function to change task color based on priority
-    public void priority_color(Task.Priority priority, TextView title) {
+    public void setPriorityColor(Task.Priority priority, TextView title) {
         if(priority == LOW) {
             title.setTextColor(Color.parseColor("#66bb6a"));
         } else if(priority == MEDIUM) {
@@ -75,7 +78,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
     }
 
     // Function to change task status image
-    public void status_image(Task.Status status, ImageView img) {
+    public void setStatusImage(Task.Status status, ImageView img) {
         if(status == Task.Status.TODO) {
             img.setImageResource(R.drawable.open);
         } else if(status == INPROGRESS) {
@@ -83,6 +86,26 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         } else if(status == DONE) {
             img.setImageResource(R.drawable.done);
         }
+    }
 
+    public void setCategoryImage(Task.TaskCategory category, ImageView img) {
+        SharedPreferences prefs = this.getContext().getSharedPreferences("com.aijat.juggernaul", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("dark", true)) {
+            if (category == Task.TaskCategory.OTHER) {
+                img.setImageResource(R.drawable.other_icon_grey);
+            } else if (category == Task.TaskCategory.SCHOOL) {
+                img.setImageResource(R.drawable.school_icon_grey);
+            } else if (category == Task.TaskCategory.WORK) {
+                img.setImageResource(R.drawable.work_icon_grey);
+            }
+        } else {
+            if (category == Task.TaskCategory.OTHER) {
+                img.setImageResource(R.drawable.other_icon_black);
+            } else if (category == Task.TaskCategory.SCHOOL) {
+                img.setImageResource(R.drawable.school_icon_black);
+            } else if (category == Task.TaskCategory.WORK) {
+                img.setImageResource(R.drawable.work_icon_black);
+            }
+        }
     }
 }

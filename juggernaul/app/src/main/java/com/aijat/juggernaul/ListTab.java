@@ -1,6 +1,5 @@
     package com.aijat.juggernaul;
 
-    import android.app.Activity;
     import android.app.AlertDialog;
     import android.app.DatePickerDialog;
     import android.content.DialogInterface;
@@ -25,7 +24,6 @@
     import android.widget.EditText;
     import android.widget.ListView;
     import android.widget.PopupWindow;
-    import android.widget.SeekBar;
     import android.widget.Spinner;
     import android.widget.Toast;
 
@@ -33,7 +31,6 @@
     import java.util.Calendar;
     import java.util.Comparator;
     import java.util.Date;
-    import java.util.List;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -44,10 +41,10 @@
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
         private Spinner categorySpinner, prioritySpinner;
-        public boolean titlesort, dlsort, priosort, statussort;
-        public boolean titleasc, dlasc, prioasc, statusasc;
-        public Task.TaskCategory temp_category;
-        public Task.Priority temp_priority;
+        public boolean titleSort, dlSort, prioritySort, statusSort;
+        public boolean titleAsc, dlAsc, priorityAsc, statusAsc;
+        public Task.TaskCategory tempCategory;
+        public Task.Priority tempPriority;
 
         @Override
         public void onResume() {
@@ -78,7 +75,6 @@
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
                     startActivityForResult(intent, 0);
-
                 }
             });
 
@@ -86,7 +82,7 @@
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    long_click_alert("Choose Action", "Delete Task", "Change Status", taskArrayAdapter.getItem(i));
+                    longClickAlert("Choose Action", "Delete Task", "Change Status", taskArrayAdapter.getItem(i));
                     return true;
                 }
             });
@@ -147,7 +143,7 @@
                     prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            temp_priority = Task.Priority.values()[i];
+                            tempPriority = Task.Priority.values()[i];
 
                         }   @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
@@ -157,13 +153,12 @@
 
                     prioritySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.Priority.values()));
 
-
                     // Category
                     categorySpinner = layout.findViewById(R.id.categorySpinner );
                     categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            temp_category = Task.TaskCategory.values()[i];
+                            tempCategory = Task.TaskCategory.values()[i];
 
                         }   @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
@@ -172,7 +167,6 @@
                     });
 
                     categorySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.TaskCategory.values()));
-
 
                     // Description
                     final EditText txtDescription = layout.findViewById(R.id.taskDescription);
@@ -190,8 +184,8 @@
                             newTask.setTitle(temp_title);
                             newTask.setDescription(temp_description);
                             newTask.setDeadline(temp_deadline);
-                            newTask.setCategory(temp_category);
-                            newTask.setPriority(temp_priority);
+                            newTask.setCategory(tempCategory);
+                            newTask.setPriority(tempPriority);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
 
@@ -203,13 +197,11 @@
             return view;
         }
 
-
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
             refreshContent();
         }
-
 
         // Handle action menu
         @Override
@@ -241,79 +233,75 @@
                 case R.id.sort1:
                     // Sort listview by title
 
-                    if(titleasc) {
-                        titleasc = false;
+                    if(titleAsc) {
+                        titleAsc = false;
                         sortByTitle();
                     } else {
-                        titleasc = true;
+                        titleAsc = true;
                         sortByTitle();
                     }
-                    titlesort = true;
-                    dlsort = false;
-                    statussort = false;
-                    priosort = false;
+                    titleSort = true;
+                    dlSort = false;
+                    statusSort = false;
+                    prioritySort = false;
                     return true;
 
                 case R.id.sort2:
                     // Sort listview by DL
-                    if(dlasc) {
-                        dlasc = false;
+                    if(dlAsc) {
+                        dlAsc = false;
                         sortByDeadline();
                     } else {
-                        dlasc = true;
+                        dlAsc = true;
                         sortByDeadline();
                     }
-                    dlsort = true;
-                    titlesort = false;
-                    statussort = false;
-                    priosort = false;
+                    dlSort = true;
+                    titleSort = false;
+                    statusSort = false;
+                    prioritySort = false;
                     return true;
                 case R.id.sort3:
                     // Sort listview by Prio
-                    if(prioasc) {
-                        prioasc = false;
+                    if(priorityAsc) {
+                        priorityAsc = false;
                         sortByPriority();
                     } else {
-                        prioasc = true;
+                        priorityAsc = true;
                         sortByPriority();
                     }
-                    titlesort = false;
-                    dlsort = false;
-                    statussort = false;
-                    priosort = true;
+                    titleSort = false;
+                    dlSort = false;
+                    statusSort = false;
+                    prioritySort = true;
                     return true;
                 case R.id.sort4:
                     // Sort listview by Status
-                    if(statusasc) {
-                        statusasc = false;
+                    if(statusAsc) {
+                        statusAsc = false;
                         sortByStatus();
                     } else {
-                        statusasc = true;
+                        statusAsc = true;
                         sortByStatus();
                     }
-                    titlesort = false;
-                    dlsort = false;
-                    priosort = false;
-                    statussort = true;
+                    titleSort = false;
+                    dlSort = false;
+                    prioritySort = false;
+                    statusSort = true;
                     return true;
-
                 default:
                     return super.onOptionsItemSelected(item);
             }
-
         }
-
 
         public void sortByTitle() {
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    if(titleasc){
+                    if(titleAsc){
                         return task.getTitle().toString().compareTo(t1.getTitle().toString());
                     } else {
                         return t1.getTitle().toString().compareTo(task.getTitle().toString());
                     }
-
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
@@ -323,12 +311,11 @@
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    if(dlasc) {
+                    if(dlAsc) {
                         return task.getDeadline().compareTo(t1.getDeadline());
                     } else {
                         return t1.getDeadline().compareTo(task.getDeadline());
                     }
-
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
@@ -338,12 +325,11 @@
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    if(prioasc) {
+                    if(priorityAsc) {
                         return task.getPriority().compareTo(t1.getPriority());
                     } else {
                         return t1.getPriority().compareTo(task.getPriority());
                     }
-
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
@@ -354,21 +340,18 @@
             taskArrayAdapter.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
-                    if(statusasc) {
+                    if(statusAsc) {
                         return task.getStatus().compareTo(t1.getStatus());
                     } else {
                         return t1.getStatus().compareTo(task.getStatus());
                     }
-
                 }
             });
             taskArrayAdapter.notifyDataSetChanged();
-
         }
 
-
         // Popup for long click of a list item
-        public void long_click_alert(String message, String positive_value, String negative_value, final Task task) {
+        public void longClickAlert(String message, String positive_value, String negative_value, final Task task) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(message)
                     .setCancelable(true)
@@ -408,16 +391,16 @@
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
             // Stupid workaround but it works
-            if(titlesort){
+            if(titleSort){
                 sortByTitle();
             }
-            if(dlsort) {
+            if(dlSort) {
                 sortByDeadline();
             }
-            if(priosort) {
+            if(prioritySort) {
                 sortByPriority();
             }
-            if(statussort) {
+            if(statusSort) {
                 sortByStatus();
             }
             taskArrayAdapter.notifyDataSetChanged();
@@ -429,23 +412,21 @@
             taskArrayAdapter.clear();
             taskArrayAdapter.addAll(allTasks);
             // Stupid workaround but it works
-            if(titlesort){
+            if(titleSort){
                 sortByTitle();
             }
-            if(dlsort) {
+            if(dlSort) {
                 sortByDeadline();
             }
-            if(priosort) {
+            if(prioritySort) {
                 sortByPriority();
             }
-            if(statussort) {
+            if(statusSort) {
                 sortByStatus();
             }
             taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);
         }
-
-
     }
 
 

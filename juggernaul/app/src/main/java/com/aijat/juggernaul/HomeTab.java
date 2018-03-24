@@ -48,7 +48,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         return view;
     }
 
-
     // Handle action menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -79,7 +78,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void refreshContent() {
@@ -88,7 +86,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         taskArrayHomeAdapter.addAll(importantTasks);
         taskArrayHomeAdapter.notifyDataSetChanged();
     }
-
 
     public void onClick(View v) {
     }

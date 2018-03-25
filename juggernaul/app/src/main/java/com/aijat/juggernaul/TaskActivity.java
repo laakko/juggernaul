@@ -3,11 +3,17 @@ package com.aijat.juggernaul;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,6 +51,7 @@ public class TaskActivity extends AppCompatActivity {
     private Button cancelButton;
     private FloatingActionButton sharebutton;
     private FloatingActionButton deleteButton;
+    private FloatingActionButton notificationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +242,31 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        // Pin As Notification button
+        notificationButton = findViewById(R.id.fab_notification);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Pin task details as a notification
+                Log.i("content", taskInEditing.getDescription().toString());
+                String task_content = "";
+                if(taskInEditing.getDescription().startsWith("(Optional)")) {
+                    task_content = "DL: " + taskInEditing.getDeadlinePretty().toString();
+                } else {
+                    task_content = "DL: " + taskInEditing.getDeadlinePretty().toString() + "\n" + taskInEditing.getDescription().toString();
+                }
+
+
+                if(taskInEditing.getCategory() == Task.TaskCategory.SCHOOL) {
+                    AddNotification(taskInEditing.getTitle().toString(), task_content, R.drawable.school_icon_black);
+                } else if(taskInEditing.getCategory() == Task.TaskCategory.WORK) {
+                    AddNotification(taskInEditing.getTitle().toString(), task_content, R.drawable.work_icon_black);
+                } else {
+                    AddNotification(taskInEditing.getTitle().toString(), task_content, R.drawable.other_icon_black);
+                }
+            }
+        });
+
 
     }
 
@@ -297,4 +329,40 @@ public class TaskActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+
+    public void AddNotification(String title, String content, int icon) {
+
+        // Necessary for Android Oreo -> )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel, but only on API 26+ because
+            // the NotificationChannel class is new and not in the support library
+            CharSequence name = "Task details notification";
+            String description = "Juggernaul pinned task";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            // Register the channel with the system
+            NotificationManager notificationManager =
+                    (NotificationManager) getApplication().getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationChannel.DEFAULT_CHANNEL_ID)
+                .setSmallIcon(icon)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(content));
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, mBuilder.build());
+
+
+    }
+
 }

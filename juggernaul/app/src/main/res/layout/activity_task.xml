@@ -250,6 +250,15 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:src="@android:drawable/ic_menu_agenda"
+            fab:fab_label="Pin As Notification"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,14 +267,6 @@
             fab:fab_label="Delete"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:src="@android:drawable/ic_menu_agenda"
-            fab:fab_label="Pin As Notification"
-            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button resetBtn;
     private Button generateMockDataBtn;
+    private ImageButton backBtn;
     private Switch darkSwitch;
     // Handle back button
     @Override
@@ -81,6 +83,14 @@ public class SettingsActivity extends AppCompatActivity {
                 generateMockDataButtonClicked(v);
             }
         });
+
+        backBtn = findViewById(R.id.backButton);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+            }
+        });
+
     }
 
     public void resetButtonClicked(View v) {

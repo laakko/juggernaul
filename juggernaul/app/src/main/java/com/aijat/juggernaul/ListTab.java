@@ -2,11 +2,17 @@
 
     import android.app.AlertDialog;
     import android.app.DatePickerDialog;
+    import android.app.NotificationChannel;
+    import android.app.NotificationManager;
+    import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.os.Build;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
+    import android.support.v4.app.NotificationCompat;
+    import android.support.v4.app.NotificationManagerCompat;
     import android.support.v4.widget.SwipeRefreshLayout;
     import android.util.Log;
     import android.view.Gravity;
@@ -31,6 +37,7 @@
     import java.util.Calendar;
     import java.util.Comparator;
     import java.util.Date;
+    import java.util.Random;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -82,7 +89,7 @@
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    longClickAlert("Choose Action", "Delete Task", "Change Status", taskArrayAdapter.getItem(i));
+                    longClickAlert("Choose Action", "Delete Task", "Pin As Notification", "Change Status", taskArrayAdapter.getItem(i));
                     return true;
                 }
             });
@@ -351,7 +358,7 @@
         }
 
         // Popup for long click of a list item
-        public void longClickAlert(String message, String positive_value, String negative_value, final Task task) {
+        public void longClickAlert(String message, String positive_value, String neutral_value, String negative_value, final Task task) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(message)
                     .setCancelable(true)
@@ -366,6 +373,54 @@
                             }
                             task.SaveToFile(getActivity().getApplicationContext());
                             refreshContent();
+                        }
+                    })
+                    .setNeutralButton(neutral_value, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Necessary for Android Oreo -> )
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                // Create the NotificationChannel, but only on API 26+ because
+                                // the NotificationChannel class is new and not in the support library
+                                CharSequence name = "Task details notification";
+                                String description = "Juggernaul pinned task";
+                                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                                NotificationChannel channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+                                channel.setDescription(description);
+                                // Register the channel with the system
+                                NotificationManager notificationManager =
+                                        (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                                notificationManager.createNotificationChannel(channel);
+                            }
+
+                            String task_content;
+                            if(task.getDescription().startsWith("(Optional)")) {
+                                task_content = "DL: " + task.getDeadlinePretty().toString();
+                            } else {
+                                task_content = "DL: " + task.getDeadlinePretty().toString() + "\n" + task.getDescription().toString();
+                            }
+
+                            int task_icon;
+                            if(task.getCategory() == Task.TaskCategory.SCHOOL) {
+                                task_icon =  R.drawable.school_icon_black;
+                            } else if(task.getCategory() == Task.TaskCategory.WORK) {
+                                task_icon =  R.drawable.work_icon_black;
+                            } else {
+                                task_icon =  R.drawable.other_icon_black;
+                            }
+
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
+                                    .setSmallIcon(task_icon)
+                                    .setContentTitle(task.getTitle().toString())
+                                    .setContentText(task_content)
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                    .setStyle(new NotificationCompat.BigTextStyle()
+                                            .bigText(task_content));
+
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+                            // notificationId is a unique int for each notification that you must define
+                            Random rand = new Random(); int notificationId = rand.nextInt(10000);
+                            notificationManager.notify(notificationId, mBuilder.build());
                         }
                     })
                     .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {

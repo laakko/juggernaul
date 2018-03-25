@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import static com.aijat.juggernaul.ListTab.allTasks;
 import static com.aijat.juggernaul.Task.Priority.HIGH;
@@ -354,13 +355,13 @@ public class TaskActivity extends AppCompatActivity {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(content));
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1, mBuilder.build());
+        Random rand = new Random(); int notificationId = rand.nextInt(10000);
+        notificationManager.notify(notificationId, mBuilder.build());
 
 
     }

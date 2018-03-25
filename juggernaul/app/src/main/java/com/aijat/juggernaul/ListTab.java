@@ -7,6 +7,7 @@
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.graphics.Point;
     import android.os.Build;
     import android.os.Bundle;
     import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@
     import android.support.v4.app.NotificationManagerCompat;
     import android.support.v4.widget.SwipeRefreshLayout;
     import android.util.Log;
+    import android.view.Display;
     import android.view.Gravity;
     import android.view.LayoutInflater;
     import android.view.Menu;
@@ -22,6 +24,7 @@
     import android.view.MenuItem;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.view.WindowManager;
     import android.view.animation.AnimationUtils;
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
@@ -116,7 +119,15 @@
                     layout.setAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_scale_up));
 
                     // New task
-                    popup = new PopupWindow(layout, 1080, 1150, true); // TODO: make it scalable, now its for full hd screens only
+                    WindowManager wm = (WindowManager) getActivity().getSystemService(
+                            Context.WINDOW_SERVICE);
+                    Point size = new Point();
+                    Display display1 = wm.getDefaultDisplay();
+                    display1.getSize(size);
+                    int deviceWidth = size.x;
+                    int deviceHeight = size.y;
+
+                    popup = new PopupWindow(layout, deviceWidth, (int) (deviceHeight*0.6), true);
                     popup.showAtLocation(layout, Gravity.TOP, 0, 100);
                     Button btnPop = layout.findViewById(R.id.btnCreateTask);
                     final EditText txtTitle = layout.findViewById(R.id.taskName);

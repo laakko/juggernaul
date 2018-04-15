@@ -4,6 +4,7 @@
     import android.app.DatePickerDialog;
     import android.app.NotificationChannel;
     import android.app.NotificationManager;
+    import android.app.PendingIntent;
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
@@ -488,7 +489,7 @@
                                 CharSequence name = "Task details notification";
                                 String description = "Juggernaul pinned task";
                                 int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                                NotificationChannel channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+                                NotificationChannel channel = new NotificationChannel("juggernaulID", name, NotificationManager.IMPORTANCE_DEFAULT);
                                 channel.setDescription(description);
                                 // Register the channel with the system
                                 NotificationManager notificationManager =
@@ -512,13 +513,17 @@
                                 task_icon =  R.drawable.other_icon_black;
                             }
 
-                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
-                                    .setSmallIcon(task_icon)
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "juggernaulID").setSmallIcon(task_icon)
                                     .setContentTitle(task.getTitle().toString())
                                     .setContentText(task_content)
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                     .setStyle(new NotificationCompat.BigTextStyle()
                                             .bigText(task_content));
+
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            PendingIntent pendint = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                            mBuilder.setContentIntent(pendint);
+
 
                             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
                             // notificationId is a unique int for each notification that you must define

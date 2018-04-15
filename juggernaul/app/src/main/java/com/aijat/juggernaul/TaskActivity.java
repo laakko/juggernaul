@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,7 +66,6 @@ public class TaskActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_task);
         final int taskId = getIntent().getIntExtra("taskId", -1);
-
         int taskIndex = 0;
         for (Task oneTask : allTasks) {
             if (oneTask.getId() == taskId) {
@@ -341,7 +341,7 @@ public class TaskActivity extends AppCompatActivity {
             CharSequence name = "Task details notification";
             String description = "Juggernaul pinned task";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("juggerID", name, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(description);
             // Register the channel with the system
             NotificationManager notificationManager =
@@ -350,13 +350,18 @@ public class TaskActivity extends AppCompatActivity {
         }
 
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationChannel.DEFAULT_CHANNEL_ID)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "juggerID")
                 .setSmallIcon(icon)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(content));
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendint = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        mBuilder.setContentIntent(pendint);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         // notificationId is a unique int for each notification that you must define

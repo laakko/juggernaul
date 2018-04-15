@@ -40,6 +40,7 @@
     import java.util.Calendar;
     import java.util.Comparator;
     import java.util.Date;
+    import java.util.List;
     import java.util.Random;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -55,6 +56,7 @@
         public boolean titleAsc, dlAsc, priorityAsc, statusAsc;
         public Task.TaskCategory tempCategory;
         public Task.Priority tempPriority;
+        private List<String> hiddenCategories = new ArrayList<String>();
 
         @Override
         public void onResume() {
@@ -242,6 +244,7 @@
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
                                 taskArrayAdapter.hideItem(i);
+                                hiddenCategories.add("OTHER");
                             }
                         }
                     } else {
@@ -249,6 +252,7 @@
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
                                 taskArrayAdapter.restoreItem(i);
+                                hiddenCategories.remove("OTHER");
                             }
                         }
                     }
@@ -260,6 +264,7 @@
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
                                 taskArrayAdapter.hideItem(i);
+                                hiddenCategories.add("SCHOOL");
                             }
                         }
                     } else {
@@ -267,6 +272,7 @@
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
                                 taskArrayAdapter.restoreItem(i);
+                                hiddenCategories.remove("SCHOOL");
                             }
                         }
                     }
@@ -274,17 +280,20 @@
                 case R.id.checkWork:
                     item.setChecked(!item.isChecked());
                     if(!item.isChecked()) {
-                        // Loop "school"-category tasks -> hide items from listView
+                        // Loop "work"-category tasks -> hide items from listView
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
                                 taskArrayAdapter.hideItem(i);
+                                hiddenCategories.add("WORK");
                             }
                         }
                     } else {
-                        // Loop "school"-category tasks -> restore items to ListView
+                        // Loop "work"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
                                 taskArrayAdapter.restoreItem(i);
+                                hiddenCategories.remove("WORK");
+
                             }
                         }
                     }
@@ -367,6 +376,8 @@
                     }
                 }
             });
+
+            updateHiddenCategories();
             taskArrayAdapter.notifyDataSetChanged();
         }
 
@@ -381,6 +392,8 @@
                     }
                 }
             });
+
+            updateHiddenCategories();
             taskArrayAdapter.notifyDataSetChanged();
         }
 
@@ -395,6 +408,8 @@
                     }
                 }
             });
+
+            updateHiddenCategories();
             taskArrayAdapter.notifyDataSetChanged();
 
         }
@@ -410,7 +425,39 @@
                     }
                 }
             });
+
+            updateHiddenCategories();
             taskArrayAdapter.notifyDataSetChanged();
+        }
+
+
+        // Workaround for sorting breaking the hidden tasks
+        public void updateHiddenCategories() {
+
+            // Clear all
+            taskArrayAdapter.clearHiddenItems();
+
+            // Hide categories again
+            if(hiddenCategories.contains("WORK")) {
+                for(int i=0; i<allTasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            } if(hiddenCategories.contains("SCHOOL")) {
+                for(int i=0; i<allTasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            } if(hiddenCategories.contains("OTHER")) {
+                for(int i=0; i<allTasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            }
+
         }
 
         // Popup for long click of a list item

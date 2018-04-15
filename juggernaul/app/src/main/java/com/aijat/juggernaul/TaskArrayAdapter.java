@@ -79,13 +79,21 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
     // Handle hidden tasks
     public final void hideItem(int itemToHide) {
         hiddenTasks.add(itemToHide);
+        Task currentTask = taskList.get(itemToHide);
         notifyDataSetChanged();
+
     }
 
     public final void restoreItem(int itemToRestore) {
         hiddenTasks.remove(itemToRestore);
+        Task currentTask = taskList.get(itemToRestore);
         notifyDataSetChanged();
     }
+
+    public final void clearHiddenItems() {
+        hiddenTasks.clear();
+    }
+
     @Override
     public int getCount() {
         return taskList.size() - hiddenTasks.size();

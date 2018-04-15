@@ -110,6 +110,7 @@ public class TaskService extends FileService {
         return notDeletedTasksList;
     }
 
+
     public static ArrayList<Task> GetImportantNotDeletedTasks(Context ctx) {
         ArrayList<Task> importantTasks = GetAllNotDeletedTasks(ctx);
         ArrayList<Task> importantNotDeletedTasks = new ArrayList<>();

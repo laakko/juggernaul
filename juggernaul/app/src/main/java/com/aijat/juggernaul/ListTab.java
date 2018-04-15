@@ -237,12 +237,57 @@
                     return true;
                 case R.id.checkOther:
                     item.setChecked(!item.isChecked());
+                    if(!item.isChecked()) {
+                        // Loop "other"-category tasks -> hide items from listView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
+                                taskArrayAdapter.hideItem(i);
+                            }
+                        }
+                    } else {
+                        // Loop "other"-category tasks -> restore items to ListView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
+                                taskArrayAdapter.restoreItem(i);
+                            }
+                        }
+                    }
                     return true;
                 case R.id.checkSchool:
                     item.setChecked(!item.isChecked());
+                    if(!item.isChecked()) {
+                        // Loop "school"-category tasks -> hide items from listView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
+                                taskArrayAdapter.hideItem(i);
+                            }
+                        }
+                    } else {
+                        // Loop "school"-category tasks -> restore items to ListView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
+                                taskArrayAdapter.restoreItem(i);
+                            }
+                        }
+                    }
                     return true;
                 case R.id.checkWork:
                     item.setChecked(!item.isChecked());
+                    if(!item.isChecked()) {
+                        // Loop "school"-category tasks -> hide items from listView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
+                                taskArrayAdapter.hideItem(i);
+                            }
+                        }
+                    } else {
+                        // Loop "school"-category tasks -> restore items to ListView
+                        for(int i=0; i<allTasks.size(); ++i) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
+                                taskArrayAdapter.restoreItem(i);
+                            }
+                        }
+                    }
                     return true;
                 case R.id.joingroup:
                     // Go to Join Group View

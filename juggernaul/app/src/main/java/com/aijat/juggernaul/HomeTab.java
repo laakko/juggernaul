@@ -38,8 +38,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
 
-        if(importantTasks.isEmpty())
-
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

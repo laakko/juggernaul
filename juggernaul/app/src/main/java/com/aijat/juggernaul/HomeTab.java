@@ -64,10 +64,14 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(duetasks) {
             thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
-            if(thisweeksTasks.isEmpty())
+            if(thisweeksTasks.isEmpty()) {
                 textView2.setVisibility(View.INVISIBLE);
-            else
+                linearLayout1.removeView(gridView2);
+                linearLayout1.removeView(textView2);
+            } else {
                 textView2.setVisibility(View.VISIBLE);
+            }
+
 
             taskArrayHomeAdapter2 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), thisweeksTasks);
 
@@ -92,10 +96,14 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(completedtasks) {
             completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
-            if(completedTasks.isEmpty())
+            if(completedTasks.isEmpty()) {
                 textView3.setVisibility(View.INVISIBLE);
-            else
+                linearLayout1.removeView(gridView3);
+                linearLayout1.removeView(textView3);
+            } else {
                 textView3.setVisibility(View.VISIBLE);
+            }
+
 
             taskArrayHomeAdapter3 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), completedTasks);
 

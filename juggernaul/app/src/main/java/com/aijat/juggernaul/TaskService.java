@@ -6,11 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 public class TaskService extends FileService {
 
@@ -123,6 +126,40 @@ public class TaskService extends FileService {
         }
         return importantNotDeletedTasks;
     }
+
+
+    public static ArrayList<Task> GetThisWeeksTasks(Context ctx) {
+        ArrayList<Task> weekTasksList = GetAllNotDeletedTasks(ctx);
+        ArrayList<Task> notDeletedWeekTasksList = new ArrayList<>();
+        for (Task oneTask : weekTasksList) {
+            if (isDueThisWeek(oneTask)) {
+                notDeletedWeekTasksList.add(oneTask);
+            }
+        }
+        return notDeletedWeekTasksList;
+    }
+
+
+    public static boolean isDueThisWeek(Task task) {
+
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK ,Calendar.MONDAY);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        Date monday = c.getTime();
+        Date nextMonday = new Date(monday.getTime() + 7*24*60*60*1000);
+        
+        if(task.getDeadline().after(monday) && task.getDeadline().before(nextMonday))
+            return true;
+        else
+            return false;
+    }
+
+
 
     private static JSONArray readTasks(Context ctx) {
         String stuff = FileService.readFile(ctx, "tasks.json");

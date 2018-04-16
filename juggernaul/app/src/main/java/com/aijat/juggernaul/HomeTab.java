@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class HomeTab extends Fragment implements View.OnClickListener {
 
     public static ArrayList<Task> importantTasks;
+    public static ArrayList<Task> thisweeksTasks;
     TaskArrayHomeAdapter taskArrayHomeAdapter;
+    TaskArrayHomeAdapter taskArrayHomeAdapter2;
 
     public void onResume() {
         super.onResume();
@@ -29,6 +31,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
         GridView gridView = view.findViewById(R.id.gridview);
+        GridView gridView2 = view.findViewById(R.id.gridview2);
 
         importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
@@ -44,6 +47,23 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         });
         
         gridView.setAdapter(taskArrayHomeAdapter);
+
+
+        thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
+        taskArrayHomeAdapter2 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), thisweeksTasks);
+
+        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
+                Intent intent = new Intent(getActivity(), TaskActivity.class);
+                intent.putExtra("taskId", selectedTaskId);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        gridView2.setAdapter(taskArrayHomeAdapter2);
+
 
         return view;
     }
@@ -85,6 +105,13 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         taskArrayHomeAdapter.clear();
         taskArrayHomeAdapter.addAll(importantTasks);
         taskArrayHomeAdapter.notifyDataSetChanged();
+
+        thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
+        taskArrayHomeAdapter2.clear();
+        taskArrayHomeAdapter2.addAll(thisweeksTasks);
+        taskArrayHomeAdapter2.notifyDataSetChanged();
+
+
     }
 
     public void onClick(View v) {

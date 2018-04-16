@@ -40,6 +40,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         GridView gridView = view.findViewById(R.id.gridview);
         GridView gridView2 = view.findViewById(R.id.gridview2);
         GridView gridView3 = view.findViewById(R.id.gridview3);
+        TextView textView1 = view.findViewById(R.id.txtImpTasks);
         TextView textView2 = view.findViewById(R.id.txtThisWeek);
         TextView textView3 = view.findViewById(R.id.txtCompleted);
         LinearLayout linearLayout1 = view.findViewById(R.id.linearLayout1);
@@ -115,13 +116,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             textView3.setVisibility(View.INVISIBLE);
         }
 
-
-        // Handle grid positions
-        if(!duetasks && completedtasks) {
-
-
-
-        }
 
         return view;
     }

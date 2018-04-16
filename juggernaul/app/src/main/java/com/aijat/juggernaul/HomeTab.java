@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static com.aijat.juggernaul.SettingsActivity.completedtasks;
+import static com.aijat.juggernaul.SettingsActivity.duetasks;
 
 public class HomeTab extends Fragment implements View.OnClickListener {
 
@@ -38,6 +42,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         GridView gridView3 = view.findViewById(R.id.gridview3);
         TextView textView2 = view.findViewById(R.id.txtThisWeek);
         TextView textView3 = view.findViewById(R.id.txtCompleted);
+        LinearLayout linearLayout1 = view.findViewById(R.id.linearLayout1);
 
         importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
@@ -56,47 +61,67 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         gridView.setAdapter(taskArrayHomeAdapter);
 
 
-        thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
-        if(thisweeksTasks.isEmpty())
+        if(duetasks) {
+            thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
+            if(thisweeksTasks.isEmpty())
+                textView2.setVisibility(View.INVISIBLE);
+            else
+                textView2.setVisibility(View.VISIBLE);
+
+            taskArrayHomeAdapter2 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), thisweeksTasks);
+
+            gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
+                    Intent intent = new Intent(getActivity(), TaskActivity.class);
+                    intent.putExtra("taskId", selectedTaskId);
+                    startActivityForResult(intent, 0);
+                }
+            });
+
+            gridView2.setAdapter(taskArrayHomeAdapter2);
+        } else {
             textView2.setVisibility(View.INVISIBLE);
-        else
-            textView2.setVisibility(View.VISIBLE);
-
-        taskArrayHomeAdapter2 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), thisweeksTasks);
-
-        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
-                Intent intent = new Intent(getActivity(), TaskActivity.class);
-                intent.putExtra("taskId", selectedTaskId);
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        gridView2.setAdapter(taskArrayHomeAdapter2);
+            linearLayout1.removeView(gridView2);
+            linearLayout1.removeView(textView2);
+        }
 
 
-        completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
-        if(completedTasks.isEmpty())
+
+        if(completedtasks) {
+            completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
+            if(completedTasks.isEmpty())
+                textView3.setVisibility(View.INVISIBLE);
+            else
+                textView3.setVisibility(View.VISIBLE);
+
+            taskArrayHomeAdapter3 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), completedTasks);
+
+            gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
+                    Intent intent = new Intent(getActivity(), TaskActivity.class);
+                    intent.putExtra("taskId", selectedTaskId);
+                    startActivityForResult(intent, 0);
+                }
+            });
+
+            gridView3.setAdapter(taskArrayHomeAdapter3);
+        } else {
+            linearLayout1.removeView(gridView3);
+            linearLayout1.removeView(textView3);
             textView3.setVisibility(View.INVISIBLE);
-        else
-            textView3.setVisibility(View.VISIBLE);
+        }
 
-        taskArrayHomeAdapter3 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), completedTasks);
 
-        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
-                Intent intent = new Intent(getActivity(), TaskActivity.class);
-                intent.putExtra("taskId", selectedTaskId);
-                startActivityForResult(intent, 0);
-            }
-        });
+        // Handle grid positions
+        if(!duetasks && completedtasks) {
 
-        gridView3.setAdapter(taskArrayHomeAdapter3);
 
+
+        }
 
         return view;
     }
@@ -139,15 +164,21 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         taskArrayHomeAdapter.addAll(importantTasks);
         taskArrayHomeAdapter.notifyDataSetChanged();
 
-        thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
-        taskArrayHomeAdapter2.clear();
-        taskArrayHomeAdapter2.addAll(thisweeksTasks);
-        taskArrayHomeAdapter2.notifyDataSetChanged();
+        if(duetasks) {
+            thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
+            taskArrayHomeAdapter2.clear();
+            taskArrayHomeAdapter2.addAll(thisweeksTasks);
+            taskArrayHomeAdapter2.notifyDataSetChanged();
+        }
 
-        completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
-        taskArrayHomeAdapter3.clear();
-        taskArrayHomeAdapter3.addAll(completedTasks);
-        taskArrayHomeAdapter3.notifyDataSetChanged();
+
+        if(completedtasks) {
+            completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
+            taskArrayHomeAdapter3.clear();
+            taskArrayHomeAdapter3.addAll(completedTasks);
+            taskArrayHomeAdapter3.notifyDataSetChanged();
+        }
+
 
 
     }

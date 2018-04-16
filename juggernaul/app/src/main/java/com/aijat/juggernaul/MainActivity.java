@@ -16,7 +16,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+import static com.aijat.juggernaul.SettingsActivity.completedtasks;
+import static com.aijat.juggernaul.SettingsActivity.duetasks;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.setTheme(R.style.Dark);
         } else {
             MainActivity.this.setTheme(R.style.AppTheme);
+        }
+
+        // Handle "completed tasks" grid
+        if (sharedPrefs.getBoolean("completedtasks",true)) {
+            completedtasks = true;
+        } else {
+            completedtasks = false;
+        }
+
+        // handle "due this week" grid
+        if (sharedPrefs.getBoolean("duetasks",true)) {
+            duetasks = true;
+        } else {
+            duetasks = false;
         }
 
         setContentView(R.layout.activity_main);

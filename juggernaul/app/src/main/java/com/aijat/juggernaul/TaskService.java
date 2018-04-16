@@ -152,7 +152,7 @@ public class TaskService extends FileService {
 
         Date monday = c.getTime();
         Date nextMonday = new Date(monday.getTime() + 7*24*60*60*1000);
-        
+
         if(task.getDeadline().after(monday) && task.getDeadline().before(nextMonday))
             return true;
         else

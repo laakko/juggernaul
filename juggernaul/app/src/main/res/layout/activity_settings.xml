@@ -34,13 +34,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/resetButton"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/txtThisWeek"
         android:layout_marginTop="108dp"
         android:checked="false"
         android:text="Dark Mode" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtThisWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/loadMockButton"
@@ -55,9 +55,9 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBottom="@+id/txtThisWeek"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_alignTop="@+id/txtThisWeek"
         android:layout_marginStart="22dp"
         android:alpha="1"
         android:background="@null"

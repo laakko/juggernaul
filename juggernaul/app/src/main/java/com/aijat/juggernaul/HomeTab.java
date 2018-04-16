@@ -19,8 +19,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     public static ArrayList<Task> importantTasks;
     public static ArrayList<Task> thisweeksTasks;
+    public static ArrayList<Task> completedTasks;
     TaskArrayHomeAdapter taskArrayHomeAdapter;
     TaskArrayHomeAdapter taskArrayHomeAdapter2;
+    TaskArrayHomeAdapter taskArrayHomeAdapter3;
 
     public void onResume() {
         super.onResume();
@@ -33,7 +35,9 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         GridView gridView = view.findViewById(R.id.gridview);
         GridView gridView2 = view.findViewById(R.id.gridview2);
+        GridView gridView3 = view.findViewById(R.id.gridview3);
         TextView textView2 = view.findViewById(R.id.txtThisWeek);
+        TextView textView3 = view.findViewById(R.id.txtCompleted);
 
         importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
         taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
@@ -71,6 +75,27 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         });
 
         gridView2.setAdapter(taskArrayHomeAdapter2);
+
+
+        completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
+        if(completedTasks.isEmpty())
+            textView3.setVisibility(View.INVISIBLE);
+        else
+            textView3.setVisibility(View.VISIBLE);
+
+        taskArrayHomeAdapter3 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), completedTasks);
+
+        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
+                Intent intent = new Intent(getActivity(), TaskActivity.class);
+                intent.putExtra("taskId", selectedTaskId);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        gridView3.setAdapter(taskArrayHomeAdapter3);
 
 
         return view;
@@ -118,6 +143,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         taskArrayHomeAdapter2.clear();
         taskArrayHomeAdapter2.addAll(thisweeksTasks);
         taskArrayHomeAdapter2.notifyDataSetChanged();
+
+        completedTasks = TaskService.GetCompletedTasks(getActivity().getApplication());
+        taskArrayHomeAdapter3.clear();
+        taskArrayHomeAdapter3.addAll(completedTasks);
+        taskArrayHomeAdapter3.notifyDataSetChanged();
 
 
     }

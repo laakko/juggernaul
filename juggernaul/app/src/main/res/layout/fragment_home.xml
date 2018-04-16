@@ -30,13 +30,13 @@
             <GridView
                 android:id="@+id/gridview"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="false"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="25dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:numColumns="1">
 
             </GridView>
@@ -57,17 +57,43 @@
             <GridView
                 android:id="@+id/gridview2"
                 android:layout_width="match_parent"
-                android:layout_height="178dp"
+                android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="false"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="25dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
+                android:numColumns="1"></GridView>>
+
+            <TextView
+                android:id="@+id/txtCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Completed tasks:"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <GridView
+                android:id="@+id/gridview3"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="25dp"
                 android:numColumns="1"></GridView>>
 
 
         </LinearLayout>
+
+
     </ScrollView>
 
 </RelativeLayout>

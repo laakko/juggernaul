@@ -127,6 +127,16 @@ public class TaskService extends FileService {
         return importantNotDeletedTasks;
     }
 
+    public static ArrayList<Task> GetCompletedTasks(Context ctx) {
+        ArrayList<Task> weekTasksList = GetAllNotDeletedTasks(ctx);
+        ArrayList<Task> notDeletedCompletedTasksList = new ArrayList<>();
+        for (Task oneTask : weekTasksList) {
+            if (oneTask.getStatus() == Task.Status.DONE) {
+                notDeletedCompletedTasksList.add(oneTask);
+            }
+        }
+        return notDeletedCompletedTasksList;
+    }
 
     public static ArrayList<Task> GetThisWeeksTasks(Context ctx) {
         ArrayList<Task> weekTasksList = GetAllNotDeletedTasks(ctx);

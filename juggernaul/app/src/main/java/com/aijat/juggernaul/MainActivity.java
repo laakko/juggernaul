@@ -18,6 +18,7 @@ import java.util.Collections;
 
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
+import static com.aijat.juggernaul.SettingsActivity.importanttasks;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             MainActivity.this.setTheme(R.style.AppTheme);
         }
+
+
+        // Handle "your most important tasks" grid
+        if (sharedPrefs.getBoolean("importanttasks",true)) {
+            importanttasks = true;
+        } else {
+            importanttasks = false;
+        }
+
 
         // Handle "completed tasks" grid
         if (sharedPrefs.getBoolean("completedtasks",true)) {

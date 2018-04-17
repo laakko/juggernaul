@@ -21,8 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
     private Button resetBtn;
     private Button generateMockDataBtn;
     private ImageButton backBtn;
-    private Switch darkSwitch, completedSwitch, dueSwitch;
-    public static boolean completedtasks, duetasks;
+    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch;
+    public static boolean completedtasks, duetasks, importanttasks;
     // Handle back button
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -47,11 +47,13 @@ public class SettingsActivity extends AppCompatActivity {
         darkSwitch = findViewById(R.id.switchDark);
         completedSwitch = findViewById(R.id.switchCompleted);
         dueSwitch = findViewById(R.id.switchDueWeek);
+        importantSwitch = findViewById(R.id.switchImportant);
 
         // Save switch states
         darkSwitch.setChecked(sharedPrefs.getBoolean("dark", true));
         completedSwitch.setChecked(sharedPrefs.getBoolean("completedtasks", true));
         dueSwitch.setChecked(sharedPrefs.getBoolean("duetasks", true));
+        importantSwitch.setChecked(sharedPrefs.getBoolean("importanttasks", true));
 
 
         // Set app background to dark
@@ -88,7 +90,6 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.commit();
                     startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
                 } else {
-                    SettingsActivity.this.setTheme(R.style.AppTheme);
                     SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
                     editor.putBoolean("completedtasks", false);
                     editor.commit();
@@ -109,9 +110,28 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.commit();
                     startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
                 } else {
-                    SettingsActivity.this.setTheme(R.style.AppTheme);
                     SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
                     editor.putBoolean("duetasks", false);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                }
+
+            }
+        });
+
+        // your important tasks - switch
+        importantSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(importantSwitch.isChecked()){
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("importanttasks", true);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("importanttasks", false);
                     editor.commit();
                     startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
                 }

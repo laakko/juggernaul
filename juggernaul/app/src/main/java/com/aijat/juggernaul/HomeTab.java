@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
+import static com.aijat.juggernaul.SettingsActivity.importanttasks;
 
 public class HomeTab extends Fragment implements View.OnClickListener {
 
@@ -45,21 +46,29 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         TextView textView3 = view.findViewById(R.id.txtCompleted);
         LinearLayout linearLayout1 = view.findViewById(R.id.linearLayout1);
 
-        importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
-        taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
+
+        if(importanttasks) {
+            importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
+            taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
 
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int selectedTaskId = taskArrayHomeAdapter.getItem(i).getId();
-                Intent intent = new Intent(getActivity(), TaskActivity.class);
-                intent.putExtra("taskId", selectedTaskId);
-                startActivityForResult(intent, 0);
-            }
-        });
-        
-        gridView.setAdapter(taskArrayHomeAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    int selectedTaskId = taskArrayHomeAdapter.getItem(i).getId();
+                    Intent intent = new Intent(getActivity(), TaskActivity.class);
+                    intent.putExtra("taskId", selectedTaskId);
+                    startActivityForResult(intent, 0);
+                }
+            });
+
+            gridView.setAdapter(taskArrayHomeAdapter);
+        } else {
+            textView1.setVisibility(View.INVISIBLE);
+            linearLayout1.removeView(gridView);
+            linearLayout1.removeView(textView1);
+        }
+
 
 
         if(duetasks) {
@@ -161,10 +170,14 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     }
 
     public void refreshContent() {
-        importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplicationContext());
-        taskArrayHomeAdapter.clear();
-        taskArrayHomeAdapter.addAll(importantTasks);
-        taskArrayHomeAdapter.notifyDataSetChanged();
+
+        if(importanttasks) {
+            importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplicationContext());
+            taskArrayHomeAdapter.clear();
+            taskArrayHomeAdapter.addAll(importantTasks);
+            taskArrayHomeAdapter.notifyDataSetChanged();
+        }
+
 
         if(duetasks) {
             thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());

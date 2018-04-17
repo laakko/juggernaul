@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static com.aijat.juggernaul.Task.Priority.HIGH;
 import static com.aijat.juggernaul.Task.Priority.LOW;
@@ -21,6 +23,7 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
 
     private Context mContext;
     private List<Task> taskList = new ArrayList<>();
+    private SortedSet<Integer> hiddenTasks = new TreeSet<>();
 
     public TaskArrayHomeAdapter(@NonNull Context context, ArrayList<Task> list) {
         super(context, 0 , list);
@@ -34,6 +37,15 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
         View listItem = convertView;
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_task_home,parent,false);
+
+        // Handle hidden tasks
+        for(Integer hiddenId : hiddenTasks) {
+            if(hiddenId <= position) {
+                position += 1;
+            } else {
+                break;
+            }
+        }
 
         Task currentTask = taskList.get(position);
 
@@ -49,6 +61,31 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
 
         return listItem;
     }
+
+
+    // Handle hidden tasks
+    public final void hideItem(int itemToHide) {
+        hiddenTasks.add(itemToHide);
+        Task currentTask = taskList.get(itemToHide);
+        notifyDataSetChanged();
+
+    }
+
+    public final void restoreItem(int itemToRestore) {
+        hiddenTasks.remove(itemToRestore);
+        Task currentTask = taskList.get(itemToRestore);
+        notifyDataSetChanged();
+    }
+
+    public final void clearHiddenItems() {
+        hiddenTasks.clear();
+    }
+
+    @Override
+    public int getCount() {
+        return taskList.size() - hiddenTasks.size();
+    }
+
 
     // Function to change task color based on priority
     public void setPriorityColor(Task.Priority priority, TextView title) {

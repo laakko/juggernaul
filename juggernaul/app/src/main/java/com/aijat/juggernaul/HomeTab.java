@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.aijat.juggernaul.ListTab.hiddenCategories;
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
@@ -171,11 +172,14 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     public void refreshContent() {
 
+        // Handle grids
+
         if(importanttasks) {
             importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayHomeAdapter.clear();
             taskArrayHomeAdapter.addAll(importantTasks);
             taskArrayHomeAdapter.notifyDataSetChanged();
+            updateHiddenCategories(taskArrayHomeAdapter, importantTasks);
         }
 
 
@@ -184,6 +188,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter2.clear();
             taskArrayHomeAdapter2.addAll(thisweeksTasks);
             taskArrayHomeAdapter2.notifyDataSetChanged();
+            updateHiddenCategories(taskArrayHomeAdapter2, thisweeksTasks);
         }
 
 
@@ -192,13 +197,49 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter3.clear();
             taskArrayHomeAdapter3.addAll(completedTasks);
             taskArrayHomeAdapter3.notifyDataSetChanged();
+            updateHiddenCategories(taskArrayHomeAdapter3, completedTasks);
         }
-
-
 
     }
 
     public void onClick(View v) {
     }
+
+
+    // Handle hidden categories
+    public void updateHiddenCategories(TaskArrayHomeAdapter taskArrayAdapter, ArrayList<Task> hometabtasks) {
+
+        // Clear all
+        taskArrayAdapter.clearHiddenItems();
+
+        if(!hiddenCategories.isEmpty()) {
+            // Hide categories again
+            if(hiddenCategories.contains("WORK")) {
+                for(int i=0; i<hometabtasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            } if(hiddenCategories.contains("SCHOOL")) {
+                for(int i=0; i<hometabtasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            } if(hiddenCategories.contains("OTHER")) {
+                for(int i=0; i<hometabtasks.size(); ++i) {
+                    if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
+                        taskArrayAdapter.hideItem(i);
+                    }
+                }
+            }
+            taskArrayAdapter.notifyDataSetChanged();
+        }
+
+
+
+
+    }
+
 }
 

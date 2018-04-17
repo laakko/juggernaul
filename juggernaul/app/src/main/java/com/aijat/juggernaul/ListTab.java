@@ -8,6 +8,7 @@
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.content.SharedPreferences;
     import android.graphics.Point;
     import android.os.Build;
     import android.os.Bundle;
@@ -30,12 +31,14 @@
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
+    import android.widget.CheckBox;
     import android.widget.DatePicker;
     import android.widget.EditText;
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.Spinner;
     import android.widget.Toast;
+    import android.widget.ToggleButton;
 
     import java.util.ArrayList;
     import java.util.Calendar;
@@ -45,11 +48,13 @@
     import java.util.Random;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+    import static android.content.Context.MODE_PRIVATE;
 
     public class ListTab extends Fragment {
 
         private PopupWindow popup;
         private ListView listView;
+        private CheckBox schoolCheck;
         TaskArrayAdapter taskArrayAdapter;
         public static ArrayList<Task> allTasks;
         private Spinner categorySpinner, prioritySpinner;
@@ -57,7 +62,7 @@
         public boolean titleAsc, dlAsc, priorityAsc, statusAsc;
         public Task.TaskCategory tempCategory;
         public Task.Priority tempPriority;
-        private List<String> hiddenCategories = new ArrayList<String>();
+        public static List<String> hiddenCategories = new ArrayList<String>();
 
         @Override
         public void onResume() {
@@ -83,6 +88,12 @@
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    // Hidden items still keep their index -> prevent wrong item from opening
+                    while(hiddenCategories.contains(taskArrayAdapter.getItem(i).getCategory().toString())) {
+                        Log.d("looped","loopissa");
+                        i++;
+                    }
                     int selectedTaskId = taskArrayAdapter.getItem(i).getId();
                     //int selectedTaskId = taskArrayAdapter.allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
@@ -224,6 +235,7 @@
             refreshContent();
         }
 
+
         // Handle action menu
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -274,6 +286,11 @@
                             if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
                                 taskArrayAdapter.restoreItem(i);
                                 hiddenCategories.remove("SCHOOL");
+                                try { // Epic workaround to prevent duplicates
+                                    hiddenCategories.remove("SCHOOL");
+                                } finally {
+                                    // do nothing
+                                }
                             }
                         }
                     }

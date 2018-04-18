@@ -27,7 +27,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
     private Context mContext;
     private List<Task> taskList = new ArrayList<>();
-    private SortedSet<Integer> hiddenTasks = new TreeSet<>();
+    public final static SortedSet<Integer> hiddenTasks = new TreeSet<>();
 
     public TaskArrayAdapter(@NonNull Context context, ArrayList<Task> list) {
         super(context, 0 , list);
@@ -76,17 +76,16 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
     }
 
 
+
     // Handle hidden tasks
     public final void hideItem(int itemToHide) {
         hiddenTasks.add(itemToHide);
-        Task currentTask = taskList.get(itemToHide);
         notifyDataSetChanged();
 
     }
 
     public final void restoreItem(int itemToRestore) {
         hiddenTasks.remove(itemToRestore);
-        Task currentTask = taskList.get(itemToRestore);
         notifyDataSetChanged();
     }
 
@@ -95,7 +94,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
     }
 
     @Override
-    public int getCount() {
+    public final int getCount() {
         return taskList.size() - hiddenTasks.size();
     }
 

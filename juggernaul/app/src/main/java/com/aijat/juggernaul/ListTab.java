@@ -89,13 +89,18 @@
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    // Hidden items still keep their index -> prevent wrong item from opening
-                    while(hiddenCategories.contains(taskArrayAdapter.getItem(i).getCategory().toString())) {
-                        Log.d("looped","loopissa");
-                        i++;
+                    // i is not a valid index if there are hidden tasks -> calculate new indexes
+                    if(!hiddenCategories.isEmpty()) {
+                        for(Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
+                            if(hiddenId <= i) {
+                                i += 1;
+                            } else {
+                                break;
+                            }
+                        }
                     }
+
                     int selectedTaskId = taskArrayAdapter.getItem(i).getId();
-                    //int selectedTaskId = taskArrayAdapter.allTasks.get(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
                     startActivityForResult(intent, 0);
@@ -106,6 +111,16 @@
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                    // i is not a valid index if there are hidden tasks -> calculate new indexes
+                    if(!hiddenCategories.isEmpty()) {
+                        for(Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
+                            if(hiddenId <= i) {
+                                i += 1;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
                     longClickAlert("Choose Action", "Delete Task", "Pin As Notification", "Change Status", taskArrayAdapter.getItem(i));
                     return true;
                 }

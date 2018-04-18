@@ -99,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/switchCompleted"
         android:layout_alignEnd="@+id/switchCompleted"
+        android:layout_marginTop="10dp"
         android:text='View "Due This Week"' />
 
     <Switch
@@ -107,6 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
         android:text='View "Completed tasks"' />
 
     <Switch

@@ -13,7 +13,6 @@
         app:showAsAction="always"></item>
     <item
         android:id="@+id/sort1"
-        android:icon="@android:drawable/ic_menu_sort_alphabetically"
         android:title="Sort by Title"></item>
     <item android:title="Sort by DL" android:id="@+id/sort2"></item>
     <item android:title="Sort by PRIO" android:id="@+id/sort3"></item>

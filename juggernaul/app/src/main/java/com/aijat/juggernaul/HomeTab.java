@@ -117,10 +117,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
             taskArrayHomeAdapter3 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), completedTasks);
 
-            gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    int selectedTaskId = taskArrayHomeAdapter2.getItem(i).getId();
+                    int selectedTaskId = taskArrayHomeAdapter3.getItem(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);
                     startActivityForResult(intent, 0);
@@ -144,6 +144,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
         // Hide sort options in HomeTab
+        /*
         MenuItem sort1 = menu.findItem(R.id.sort1); sort1.setVisible(false);
         MenuItem sort2 = menu.findItem(R.id.sort2); sort2.setVisible(false);
         MenuItem sort3 = menu.findItem(R.id.sort3); sort3.setVisible(false);
@@ -151,6 +152,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         MenuItem check1 = menu.findItem(R.id.checkOther); check1.setVisible(false);
         MenuItem check2 = menu.findItem(R.id.checkWork); check2.setVisible(false);
         MenuItem check3 = menu.findItem(R.id.checkSchool); check3.setVisible(false);
+        */
 
     } @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -277,7 +278,7 @@ public class TaskActivity extends AppCompatActivity {
                 "Low", "Medium", "High"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose a new priority").setItems(items, new DialogInterface.OnClickListener() {
+        builder.setTitle("Choose a new priority").setIcon(R.mipmap.ic_launcher).setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(items[i] == "Low")
@@ -299,6 +300,7 @@ public class TaskActivity extends AppCompatActivity {
         });
 
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230,68, 88, 120)));
         dialog.show();
     }
 

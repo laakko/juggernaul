@@ -50,6 +50,13 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(importanttasks) {
             importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
+            if(importantTasks.isEmpty()) {
+               // textView1.setVisibility(View.INVISIBLE);
+                linearLayout1.removeView(gridView);
+                linearLayout1.removeView(textView1);
+            } else {
+                textView1.setVisibility(View.VISIBLE);
+            }
             taskArrayHomeAdapter = new TaskArrayHomeAdapter(getContext().getApplicationContext(), importantTasks);
 
 
@@ -135,8 +142,19 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         }
 
 
+
+
+        if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty()) {
+            linearLayout1.addView(textView1);
+            textView1.setText("Nothing to show: \n no important, due or completed tasks. \n Enjoy your light schedule! ");
+        } else {
+            textView1.setText("Your most important tasks:");
+        }
+
         return view;
     }
+
+
 
     // Handle action menu
     @Override

@@ -191,11 +191,16 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             textView3.setVisibility(View.INVISIBLE);
         }
 
-        if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty() && scheduledTasks.isEmpty()) {
-            linearLayout1.addView(textView1);
-            textView1.setText("Nothing to show: \n no important, due or completed tasks. \n Enjoy your light schedule! ");
-        } else {
-            textView1.setText("Your most important tasks:");
+        try {
+            if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty() && scheduledTasks.isEmpty()) {
+                linearLayout1.addView(textView1);
+                textView1.setText("Nothing to show: \n no important, due or completed tasks. \n Enjoy your light schedule! ");
+            } else {
+                textView1.setText("Your most important tasks:");
+            }
+
+        } catch(NullPointerException e) {
+            e.printStackTrace();
         }
 
         return view;

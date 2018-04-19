@@ -21,8 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
     private Button resetBtn;
     private Button generateMockDataBtn;
     private ImageButton backBtn;
-    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch;
-    public static boolean completedtasks, duetasks, importanttasks;
+    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch;
+    public static boolean completedtasks, duetasks, importanttasks, scheduledtasks;
     // Handle back button
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -48,12 +48,14 @@ public class SettingsActivity extends AppCompatActivity {
         completedSwitch = findViewById(R.id.switchCompleted);
         dueSwitch = findViewById(R.id.switchDueWeek);
         importantSwitch = findViewById(R.id.switchImportant);
+        scheduleSwitch = findViewById(R.id.switchSchedule);
 
         // Save switch states
         darkSwitch.setChecked(sharedPrefs.getBoolean("dark", true));
         completedSwitch.setChecked(sharedPrefs.getBoolean("completedtasks", true));
         dueSwitch.setChecked(sharedPrefs.getBoolean("duetasks", true));
         importantSwitch.setChecked(sharedPrefs.getBoolean("importanttasks", true));
+        scheduleSwitch.setChecked(sharedPrefs.getBoolean("scheduledtasks", true));
 
 
         // Set app background to dark
@@ -139,6 +141,26 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // scheduled tasks - switch
+        scheduleSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(scheduleSwitch.isChecked()){
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("scheduledtasks", true);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("scheduledtasks", false);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                }
+
+            }
+        });
+
         resetBtn = findViewById(R.id.resetButton);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -176,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
             c.setTime(new Date());
             c.add(Calendar.WEEK_OF_MONTH, 1);
             Date date = c.getTime();
-            Task newTask = new Task("Mock data title no. " + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false);
+            Task newTask = new Task("Mock data title no. " + Integer.toString(realIndex), "Description" + Integer.toString(realIndex), Task.Priority.LOW, date, Task.TaskCategory.OTHER, Task.Status.TODO, "User" + Integer.toString(realIndex), "Group" + Integer.toString(realIndex), false, false);
             mockTasks.add(newTask);
         }
         for (Task task : mockTasks) {

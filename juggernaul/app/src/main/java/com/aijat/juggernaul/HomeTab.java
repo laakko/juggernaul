@@ -1,8 +1,12 @@
 package com.aijat.juggernaul;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,15 +25,18 @@ import static com.aijat.juggernaul.ListTab.hiddenCategories;
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
+import static com.aijat.juggernaul.SettingsActivity.scheduledtasks;
 
 public class HomeTab extends Fragment implements View.OnClickListener {
 
     public static ArrayList<Task> importantTasks;
     public static ArrayList<Task> thisweeksTasks;
     public static ArrayList<Task> completedTasks;
+    public static ArrayList<Task> scheduledTasks;
     TaskArrayHomeAdapter taskArrayHomeAdapter;
     TaskArrayHomeAdapter taskArrayHomeAdapter2;
     TaskArrayHomeAdapter taskArrayHomeAdapter3;
+    TaskArrayHomeAdapter taskArrayHomeAdapter4;
 
     public void onResume() {
         super.onResume();
@@ -42,9 +50,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         GridView gridView = view.findViewById(R.id.gridview);
         GridView gridView2 = view.findViewById(R.id.gridview2);
         GridView gridView3 = view.findViewById(R.id.gridview3);
+        GridView gridView4 = view.findViewById(R.id.gridview4);
         TextView textView1 = view.findViewById(R.id.txtImpTasks);
         TextView textView2 = view.findViewById(R.id.txtThisWeek);
         TextView textView3 = view.findViewById(R.id.txtCompleted);
+        TextView textView4 = view.findViewById(R.id.txtScheduled);
         LinearLayout linearLayout1 = view.findViewById(R.id.linearLayout1);
 
 
@@ -75,6 +85,46 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             textView1.setVisibility(View.INVISIBLE);
             linearLayout1.removeView(gridView);
             linearLayout1.removeView(textView1);
+        }
+
+
+        if(scheduledtasks) {
+
+                scheduledTasks = TaskService.GetScheduledTasks(getActivity().getApplication());
+                if(scheduledTasks.isEmpty()) {
+                    Log.i("if empty", "true");
+                    textView4.setVisibility(View.INVISIBLE);
+                    linearLayout1.removeView(gridView4);
+                    linearLayout1.removeView(textView4);
+                } else {
+                    textView4.setVisibility(View.VISIBLE);
+                }
+                taskArrayHomeAdapter4 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), scheduledTasks);
+                gridView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        int selectedTaskId = taskArrayHomeAdapter4.getItem(i).getId();
+                        Intent intent = new Intent(getActivity(), TaskActivity.class);
+                        intent.putExtra("taskId", selectedTaskId);
+                        startActivityForResult(intent, 0);
+                    }
+                });
+
+                gridView4.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        remove_scheduled_alert(taskArrayHomeAdapter4.getItem(i));
+                        refreshContent();
+                        return true;
+                    }
+                });
+
+                gridView4.setAdapter(taskArrayHomeAdapter4);
+
+
+        } else {
+            linearLayout1.removeView(gridView4);
+            linearLayout1.removeView(textView4);
         }
 
 
@@ -141,10 +191,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             textView3.setVisibility(View.INVISIBLE);
         }
 
-
-
-
-        if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty()) {
+        if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty() && scheduledTasks.isEmpty()) {
             linearLayout1.addView(textView1);
             textView1.setText("Nothing to show: \n no important, due or completed tasks. \n Enjoy your light schedule! ");
         } else {
@@ -194,12 +241,23 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         // Handle grids
 
+        if(scheduledtasks) {
+            scheduledTasks = TaskService.GetScheduledTasks(getActivity().getApplicationContext());
+            taskArrayHomeAdapter4.clear();
+            taskArrayHomeAdapter4.addAll(scheduledTasks);
+            taskArrayHomeAdapter4.notifyDataSetChanged();
+        }
+
+
+
+
+
         if(importanttasks) {
             importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayHomeAdapter.clear();
             taskArrayHomeAdapter.addAll(importantTasks);
             taskArrayHomeAdapter.notifyDataSetChanged();
-            updateHiddenCategories(taskArrayHomeAdapter, importantTasks);
+           // updateHiddenCategories(taskArrayHomeAdapter, importantTasks);
         }
 
 
@@ -208,7 +266,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter2.clear();
             taskArrayHomeAdapter2.addAll(thisweeksTasks);
             taskArrayHomeAdapter2.notifyDataSetChanged();
-            updateHiddenCategories(taskArrayHomeAdapter2, thisweeksTasks);
+           // updateHiddenCategories(taskArrayHomeAdapter2, thisweeksTasks);
         }
 
 
@@ -217,7 +275,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter3.clear();
             taskArrayHomeAdapter3.addAll(completedTasks);
             taskArrayHomeAdapter3.notifyDataSetChanged();
-            updateHiddenCategories(taskArrayHomeAdapter3, completedTasks);
+         //   updateHiddenCategories(taskArrayHomeAdapter3, completedTasks);
         }
 
     }
@@ -260,6 +318,29 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
 
     }
+
+    public void remove_scheduled_alert(final Task task) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Remove scheduled item?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Delete the task and go back to MainMenu
+                        task.setScheduled(false);
+                        task.SaveToFile(getContext());
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
 }
 

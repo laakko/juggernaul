@@ -99,6 +99,15 @@ public class Task {
         this.deleted = deleted;
     }
 
+    public boolean isScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled = scheduled;
+    }
+
+
     public enum Priority {
         LOW ,
         MEDIUM,
@@ -125,9 +134,10 @@ public class Task {
     private String user; // TODO: Create a User class
     private String group; // TODO: Create a Group
     private boolean deleted;
+    private boolean scheduled;
 
     // The full constructor with id
-    public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted) {
+    public Task(int id, String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted, Boolean scheduled) {
         this.id = id;
         this.title = title;
         this.description = desc;
@@ -138,10 +148,11 @@ public class Task {
         this.user = user;
         this.group = group;
         this.deleted = deleted;
+        this.scheduled = scheduled;
     }
 
     // The full constructor with default id
-    public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted) {
+    public Task(String title, String desc, Priority pri, Date dl, TaskCategory cat, Status status, String user, String group, Boolean deleted, Boolean scheduled) {
         this.id = -1;
         this.title = title;
         this.description = desc;
@@ -152,10 +163,11 @@ public class Task {
         this.user = user;
         this.group = group;
         this.deleted = deleted;
+        this.scheduled = scheduled;
     }
 
     // The base constructor (optional data is null or empty)
-    public Task(String title, Priority pri, Date dl, TaskCategory cat, Status status, String user, Boolean deleted) {
+    public Task(String title, Priority pri, Date dl, TaskCategory cat, Status status, String user, Boolean deleted, Boolean scheduled) {
         this.id = -1;
         this.title = title;
         this.description = "";
@@ -166,6 +178,7 @@ public class Task {
         this.user = user;
         this.group = "";
         this.deleted = deleted;
+        this.scheduled = scheduled;
     }
 
     public Task() {
@@ -179,6 +192,7 @@ public class Task {
         this.user = "";
         this.group = "";
         this.deleted = false;
+        this.scheduled = false;
     }
 
     public int daysUntilDeadline() {
@@ -197,6 +211,8 @@ public class Task {
         this.user = other.user;
         this.group = other.group;
         this.deleted = other.deleted;
+        this.scheduled = other.scheduled;
+
     }
 
     public JSONObject JSONify() {
@@ -212,6 +228,7 @@ public class Task {
             json.put("user", this.user);
             json.put("group", this.group);
             json.put("deleted", this.deleted);
+            json.put("scheduled", this.scheduled);
         } catch (JSONException e) {
             Log.i("JSONError", "Could not form JSON");
         }

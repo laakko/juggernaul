@@ -43,6 +43,32 @@
             </GridView>
 
             <TextView
+                android:id="@+id/txtScheduled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:text="My schedule:"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <GridView
+                android:id="@+id/gridview4"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="25dp"
+                android:numColumns="1">
+
+            </GridView>
+
+            <TextView
                 android:id="@+id/txtThisWeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

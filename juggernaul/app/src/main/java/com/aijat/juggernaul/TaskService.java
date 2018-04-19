@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
+
 
 public class TaskService extends FileService {
 
@@ -170,6 +172,23 @@ public class TaskService extends FileService {
     }
 
 
+    public static ArrayList<Task> GetScheduledTasks(Context ctx) {
+        ArrayList<Task> alltaskslist = GetAllTasks(ctx);
+        ArrayList<Task> ScheduledTasksList = new ArrayList<>();
+        try {
+            for (Task oneTask : alltaskslist) {
+                Log.i("status", Boolean.toString(oneTask.isScheduled()));
+                if(oneTask.isScheduled()){
+                    Log.i("scheduled", "true");
+                    ScheduledTasksList.add(oneTask);
+                }
+            }
+
+        } catch(NullPointerException e) {
+
+        }
+        return ScheduledTasksList;
+    }
 
     private static JSONArray readTasks(Context ctx) {
         String stuff = FileService.readFile(ctx, "tasks.json");
@@ -197,8 +216,9 @@ public class TaskService extends FileService {
             String user = json.getString("user");
             String group = json.getString("group");
             Boolean deleted = Boolean.parseBoolean(json.getString("deleted"));
+            Boolean scheduled = Boolean.parseBoolean(json.getString("scheduled"));
 
-            return new Task(id, title, desc, pri, dl, cat, status, user, group, deleted);
+            return new Task(id, title, desc, pri, dl, cat, status, user, group, deleted, scheduled);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {

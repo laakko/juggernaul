@@ -1,5 +1,6 @@
     package com.aijat.juggernaul;
 
+    import android.app.Activity;
     import android.app.AlertDialog;
     import android.app.DatePickerDialog;
     import android.app.NotificationChannel;
@@ -77,7 +78,6 @@
             View view = inflater.inflate(R.layout.fragment_list, container, false);
             setHasOptionsMenu(true);
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
-
             taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
             taskArrayAdapter.addAll(allTasks);
 
@@ -235,6 +235,7 @@
                             newTask.setDeadline(temp_deadline);
                             newTask.setCategory(tempCategory);
                             newTask.setPriority(tempPriority);
+                            newTask.setScheduled(false);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
 
@@ -593,7 +594,7 @@
         // Popup for long click of a list item
         public void longClickAlert2(final Task task) {
             final String[] actions = new String[] {
-                    "Pin As Notification", "Change Status", "Delete Task"
+                    "Pin As Notification", "Change Status", "Add to Schedule", "Delete Task"
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -674,6 +675,15 @@
                                         }
                                         task.SaveToFile(getActivity().getApplicationContext());
                                         refreshContent();
+                                    } else if(actions[i] == "Add to Schedule") {
+                                        task.setScheduled(true);
+                                        if(task.isScheduled()) {
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task added to your schedule!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+                                        task.SaveToFile(getActivity().getApplicationContext());
+                                        refreshContent();
+
                                     }
 
                                 }

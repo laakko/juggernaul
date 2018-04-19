@@ -19,6 +19,7 @@ import java.util.Collections;
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
+import static com.aijat.juggernaul.SettingsActivity.scheduledtasks;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             importanttasks = false;
         }
 
+        // Handle "my scheduled tasks" grid
+        if (sharedPrefs.getBoolean("scheduledtasks",true)) {
+            scheduledtasks = true;
+        } else {
+            scheduledtasks = false;
+        }
 
         // Handle "completed tasks" grid
         if (sharedPrefs.getBoolean("completedtasks",true)) {

@@ -118,6 +118,7 @@
         android:layout_above="@+id/switchSchedule"
         android:layout_alignEnd="@+id/switchSchedule"
         android:text='View "Your most important tasks"' />
+
     <Switch
         android:id="@+id/switchSchedule"
         android:layout_width="wrap_content"
@@ -125,6 +126,6 @@
         android:layout_above="@+id/switchDueWeek"
         android:layout_alignEnd="@+id/switchDueWeek"
         android:layout_marginTop="10dp"
-        android:text='View "My Schedule:"' />
+        android:text='View "Your Schedule:"' />
 
 </RelativeLayout>

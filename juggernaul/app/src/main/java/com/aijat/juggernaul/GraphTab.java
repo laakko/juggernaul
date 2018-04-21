@@ -1,8 +1,11 @@
 package com.aijat.juggernaul;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,31 +13,50 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.db.chart.model.LineSet;
+import com.db.chart.model.Point;
+import com.db.chart.view.ChartView;
+import com.db.chart.view.LineChartView;
+import com.google.android.gms.vision.text.Line;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.Series;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GraphTab extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         View view = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        GraphView graph = view.findViewById(R.id.graph);
+        Map taskTimeline = TaskService.GetTaskTimeline(getContext().getApplicationContext());
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 0),
-                new DataPoint(1, 0),
-                new DataPoint(2, 0),
-                new DataPoint(3, 0),
-                new DataPoint(4, 0)
-        });
-        series.setDrawDataPoints(true);
-        graph.getViewport().setScalable(true);
-        graph.addSeries(series);
+        ArrayList<String> labelsList = new ArrayList(taskTimeline.keySet());
+        ArrayList<Float> valuesList = new ArrayList(taskTimeline.values());
+
+        String[] labels = new String[labelsList.size()];
+        labels = labelsList.toArray(labels);
+        float[] values = new float[valuesList.size()];
+        int i = 0;
+        for (Float f : valuesList) {
+            values[i++] = (f != null ? f : Float.NaN);
+        }
+
+        if (labels.length != 0) {
+            LineSet dataset = new LineSet(labels, values);
+
+            dataset = CustomizeDataset(dataset);
+
+            LineChartView chart = view.findViewById(R.id.linechart);
+            chart.addData(dataset);
+            chart = CustomizeChart(chart);
+            chart.show();
+        }
 
         return view;
     }
@@ -70,5 +92,25 @@ public class GraphTab extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public LineChartView CustomizeChart(LineChartView chart) {
+        chart.setAxisBorderValues(0.0f, 4.0f, 1.0f);
+        // chart.setAxisColor((255 & 0xff) << 24 | (200 & 0xff) << 16 | (200 & 0xff) << 8 | (200 & 0xff));
+        chart.setAxisColor(Color.WHITE);
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        chart.setGrid(4, 1, paint);
+        chart.setFontSize(24);
+        chart.setLabelsColor(Color.WHITE);
+        return chart;
+    }
+
+    public LineSet CustomizeDataset(LineSet dataset) {
+        dataset.setDotsColor(32000);
+        dataset.setSmooth(true);
+        dataset.setColor(60000);
+
+        return dataset;
     }
 }

@@ -629,11 +629,11 @@
 
                                         int task_icon;
                                         if(task.getCategory() == Task.TaskCategory.SCHOOL) {
-                                            task_icon =  R.drawable.school_icon_black;
+                                            task_icon =  R.drawable.school_icon_grey;
                                         } else if(task.getCategory() == Task.TaskCategory.WORK) {
-                                            task_icon =  R.drawable.work_icon_black;
+                                            task_icon =  R.drawable.work_icon_grey;
                                         } else {
-                                            task_icon =  R.drawable.other_icon_black;
+                                            task_icon =  R.drawable.other_icon_grey;
                                         }
 
                                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "juggernaulID").setSmallIcon(task_icon)

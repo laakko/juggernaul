@@ -2,6 +2,7 @@ package com.aijat.juggernaul;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 
@@ -188,6 +192,29 @@ public class TaskService extends FileService {
 
         }
         return ScheduledTasksList;
+    }
+
+    public static Map GetTaskTimeline(Context ctx) {
+        Map taskTimeline = new LinkedHashMap<String, Float>();
+        ArrayList<Task> allTasksList = GetAllTasks(ctx);
+        if (allTasksList.size() == 0) {
+            return taskTimeline;
+        }
+        Collections.sort(allTasksList);
+        try {
+            for (Task oneTask : allTasksList) {
+                String dl = oneTask.getDeadlineDayAndMonth();
+                if (!taskTimeline.containsKey(dl)) {
+                    taskTimeline.put(dl, 1.0f);
+                } else {
+                    float oldAmount = (float) taskTimeline.get(dl);
+                    taskTimeline.replace(dl, oldAmount + 1.0f);
+                }
+            }
+        } catch (NullPointerException e) {
+
+        }
+        return taskTimeline;
     }
 
     private static JSONArray readTasks(Context ctx) {

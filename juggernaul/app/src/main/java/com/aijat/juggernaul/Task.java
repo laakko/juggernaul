@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
     public int getId() {
         return id;
@@ -37,6 +37,10 @@ public class Task {
 
     public String getDeadlinePretty() {
         return new SimpleDateFormat("dd.MM.yyyy").format(this.deadline);
+    }
+
+    public String getDeadlineDayAndMonth() {
+        return new SimpleDateFormat("dd.MM").format(this.deadline);
     }
 
     public Status getStatus() {
@@ -105,6 +109,11 @@ public class Task {
 
     public void setScheduled(boolean scheduled) {
         this.scheduled = scheduled;
+    }
+
+    @Override
+    public int compareTo(Task compareTask) {
+        return this.getDeadline().compareTo(compareTask.getDeadline());
     }
 
 

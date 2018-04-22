@@ -127,7 +127,7 @@
                     return true;
                 }
             });
-
+/*
             final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeRefresh);
             swipe.setOnRefreshListener(
                     new SwipeRefreshLayout.OnRefreshListener() {
@@ -137,7 +137,7 @@
                         }
                     }
             );
-
+*/
             // Add new task
             FloatingActionButton fab = view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -716,7 +716,7 @@
             taskArrayAdapter.notifyDataSetChanged();
 
         }
-
+        /*
         private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
@@ -736,6 +736,7 @@
             taskArrayAdapter.notifyDataSetChanged();
             swipe.setRefreshing(false);
         }
+        */
     }
 
 

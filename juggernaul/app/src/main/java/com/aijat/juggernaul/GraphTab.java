@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -24,8 +25,12 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class GraphTab extends Fragment {
 
@@ -33,6 +38,7 @@ public class GraphTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_graph, container, false);
+        SharedPreferences sharedPrefs = this.getActivity().getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE);
 
         Map taskTimeline = TaskService.GetTaskTimeline(getContext().getApplicationContext());
 
@@ -43,18 +49,22 @@ public class GraphTab extends Fragment {
         labels = labelsList.toArray(labels);
         float[] values = new float[valuesList.size()];
         int i = 0;
+        float maxValue = 0;
         for (Float f : valuesList) {
             values[i++] = (f != null ? f : Float.NaN);
+            if (f > maxValue) {
+                maxValue = f;
+            }
         }
 
         if (labels.length != 0) {
             LineSet dataset = new LineSet(labels, values);
 
-            dataset = CustomizeDataset(dataset);
+            dataset = CustomizeDataset(dataset, sharedPrefs);
 
             LineChartView chart = view.findViewById(R.id.linechart);
             chart.addData(dataset);
-            chart = CustomizeChart(chart);
+            chart = CustomizeChart(chart, sharedPrefs, maxValue);
             chart.show();
         }
 
@@ -94,22 +104,34 @@ public class GraphTab extends Fragment {
 
     }
 
-    public LineChartView CustomizeChart(LineChartView chart) {
-        chart.setAxisBorderValues(0.0f, 4.0f, 1.0f);
-        // chart.setAxisColor((255 & 0xff) << 24 | (200 & 0xff) << 16 | (200 & 0xff) << 8 | (200 & 0xff));
-        chart.setAxisColor(Color.WHITE);
+    public LineChartView CustomizeChart(LineChartView chart, SharedPreferences prefs, float maxValue) {
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        chart.setGrid(4, 1, paint);
-        chart.setFontSize(24);
-        chart.setLabelsColor(Color.WHITE);
+        if (prefs.getBoolean("dark", true)) {
+            chart.setAxisColor(Color.WHITE);
+            paint.setColor(Color.WHITE);
+            chart.setLabelsColor(Color.WHITE);
+        } else {
+            chart.setAxisColor(Color.BLACK);
+            paint.setColor(Color.BLACK);
+            chart.setLabelsColor(Color.BLACK);
+        }
+        chart.setAxisBorderValues(0.0f, maxValue, 1.0f);
+        chart.setGrid(Math.round(maxValue), 1, paint);
+        chart.setFontSize(36);
+
         return chart;
     }
 
-    public LineSet CustomizeDataset(LineSet dataset) {
-        dataset.setDotsColor(32000);
+    public LineSet CustomizeDataset(LineSet dataset, SharedPreferences prefs) {
+        if (prefs.getBoolean("dark", true)) {
+            dataset.setDotsColor(Color.parseColor("#ead75d"));
+            dataset.setColor(Color.parseColor("#6a8fc9"));
+        } else {
+            dataset.setDotsColor(getResources().getColor(R.color.colorPrimary));
+            dataset.setColor(Color.parseColor("#aabbcc"));
+        }
         dataset.setSmooth(true);
-        dataset.setColor(60000);
+        dataset.setShadow(10.0f, 0.0f, 10.0f, Color.BLACK);
 
         return dataset;
     }

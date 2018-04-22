@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button resetBtn;
     private Button generateMockDataBtn;
     private ImageButton backBtn;
-    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch;
+    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch, switchHideCompleted;
     public static boolean completedtasks, duetasks, importanttasks, scheduledtasks;
     // Handle back button
     @Override
@@ -50,12 +50,15 @@ public class SettingsActivity extends AppCompatActivity {
         importantSwitch = findViewById(R.id.switchImportant);
         scheduleSwitch = findViewById(R.id.switchSchedule);
 
+        switchHideCompleted = findViewById(R.id.switchHideCompleted);
+
         // Save switch states
         darkSwitch.setChecked(sharedPrefs.getBoolean("dark", true));
         completedSwitch.setChecked(sharedPrefs.getBoolean("completedtasks", true));
         dueSwitch.setChecked(sharedPrefs.getBoolean("duetasks", true));
         importantSwitch.setChecked(sharedPrefs.getBoolean("importanttasks", true));
         scheduleSwitch.setChecked(sharedPrefs.getBoolean("scheduledtasks", true));
+        switchHideCompleted.setChecked(sharedPrefs.getBoolean("hidecompleted", false));
 
 
         // Set app background to dark
@@ -160,6 +163,28 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+
+        // Hide completed tasks - switch
+        switchHideCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(switchHideCompleted.isChecked()){
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("hidecompleted", true);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("hidecompleted", false);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                }
+
+            }
+        });
+
 
         resetBtn = findViewById(R.id.resetButton);
         resetBtn.setOnClickListener(new View.OnClickListener() {

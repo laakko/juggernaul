@@ -242,7 +242,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Prompt user about task deletion
-                delete_alert("Are you sure you want to delete this Task?", "Yes", "No", taskInEditing);
+                delete_alert("Are you sure you want to delete this Task?", "Delete", "Cancel", taskInEditing);
             }
         });
 

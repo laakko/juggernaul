@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import static com.aijat.juggernaul.ListTab.hiddenCategories;
+import static com.aijat.juggernaul.MainActivity.hidecompleted;
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
@@ -270,6 +271,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter4.clear();
             taskArrayHomeAdapter4.addAll(scheduledTasks);
             taskArrayHomeAdapter4.notifyDataSetChanged();
+            hideCompletedTasks(taskArrayHomeAdapter4, scheduledTasks);
         }
 
 
@@ -281,6 +283,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter.clear();
             taskArrayHomeAdapter.addAll(importantTasks);
             taskArrayHomeAdapter.notifyDataSetChanged();
+            hideCompletedTasks(taskArrayHomeAdapter, importantTasks);
            // updateHiddenCategories(taskArrayHomeAdapter, importantTasks);
         }
 
@@ -290,6 +293,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter2.clear();
             taskArrayHomeAdapter2.addAll(thisweeksTasks);
             taskArrayHomeAdapter2.notifyDataSetChanged();
+            hideCompletedTasks(taskArrayHomeAdapter2, thisweeksTasks);
            // updateHiddenCategories(taskArrayHomeAdapter2, thisweeksTasks);
         }
 
@@ -307,6 +311,16 @@ public class HomeTab extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
     }
 
+
+    public void hideCompletedTasks(TaskArrayHomeAdapter taskArrayAdapter, ArrayList<Task> allTasks) {
+        if (hidecompleted) {
+            for (int i = 0; i < allTasks.size(); ++i) {
+                if (taskArrayAdapter.getItem(i).getStatus() == Task.Status.DONE) {
+                    taskArrayAdapter.hideItem(i);
+                }
+            }
+        }
+    }
 
     // Handle hidden categories
     public void updateHiddenCategories(TaskArrayHomeAdapter taskArrayAdapter, ArrayList<Task> hometabtasks) {
@@ -347,7 +361,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Remove scheduled item?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
                         // Delete the task and go back to MainMenu
@@ -356,7 +370,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

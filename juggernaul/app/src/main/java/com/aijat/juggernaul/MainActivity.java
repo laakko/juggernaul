@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
+
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
@@ -15,6 +17,8 @@ import static com.aijat.juggernaul.SettingsActivity.scheduledtasks;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static boolean hidecompleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
             duetasks = true;
         } else {
             duetasks = false;
+        }
+
+        if(sharedPrefs.getBoolean("hidecompleted", true)){
+            hidecompleted = true;
+        } else {
+            hidecompleted = false;
         }
 
         setContentView(R.layout.activity_main);

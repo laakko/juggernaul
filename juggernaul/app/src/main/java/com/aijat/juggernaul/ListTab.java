@@ -46,6 +46,7 @@
     import java.util.Random;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+    import static com.aijat.juggernaul.MainActivity.hidecompleted;
 
     public class ListTab extends Fragment {
 
@@ -74,7 +75,6 @@
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter = new TaskArrayAdapter(view.getContext(), allTasks);
             taskArrayAdapter.addAll(allTasks);
-
             listView = view.findViewById(R.id.taskList);
             listView.setAdapter(taskArrayAdapter);
             listView.setLongClickable(true);
@@ -466,6 +466,11 @@
             // Clear all
             taskArrayAdapter.clearHiddenItems();
 
+            if(hidecompleted) {
+                hideAllCompletedTasks();
+            } else {
+                restoreAllCompletedTasks();
+            }
             // Hide categories again
             if(hiddenCategories.contains("WORK")) {
                 for(int i=0; i<allTasks.size(); ++i) {
@@ -488,101 +493,6 @@
             }
 
         }
-
-        // Popup for long click of a list item
-        public void longClickAlert(String message, String positive_value, String neutral_value, String negative_value, final Task task) {
-            final String[] actions = new String[] {
-                    "Pin As Notification", "Change Status", "Delete Task"
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(message)
-                    .setCancelable(true)
-                    .setPositiveButton(positive_value, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int id) {
-                            // Delete the task and go back to MainMenu
-                            task.setDeleted(true);
-                            if(task.isDeleted()) {
-                                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task successfully deleted!", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                            task.SaveToFile(getActivity().getApplicationContext());
-                            refreshContent();
-                        }
-                    })
-                    .setNeutralButton(neutral_value, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // Necessary for Android Oreo -> )
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                // Create the NotificationChannel, but only on API 26+ because
-                                // the NotificationChannel class is new and not in the support library
-                                CharSequence name = "Task details notification";
-                                String description = "Juggernaul pinned task";
-                                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                                NotificationChannel channel = new NotificationChannel("juggernaulID", name, NotificationManager.IMPORTANCE_DEFAULT);
-                                channel.setDescription(description);
-                                // Register the channel with the system
-                                NotificationManager notificationManager =
-                                        (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                                notificationManager.createNotificationChannel(channel);
-                            }
-
-                            String task_content;
-                            if(task.getDescription().startsWith("(Optional)")) {
-                                task_content = "DL: " + task.getDeadlinePretty().toString();
-                            } else {
-                                task_content = "DL: " + task.getDeadlinePretty().toString() + "\n" + task.getDescription().toString();
-                            }
-
-                            int task_icon;
-                            if(task.getCategory() == Task.TaskCategory.SCHOOL) {
-                                task_icon =  R.drawable.school_icon_black;
-                            } else if(task.getCategory() == Task.TaskCategory.WORK) {
-                                task_icon =  R.drawable.work_icon_black;
-                            } else {
-                                task_icon =  R.drawable.other_icon_black;
-                            }
-
-                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "juggernaulID").setSmallIcon(task_icon)
-                                    .setContentTitle(task.getTitle().toString())
-                                    .setContentText(task_content)
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                    .setStyle(new NotificationCompat.BigTextStyle()
-                                            .bigText(task_content));
-
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            PendingIntent pendint = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                            mBuilder.setContentIntent(pendint);
-
-
-                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-                            // notificationId is a unique int for each notification that you must define
-                            Random rand = new Random(); int notificationId = rand.nextInt(10000);
-                            notificationManager.notify(notificationId, mBuilder.build());
-                        }
-                    })
-                    .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            if(task.getStatus() == Task.Status.TODO)
-                                task.setStatus(Task.Status.INPROGRESS);
-                            else if(task.getStatus() == Task.Status.INPROGRESS)
-                                task.setStatus(Task.Status.DONE);
-                            else
-                                task.setStatus(Task.Status.TODO);
-                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
-                            toast.show();
-                            task.SaveToFile(getActivity().getApplicationContext());
-                            refreshContent();
-                        }
-                    });
-
-            AlertDialog alert = builder.create();
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            alert.show();
-        }
-
 
         // Popup for long click of a list item
         public void longClickAlert2(final Task task) {
@@ -690,6 +600,27 @@
             alert.show();
         }
 
+
+        public void hideAllCompletedTasks() {
+            allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
+            for(int i=0; i<allTasks.size(); ++i) {
+                if(taskArrayAdapter.getItem(i).getStatus() == Task.Status.DONE) {
+                    taskArrayAdapter.hideItem(i);
+                }
+
+            }
+        }
+
+        public void restoreAllCompletedTasks() {
+            allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
+            for(int i=0; i<allTasks.size(); ++i) {
+                if(taskArrayAdapter.getItem(i).getStatus() == Task.Status.DONE) {
+                    taskArrayAdapter.restoreItem(i);
+                }
+
+            }
+        }
+
         public void refreshContent() {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());
             taskArrayAdapter.clear();
@@ -706,9 +637,15 @@
             if(statusSort) {
                 sortByStatus();
             }
+            updateHiddenCategories();
             taskArrayAdapter.notifyDataSetChanged();
 
         }
+
+
+
+
+
         /*
         private void refreshContentWithSwipe(SwipeRefreshLayout swipe) {
             allTasks = TaskService.GetAllNotDeletedTasks(getActivity().getApplicationContext());

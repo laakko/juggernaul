@@ -154,6 +154,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            android:minLines="5"
+            android:maxLines="11"
             android:ems="10"
             android:hint="Enter description"
             android:inputType="textMultiLine"
@@ -171,20 +174,22 @@
 
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="0.25"
-                android:background="#669932"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#66bb6a"
                 android:text="Save" />
 
             <Button
                 android:id="@+id/cancelButton"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.25"
-                android:background="@android:color/holo_red_light"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@android:color/holo_red_light"
                 android:text="Cancel" />
 
         </LinearLayout>

@@ -80,7 +80,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(importanttasks) {
             importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
-            if(importantTasks.isEmpty() || hidecompleted) {
+            if(importantTasks.isEmpty()) {
                // textView1.setVisibility(View.INVISIBLE);
                 linearLayout1.removeView(gridView);
                 linearLayout1.removeView(textView1);
@@ -111,7 +111,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         if(scheduledtasks) {
 
                 scheduledTasks = TaskService.GetScheduledTasks(getActivity().getApplication());
-                if(scheduledTasks.isEmpty()  || hidecompleted) {
+                if(scheduledTasks.isEmpty()) {
                     Log.i("if empty", "true");
                     textView4.setVisibility(View.INVISIBLE);
                     linearLayout1.removeView(gridView4);
@@ -151,7 +151,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(duetasks) {
             thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
-            if(thisweeksTasks.isEmpty() || hidecompleted) {
+            if(thisweeksTasks.isEmpty()) {
                 textView2.setVisibility(View.INVISIBLE);
                 linearLayout1.removeView(gridView2);
                 linearLayout1.removeView(textView2);
@@ -213,8 +213,16 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         try {
             if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && scheduledTasks.isEmpty()) {
+                linearLayout1.removeView(textView3);
+                linearLayout1.removeView(gridView3);
                 linearLayout1.addView(textView1);
-                textView1.setText("Nothing to show: \n no important, due or scheduled tasks. \n Enjoy your light schedule! ");
+
+                if(!completedTasks.isEmpty()) {
+                    linearLayout1.addView(textView3);
+                    linearLayout1.addView(gridView3);
+
+                }
+                textView1.setText("No important, due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
             } else {
                 textView1.setText("Your most important tasks:");
             }

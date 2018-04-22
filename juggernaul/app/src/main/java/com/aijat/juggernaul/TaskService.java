@@ -120,11 +120,14 @@ public class TaskService extends FileService {
         ArrayList<Task> importantTasks = GetAllNotDeletedTasks(ctx);
         ArrayList<Task> importantNotDeletedTasks = new ArrayList<>();
         for (Task oneTask : importantTasks) {
-            if (    oneTask.daysUntilDeadline() < 3 ||
-                    oneTask.getPriority() == Task.Priority.HIGH ||
-                    oneTask.getPriority() == Task.Priority.MEDIUM) {
-                importantNotDeletedTasks.add(oneTask);
+            if(oneTask.getStatus() != Task.Status.DONE) {
+                if (    oneTask.daysUntilDeadline() < 3 ||
+                        oneTask.getPriority() == Task.Priority.HIGH ||
+                        oneTask.getPriority() == Task.Priority.MEDIUM) {
+                    importantNotDeletedTasks.add(oneTask);
+                }
             }
+
         }
         return importantNotDeletedTasks;
     }
@@ -144,7 +147,7 @@ public class TaskService extends FileService {
         ArrayList<Task> weekTasksList = GetAllNotDeletedTasks(ctx);
         ArrayList<Task> notDeletedWeekTasksList = new ArrayList<>();
         for (Task oneTask : weekTasksList) {
-            if (isDueThisWeek(oneTask)) {
+            if (isDueThisWeek(oneTask) && oneTask.getStatus() != Task.Status.DONE) {
                 notDeletedWeekTasksList.add(oneTask);
             }
         }
@@ -178,7 +181,7 @@ public class TaskService extends FileService {
         try {
             for (Task oneTask : alltaskslist) {
                 Log.i("status", Boolean.toString(oneTask.isScheduled()));
-                if(oneTask.isScheduled()){
+                if(oneTask.isScheduled() && oneTask.getStatus() != Task.Status.DONE){
                     Log.i("scheduled", "true");
                     ScheduledTasksList.add(oneTask);
                 }

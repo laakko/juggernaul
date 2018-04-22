@@ -45,6 +45,10 @@
     import java.util.List;
     import java.util.Random;
 
+    import nl.dionsegijn.konfetti.KonfettiView;
+    import nl.dionsegijn.konfetti.models.Shape;
+    import nl.dionsegijn.konfetti.models.Size;
+
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
     import static com.aijat.juggernaul.MainActivity.hidecompleted;
 
@@ -60,6 +64,7 @@
         public Task.TaskCategory tempCategory;
         public Task.Priority tempPriority;
         public static List<String> hiddenCategories = new ArrayList<String>();
+        public boolean konfetti;
 
         @Override
         public void onResume() {
@@ -116,10 +121,12 @@
                         }
                     }
                     //longClickAlert("Choose Action", "Delete Task", "Pin As Notification", "Change Status", taskArrayAdapter.getItem(i));
-                    longClickAlert2(taskArrayAdapter.getItem(i));
+                    longClickAlert2(taskArrayAdapter.getItem(i), getView());
                     return true;
                 }
             });
+
+
 /*
             final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeRefresh);
             swipe.setOnRefreshListener(
@@ -130,7 +137,11 @@
                         }
                     }
             );
+
+
 */
+
+
             // Add new task
             FloatingActionButton fab = view.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -495,7 +506,7 @@
         }
 
         // Popup for long click of a list item
-        public void longClickAlert2(final Task task) {
+        public void longClickAlert2(final Task task, final View view) {
             final String[] actions = new String[] {
                     "Pin As Notification", "Change Status", "Add to Schedule", "Delete Task"
             };
@@ -558,14 +569,38 @@
 
                                     } else if(actions[i] == "Change Status") {
 
-                                        if(task.getStatus() == Task.Status.TODO)
+                                        if(task.getStatus() == Task.Status.TODO) {
                                             task.setStatus(Task.Status.INPROGRESS);
-                                        else if(task.getStatus() == Task.Status.INPROGRESS)
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+                                        else if(task.getStatus() == Task.Status.INPROGRESS) {
                                             task.setStatus(Task.Status.DONE);
-                                        else
+                                            konfetti = true;
+                                            final KonfettiView konfettiView = (KonfettiView)view.findViewById(R.id.viewKonfetti);
+                                            if(konfetti) {
+                                                konfettiView.build()
+                                                        .addColors(Color.rgb(146,205,207), Color.rgb(49,53,61), Color.rgb(68,88,120))
+                                                        .setDirection(0.0, 359.0)
+                                                        .setSpeed(2f,7f)
+                                                        .setFadeOutEnabled(true)
+                                                        .setTimeToLive(1000L)
+                                                        .addShapes(Shape.RECT, Shape.CIRCLE)
+                                                        .addSizes(new Size(13, 5f))
+                                                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                                                        .stream(300, 5000L);
+
+                                            } konfetti = false;
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Well done, task completed!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+                                        else {
                                             task.setStatus(Task.Status.TODO);
-                                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
-                                        toast.show();
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task status changed!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+
+
                                         task.SaveToFile(getActivity().getApplicationContext());
                                         refreshContent();
 

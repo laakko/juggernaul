@@ -34,6 +34,8 @@ public class GraphTab extends Fragment {
         ArrayList<String> labelsList = new ArrayList(taskTimeline.keySet());
         ArrayList<Float> valuesList = new ArrayList(taskTimeline.values());
 
+        labelsList = removeYearPart(labelsList);
+
         String[] labels = new String[labelsList.size()];
         labels = labelsList.toArray(labels);
         float[] values = new float[valuesList.size()];
@@ -91,6 +93,16 @@ public class GraphTab extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public ArrayList<String> removeYearPart(ArrayList<String> list) {
+        ArrayList<String> withoutYear = new ArrayList<>();
+        for (String s : list) {
+            String[] parts = s.split("\\.");
+            String dayAndMonth = parts[0] + "." + parts[1];
+            withoutYear.add(dayAndMonth);
+        }
+        return withoutYear;
     }
 
     public LineChartView CustomizeChart(LineChartView chart, SharedPreferences prefs, float maxValue) {

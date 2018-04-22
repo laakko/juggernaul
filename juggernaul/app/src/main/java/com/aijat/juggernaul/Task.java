@@ -39,10 +39,6 @@ public class Task implements Comparable<Task> {
         return new SimpleDateFormat("dd.MM.yyyy").format(this.deadline);
     }
 
-    public String getDeadlineDayAndMonth() {
-        return new SimpleDateFormat("dd.MM").format(this.deadline);
-    }
-
     public Status getStatus() {
         return status;
     }

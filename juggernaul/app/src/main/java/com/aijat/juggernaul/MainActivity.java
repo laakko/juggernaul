@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Graph"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-
         final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PageAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());

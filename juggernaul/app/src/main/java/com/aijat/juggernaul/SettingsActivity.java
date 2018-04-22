@@ -187,6 +187,8 @@ public class SettingsActivity extends AppCompatActivity {
         TaskService.ResetEverything(getApplicationContext());
         Toast toast = Toast.makeText(getApplicationContext(), "App reset successful!", Toast.LENGTH_SHORT);
         toast.show();
+        // Uncomment this if you want to simulate first time usage
+        // FileService.deleteFile(getApplicationContext(), "tasks.json");
     }
 
     public void generateMockDataButtonClicked(View v) {

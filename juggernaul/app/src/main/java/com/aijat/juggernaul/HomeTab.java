@@ -3,9 +3,12 @@ package com.aijat.juggernaul;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +46,24 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        if (FileService.readFile(getContext().getApplicationContext(), "tasks.json") == null) {
+            TaskService.ResetEverything(getContext().getApplicationContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Welcome to Juggernaul!")
+                    .setCancelable(true).setIcon(R.mipmap.ic_launcher)
+                    .setMessage("Say goodbye to your other apps.\n\nJuggernaul is the best solution for time management and scheduling!\n\nStart improving your life right now by adding new tasks!\n\n\n\n© Aijat");
+
+            AlertDialog alert = builder.create();
+            alert.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230, 68, 88, 120)));
+            alert.show();
+            alert.getWindow().setLayout(900,1200);
+            TextView message = alert.findViewById(android.R.id.message);
+            message.setTextSize(20);
+            message.setGravity(Gravity.CENTER);
+        }
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
         GridView gridView = view.findViewById(R.id.gridview);

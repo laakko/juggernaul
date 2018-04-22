@@ -1,6 +1,5 @@
     package com.aijat.juggernaul;
 
-    import android.app.Activity;
     import android.app.AlertDialog;
     import android.app.DatePickerDialog;
     import android.app.NotificationChannel;
@@ -9,7 +8,6 @@
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
-    import android.content.SharedPreferences;
     import android.graphics.Color;
     import android.graphics.Point;
     import android.graphics.drawable.ColorDrawable;
@@ -19,7 +17,6 @@
     import android.support.v4.app.Fragment;
     import android.support.v4.app.NotificationCompat;
     import android.support.v4.app.NotificationManagerCompat;
-    import android.support.v4.widget.SwipeRefreshLayout;
     import android.util.Log;
     import android.view.Display;
     import android.view.Gravity;
@@ -34,14 +31,12 @@
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
-    import android.widget.CheckBox;
     import android.widget.DatePicker;
     import android.widget.EditText;
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.Spinner;
     import android.widget.Toast;
-    import android.widget.ToggleButton;
 
     import java.util.ArrayList;
     import java.util.Calendar;
@@ -51,7 +46,6 @@
     import java.util.Random;
 
     import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-    import static android.content.Context.MODE_PRIVATE;
 
     public class ListTab extends Fragment {
 

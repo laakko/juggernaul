@@ -80,7 +80,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(importanttasks) {
             importantTasks = TaskService.GetImportantNotDeletedTasks(getActivity().getApplication());
-            if(importantTasks.isEmpty()) {
+            if(importantTasks.isEmpty() || hidecompleted) {
                // textView1.setVisibility(View.INVISIBLE);
                 linearLayout1.removeView(gridView);
                 linearLayout1.removeView(textView1);
@@ -111,7 +111,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         if(scheduledtasks) {
 
                 scheduledTasks = TaskService.GetScheduledTasks(getActivity().getApplication());
-                if(scheduledTasks.isEmpty()) {
+                if(scheduledTasks.isEmpty()  || hidecompleted) {
                     Log.i("if empty", "true");
                     textView4.setVisibility(View.INVISIBLE);
                     linearLayout1.removeView(gridView4);
@@ -151,7 +151,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
         if(duetasks) {
             thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
-            if(thisweeksTasks.isEmpty()) {
+            if(thisweeksTasks.isEmpty() || hidecompleted) {
                 textView2.setVisibility(View.INVISIBLE);
                 linearLayout1.removeView(gridView2);
                 linearLayout1.removeView(textView2);
@@ -212,9 +212,9 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         }
 
         try {
-            if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && completedTasks.isEmpty() && scheduledTasks.isEmpty()) {
+            if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && scheduledTasks.isEmpty()) {
                 linearLayout1.addView(textView1);
-                textView1.setText("Nothing to show: \n no important, due or completed tasks. \n Enjoy your light schedule! ");
+                textView1.setText("Nothing to show: \n no important, due or scheduled tasks. \n Enjoy your light schedule! ");
             } else {
                 textView1.setText("Your most important tasks:");
             }
@@ -273,9 +273,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             taskArrayHomeAdapter4.notifyDataSetChanged();
             hideCompletedTasks(taskArrayHomeAdapter4, scheduledTasks);
         }
-
-
-
 
 
         if(importanttasks) {

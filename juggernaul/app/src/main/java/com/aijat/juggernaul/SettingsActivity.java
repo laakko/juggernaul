@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         dueSwitch.setChecked(sharedPrefs.getBoolean("duetasks", true));
         importantSwitch.setChecked(sharedPrefs.getBoolean("importanttasks", true));
         scheduleSwitch.setChecked(sharedPrefs.getBoolean("scheduledtasks", true));
-        switchHideCompleted.setChecked(sharedPrefs.getBoolean("hidecompleted", false));
+        switchHideCompleted.setChecked(sharedPrefs.getBoolean("hidecompleted", true));
 
 
         // Set app background to dark

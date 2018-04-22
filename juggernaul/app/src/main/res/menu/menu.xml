@@ -9,8 +9,8 @@
         app:showAsAction="always|collapseActionView"></item>
     <item
         android:id="@+id/joingroup"
-        android:title="Join Group"
-        app:showAsAction="always"></item>
+        android:enabled="false"
+        android:title="Join Group"></item>
     <item
         android:id="@+id/sort1"
         android:title="Sort by Title"></item>

@@ -54,6 +54,7 @@ public class TaskActivity extends AppCompatActivity {
     private FloatingActionButton sharebutton;
     private FloatingActionButton deleteButton;
     private FloatingActionButton notificationButton;
+    private FloatingActionButton scheduleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,6 +271,19 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        // Add to shcedule button
+        scheduleButton = findViewById(R.id.fab_schedule);
+        scheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                taskInEditing.setScheduled(true);
+                if(taskInEditing.isScheduled()) {
+                    Toast toast = Toast.makeText(getApplication().getApplicationContext(), "Task added to your schedule!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                taskInEditing.SaveToFile(getApplication().getApplicationContext());
+            }
+        });
 
     }
 

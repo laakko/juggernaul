@@ -196,7 +196,7 @@ public class TaskService extends FileService {
 
     public static Map GetTaskTimeline(Context ctx) {
         Map taskTimeline = new LinkedHashMap<String, Float>();
-        ArrayList<Task> allTasksList = GetAllTasks(ctx);
+        ArrayList<Task> allTasksList = GetAllNotDeletedTasks(ctx);
         if (allTasksList.size() == 0) {
             return taskTimeline;
         }

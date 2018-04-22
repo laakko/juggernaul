@@ -67,12 +67,14 @@ public class TaskActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_task);
         final int taskId = getIntent().getIntExtra("taskId", -1);
-        int taskIndex = 0;
+        int taskIndexTemp = 0;
         for (Task oneTask : allTasks) {
             if (oneTask.getId() == taskId) {
-                taskIndex = allTasks.indexOf(oneTask);
+                taskIndexTemp = allTasks.indexOf(oneTask);
             }
         }
+
+        final int taskIndex = taskIndexTemp;
 
         final Task taskInEditing = allTasks.get(taskIndex);
 
@@ -150,7 +152,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
         statusSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Task.Status.values()));
-        statusSpinner.setSelection(allTasks.get(taskId).getStatus().ordinal()); // Get status value from task and update spinner accordingly
+        statusSpinner.setSelection(allTasks.get(taskIndex).getStatus().ordinal()); // Get status value from task and update spinner accordingly
 
         // Category
         categorySpinner = findViewById(R.id.categorySpinner );
@@ -169,7 +171,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
         categorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Task.TaskCategory.values()));
-        categorySpinner.setSelection(allTasks.get(taskId).getCategory().ordinal()); // Get status value from task and update spinner accordingly
+        categorySpinner.setSelection(allTasks.get(taskIndex).getCategory().ordinal()); // Get status value from task and update spinner accordingly
 
         // Description
         txtDescription = findViewById(R.id.txtDescription);
@@ -215,7 +217,7 @@ public class TaskActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskInEditing.Assign(allTasks.get(taskId));
+                taskInEditing.Assign(allTasks.get(taskIndex));
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

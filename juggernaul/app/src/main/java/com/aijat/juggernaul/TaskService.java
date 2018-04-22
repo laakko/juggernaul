@@ -203,7 +203,7 @@ public class TaskService extends FileService {
         Collections.sort(allTasksList);
         try {
             for (Task oneTask : allTasksList) {
-                String dl = oneTask.getDeadlineDayAndMonth();
+                String dl = oneTask.getDeadlinePretty();
                 if (!taskTimeline.containsKey(dl)) {
                     taskTimeline.put(dl, 1.0f);
                 } else {

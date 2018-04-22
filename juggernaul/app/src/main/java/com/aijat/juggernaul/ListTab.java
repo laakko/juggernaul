@@ -86,15 +86,14 @@
 
                     // i is not a valid index if there are hidden tasks -> calculate new indexes
                     if(!hiddenCategories.isEmpty()) {
-                        for(Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
-                            if(hiddenId <= i) {
+                        for (Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
+                            if (hiddenId <= i) {
                                 i += 1;
                             } else {
                                 break;
                             }
                         }
                     }
-
                     int selectedTaskId = taskArrayAdapter.getItem(i).getId();
                     Intent intent = new Intent(getActivity(), TaskActivity.class);
                     intent.putExtra("taskId", selectedTaskId);

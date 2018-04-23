@@ -33,12 +33,12 @@
         android:id="@+id/switchDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchHideCompleted"
+        android:layout_alignEnd="@+id/switchImportant"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="49dp"
         android:checked="false"
         android:gravity="center"
-        android:text="Dark Mode" />
+        android:text="Dark Mode " />
 
     <TextView
         android:id="@+id/textView2"
@@ -99,7 +99,7 @@
         android:layout_above="@+id/switchCompleted"
         android:layout_alignEnd="@+id/switchCompleted"
         android:layout_marginTop="10dp"
-        android:text='View "Due This Week"' />
+        android:text='"Due This Week" ' />
 
     <Switch
         android:id="@+id/switchCompleted"
@@ -108,7 +108,8 @@
         android:layout_above="@+id/resetButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="54dp"
-        android:text='View "Completed tasks"' />
+        android:layout_marginTop="10dp"
+        android:text='"Completed tasks" ' />
 
     <Switch
         android:id="@+id/switchImportant"
@@ -116,7 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/switchSchedule"
         android:layout_alignEnd="@+id/switchSchedule"
-        android:text='View "Your most important tasks"' />
+        android:layout_marginTop="10dp"
+        android:text='"Your most important tasks" ' />
 
     <Switch
         android:id="@+id/switchSchedule"
@@ -125,15 +127,15 @@
         android:layout_above="@+id/switchDueWeek"
         android:layout_alignEnd="@+id/switchDueWeek"
         android:layout_marginTop="10dp"
-        android:text='View "Your Schedule:"' />
+        android:text='"Your Schedule" ' />
 
     <Switch
         android:id="@+id/switchHideCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/switchSchedule"
+        android:layout_alignEnd="@+id/switchDark"
         android:layout_below="@+id/switchDark"
-        android:text="Hide completed tasks" />
+        android:text="Hide completed tasks " />
 
     <Button
         android:id="@+id/btnDeleteCompleted"

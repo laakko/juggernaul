@@ -181,9 +181,7 @@ public class TaskService extends FileService {
         ArrayList<Task> ScheduledTasksList = new ArrayList<>();
         try {
             for (Task oneTask : alltaskslist) {
-                Log.i("status", Boolean.toString(oneTask.isScheduled()));
                 if(oneTask.isScheduled() && oneTask.getStatus() != Task.Status.DONE){
-                    Log.i("scheduled", "true");
                     ScheduledTasksList.add(oneTask);
                 }
             }

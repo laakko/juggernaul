@@ -203,12 +203,14 @@ public class TaskService extends FileService {
         Collections.sort(allTasksList);
         try {
             for (Task oneTask : allTasksList) {
-                String dl = oneTask.getDeadlinePretty();
-                if (!taskTimeline.containsKey(dl)) {
-                    taskTimeline.put(dl, 1.0f);
-                } else {
-                    float oldAmount = (float) taskTimeline.get(dl);
-                    taskTimeline.replace(dl, oldAmount + 1.0f);
+                if(oneTask.getStatus() != Task.Status.DONE) {
+                    String dl = oneTask.getDeadlinePretty();
+                    if (!taskTimeline.containsKey(dl)) {
+                        taskTimeline.put(dl, 1.0f);
+                    } else {
+                        float oldAmount = (float) taskTimeline.get(dl);
+                        taskTimeline.replace(dl, oldAmount + 1.0f);
+                    }
                 }
             }
         } catch (NullPointerException e) {

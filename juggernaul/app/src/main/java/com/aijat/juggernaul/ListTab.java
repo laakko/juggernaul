@@ -65,6 +65,7 @@
         public Task.Priority tempPriority;
         public static List<String> hiddenCategories = new ArrayList<String>();
         public boolean konfetti;
+        public static boolean updateTabs;
 
         @Override
         public void onResume() {
@@ -203,7 +204,8 @@
                         }
                     });
 
-                    prioritySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.Priority.values()));
+                    ArrayAdapter<String> adapter = new ArrayAdapter(layout.getContext(), android.R.layout.simple_spinner_item, Task.Priority.values());
+                    prioritySpinner.setAdapter(adapter);
 
                     // Category
                     categorySpinner = layout.findViewById(R.id.categorySpinner );
@@ -673,6 +675,7 @@
                 sortByStatus();
             }
             updateHiddenCategories();
+            updateTabs = true;
             taskArrayAdapter.notifyDataSetChanged();
 
         }

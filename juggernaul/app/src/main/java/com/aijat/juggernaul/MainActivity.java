@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
+import static com.aijat.juggernaul.ListTab.updateTabs;
 import static com.aijat.juggernaul.SettingsActivity.completedtasks;
 import static com.aijat.juggernaul.SettingsActivity.duetasks;
 import static com.aijat.juggernaul.SettingsActivity.importanttasks;
@@ -86,7 +87,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                viewPager.getAdapter().notifyDataSetChanged();
+
+                if(updateTabs) {
+                    viewPager.getAdapter().notifyDataSetChanged();
+                    updateTabs = false;
+                }
+
 
             }
             @Override

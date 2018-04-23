@@ -381,6 +381,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                     }
                 });
         AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230, 68, 88, 120))); // ColorPrimary
         alert.show();
     }
 

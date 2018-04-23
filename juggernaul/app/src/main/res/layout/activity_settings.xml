@@ -7,16 +7,14 @@
     android:orientation="vertical">
 
 
-
-
     <Button
         android:id="@+id/resetButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/loadMockButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="120dp"
+        android:background="@drawable/rounded_button"
         android:text="Reset" />
 
     <Button
@@ -24,31 +22,30 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/resetButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_above="@+id/textView10"
+        android:layout_toStartOf="@+id/textView"
+        android:background="@drawable/rounded_button"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:text="Load mock data" />
 
     <Switch
         android:id="@+id/switchDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/resetButton"
+        android:layout_alignEnd="@+id/switchHideCompleted"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
+        android:layout_marginTop="17dp"
         android:checked="false"
+        android:gravity="center"
         android:text="Dark Mode" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/loadMockButton"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/loadMockButton"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
         android:gravity="center"
         android:text="Settings"
@@ -72,8 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="27dp"
-        android:layout_toEndOf="@+id/loadMockButton"
+        android:layout_alignStart="@+id/btnDeleteCompleted"
+        android:layout_marginStart="39dp"
         android:text="© Aijat 2018" />
 
     <TextView
@@ -82,7 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView9"
         android:layout_alignBottom="@+id/textView9"
-        android:layout_toStartOf="@+id/resetButton"
+        android:layout_alignEnd="@+id/loadMockButton"
+        android:layout_marginEnd="13dp"
         android:text="App version: 1.0.0" />
 
     <TextView
@@ -107,9 +105,9 @@
         android:id="@+id/switchCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/resetButton"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="54dp"
         android:text='View "Completed tasks"' />
 
     <Switch
@@ -136,5 +134,18 @@
         android:layout_alignStart="@+id/switchSchedule"
         android:layout_below="@+id/switchDark"
         android:text="Hide completed tasks" />
+
+    <Button
+        android:id="@+id/btnDeleteCompleted"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView9"
+        android:layout_toEndOf="@+id/textView2"
+        android:background="@drawable/rounded_button"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="delete completed "
+        android:textSize="12sp" />
 
 </RelativeLayout>

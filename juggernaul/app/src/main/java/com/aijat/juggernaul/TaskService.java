@@ -143,6 +143,7 @@ public class TaskService extends FileService {
         return notDeletedCompletedTasksList;
     }
 
+
     public static ArrayList<Task> GetThisWeeksTasks(Context ctx) {
         ArrayList<Task> weekTasksList = GetAllNotDeletedTasks(ctx);
         ArrayList<Task> notDeletedWeekTasksList = new ArrayList<>();

@@ -1,7 +1,12 @@
 package com.aijat.juggernaul;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -20,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button resetBtn;
     private Button generateMockDataBtn;
+    private Button deleteCompletedBtn;
     private ImageButton backBtn;
     private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch, switchHideCompleted;
     public static boolean completedtasks, duetasks, importanttasks, scheduledtasks;
@@ -186,10 +192,17 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        deleteCompletedBtn = findViewById(R.id.btnDeleteCompleted);
+        deleteCompletedBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                deleteCompletedAlert();
+            }
+        });
+
         resetBtn = findViewById(R.id.resetButton);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                resetButtonClicked(v);
+                resetAlert();
             }
         });
         generateMockDataBtn = findViewById(R.id.loadMockButton);
@@ -208,13 +221,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    public void resetButtonClicked(View v) {
-        TaskService.ResetEverything(getApplicationContext());
-        Toast toast = Toast.makeText(getApplicationContext(), "App reset successful!", Toast.LENGTH_SHORT);
-        toast.show();
-        // Uncomment this if you want to simulate first time usage
-        // FileService.deleteFile(getApplicationContext(), "tasks.json");
-    }
 
     public void generateMockDataButtonClicked(View v) {
         TaskService.ResetEverything(getApplicationContext());
@@ -237,5 +243,58 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onClick(View v) {
 
+    }
+
+    public void resetAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to reset? This will delete all tasks")
+                .setCancelable(false)
+                .setPositiveButton("Yes, reset everything", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        TaskService.ResetEverything(getApplicationContext());
+                        Toast toast = Toast.makeText(getApplicationContext(), "App reset successful!", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230, 68, 88, 120))); // ColorPrimary
+        alert.show();
+    }
+
+    public void deleteCompletedAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete all completed tasks?")
+                .setCancelable(false)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        ArrayList<Task> alltasks = TaskService.GetAllNotDeletedTasks(getApplication().getApplicationContext());
+                        for(Task oneTask : alltasks) {
+                            if(oneTask.getStatus() == Task.Status.DONE) {
+                                oneTask.setDeleted(true);
+                                oneTask.SaveToFile(getApplication().getApplicationContext());
+                            }
+                        }
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "Completed tasks removed!", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230, 68, 88, 120))); // ColorPrimary
+        alert.show();
     }
 }

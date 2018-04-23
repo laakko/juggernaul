@@ -116,19 +116,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="25dp"
                 android:numColumns="1"></GridView>>
-
-            <TextView
-                android:id="@+id/txtQuote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="Quote of The Day: "
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
+            
 
         </LinearLayout>
 

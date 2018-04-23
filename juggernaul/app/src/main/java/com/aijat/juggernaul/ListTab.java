@@ -90,7 +90,7 @@
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                     // i is not a valid index if there are hidden tasks -> calculate new indexes
-                    if(!hiddenCategories.isEmpty()) {
+                    if(!hiddenCategories.isEmpty() || hidecompleted) {
                         for (Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
                             if (hiddenId <= i) {
                                 i += 1;
@@ -111,7 +111,7 @@
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                     // i is not a valid index if there are hidden tasks -> calculate new indexes
-                    if(!hiddenCategories.isEmpty()) {
+                    if(!hiddenCategories.isEmpty() || hidecompleted) {
                         for(Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
                             if(hiddenId <= i) {
                                 i += 1;
@@ -120,7 +120,6 @@
                             }
                         }
                     }
-                    //longClickAlert("Choose Action", "Delete Task", "Pin As Notification", "Change Status", taskArrayAdapter.getItem(i));
                     longClickAlert2(taskArrayAdapter.getItem(i), getView());
                     return true;
                 }
@@ -242,6 +241,7 @@
                             newTask.setScheduled(false);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
+
 
                             popup.dismiss();
                         }

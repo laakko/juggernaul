@@ -276,9 +276,13 @@ public class TaskActivity extends AppCompatActivity {
         scheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskInEditing.setScheduled(true);
+                if(taskInEditing.getStatus() != Task.Status.DONE)
+                    taskInEditing.setScheduled(true);
                 if(taskInEditing.isScheduled()) {
                     Toast toast = Toast.makeText(getApplication().getApplicationContext(), "Task added to your schedule!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(getApplication().getApplicationContext(), "Can't add completed task to schedule, change status first!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 taskInEditing.SaveToFile(getApplication().getApplicationContext());

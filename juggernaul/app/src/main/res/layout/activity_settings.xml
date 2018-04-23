@@ -12,7 +12,8 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/loadMockButton"
+        android:layout_alignBaseline="@+id/btnDeleteCompleted"
+        android:layout_alignBottom="@+id/btnDeleteCompleted"
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_button"
         android:text="Reset" />
@@ -22,7 +23,8 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView10"
+        android:layout_alignBaseline="@+id/resetButton"
+        android:layout_alignBottom="@+id/resetButton"
         android:layout_toStartOf="@+id/textView"
         android:background="@drawable/rounded_button"
         android:paddingLeft="5dp"
@@ -77,10 +79,8 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView9"
-        android:layout_alignBottom="@+id/textView9"
         android:layout_alignEnd="@+id/loadMockButton"
-        android:layout_marginEnd="13dp"
+        android:layout_below="@+id/textView12"
         android:text="App version: 1.0.0" />
 
     <TextView
@@ -88,7 +88,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/switchImportant"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="Modify Home-tab" />
 
@@ -96,37 +97,35 @@
         android:id="@+id/switchDueWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/switchCompleted"
         android:layout_alignEnd="@+id/switchCompleted"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/switchSchedule"
+        android:layout_marginTop="15dp"
         android:text='"Due This Week" ' />
 
     <Switch
         android:id="@+id/switchCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/resetButton"
+        android:layout_below="@+id/switchDueWeek"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:text='"Completed tasks" ' />
 
     <Switch
         android:id="@+id/switchImportant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/switchSchedule"
         android:layout_alignEnd="@+id/switchSchedule"
-        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
         android:text='"Your most important tasks" ' />
 
     <Switch
         android:id="@+id/switchSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/switchDueWeek"
         android:layout_alignEnd="@+id/switchDueWeek"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/switchImportant"
+        android:layout_marginTop="16dp"
         android:text='"Your Schedule" ' />
 
     <Switch
@@ -135,6 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/switchDark"
         android:layout_below="@+id/switchDark"
+        android:layout_marginTop = "10dp"
         android:text="Hide completed tasks " />
 
     <Button
@@ -142,12 +142,23 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView9"
+        android:layout_above="@+id/textView12"
+        android:layout_marginBottom="17dp"
         android:layout_toEndOf="@+id/textView2"
         android:background="@drawable/rounded_button"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="delete completed "
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView9"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:autoLink="web"
+        android:text="https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/" />
 
 </RelativeLayout>

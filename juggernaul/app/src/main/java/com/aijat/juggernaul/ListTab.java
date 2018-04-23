@@ -616,9 +616,13 @@
                                         task.SaveToFile(getActivity().getApplicationContext());
                                         refreshContent();
                                     } else if(actions[i] == "Add to Schedule") {
-                                        task.setScheduled(true);
+                                        if(task.getStatus() != Task.Status.DONE)
+                                            task.setScheduled(true);
                                         if(task.isScheduled()) {
                                             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Task added to your schedule!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        } else {
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Can't add completed task to schedule, change status first!", Toast.LENGTH_SHORT);
                                             toast.show();
                                         }
                                         task.SaveToFile(getActivity().getApplicationContext());

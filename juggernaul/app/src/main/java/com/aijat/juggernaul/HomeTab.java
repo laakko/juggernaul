@@ -1,5 +1,6 @@
 package com.aijat.juggernaul;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -102,6 +104,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
             gridView.setAdapter(taskArrayHomeAdapter);
         } else {
+            Log.i("täällä ollaan","joo");
             textView1.setVisibility(View.INVISIBLE);
             linearLayout1.removeView(gridView);
             linearLayout1.removeView(textView1);
@@ -134,7 +137,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                         remove_scheduled_alert(taskArrayHomeAdapter4.getItem(i));
-                        refreshContent();
                         return true;
                     }
                 });
@@ -212,7 +214,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         }
 
         try {
-            if(importantTasks.isEmpty() && thisweeksTasks.isEmpty() && scheduledTasks.isEmpty()) {
+            if((importantTasks.isEmpty() && thisweeksTasks.isEmpty() && scheduledTasks.isEmpty())
+                    || (!importanttasks && thisweeksTasks.isEmpty() && scheduledTasks.isEmpty())
+                    || (importantTasks.isEmpty() && !duetasks && scheduledTasks.isEmpty())
+                    || (importantTasks.isEmpty() && thisweeksTasks.isEmpty() && !scheduledtasks)){
                 linearLayout1.removeView(textView3);
                 linearLayout1.removeView(gridView3);
                 linearLayout1.addView(textView1);
@@ -220,7 +225,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                 if(!completedTasks.isEmpty()) {
                     linearLayout1.addView(textView3);
                     linearLayout1.addView(gridView3);
-
                 }
                 textView1.setText("No important, due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
             } else {
@@ -372,6 +376,9 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                         // Delete the task and go back to MainMenu
                         task.setScheduled(false);
                         task.SaveToFile(getContext());
+                        refreshContent();
+                        Toast toast = Toast.makeText(getContext().getApplicationContext(), "Task removed from your schedule.", Toast.LENGTH_SHORT);
+                        toast.show();
 
                     }
                 })

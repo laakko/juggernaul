@@ -27,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button generateMockDataBtn;
     private Button deleteCompletedBtn;
     private ImageButton backBtn;
-    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch, switchHideCompleted;
+    private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch, switchHideCompleted, switchAutoDelete;
     public static boolean completedtasks, duetasks, importanttasks, scheduledtasks;
     // Handle back button
     @Override
@@ -57,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         scheduleSwitch = findViewById(R.id.switchSchedule);
 
         switchHideCompleted = findViewById(R.id.switchHideCompleted);
+        switchAutoDelete = findViewById(R.id.switchAutoDelete);
 
         // Save switch states
         darkSwitch.setChecked(sharedPrefs.getBoolean("dark", true));
@@ -65,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         importantSwitch.setChecked(sharedPrefs.getBoolean("importanttasks", true));
         scheduleSwitch.setChecked(sharedPrefs.getBoolean("scheduledtasks", true));
         switchHideCompleted.setChecked(sharedPrefs.getBoolean("hidecompleted", true));
+        switchAutoDelete.setChecked(sharedPrefs.getBoolean("autodelete", true));
 
 
         // Set app background to dark
@@ -184,6 +186,26 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
                     editor.putBoolean("hidecompleted", false);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                }
+
+            }
+        });
+
+        // Auto Delete when DL passes - switch
+        switchHideCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(switchHideCompleted.isChecked()){
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("autodelete", true);
+                    editor.commit();
+                    startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
+                    editor.putBoolean("autodelete", false);
                     editor.commit();
                     startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
                 }

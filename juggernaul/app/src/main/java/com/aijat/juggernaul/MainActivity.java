@@ -61,10 +61,24 @@ public class MainActivity extends AppCompatActivity {
             duetasks = false;
         }
 
+        // Hide completed tasks - switch
         if(sharedPrefs.getBoolean("hidecompleted", true)){
             hidecompleted = true;
         } else {
             hidecompleted = false;
+        }
+
+        // Auto-delete tasks when DL passes - switch
+        if(sharedPrefs.getBoolean("autodelete", true)) {
+            ArrayList<Task> allTasks = TaskService.GetAllNotDeletedTasks(getApplication().getApplicationContext());
+            for(Task task : allTasks) {
+                if(task.daysUntilDeadline() < 0) {
+                    task.setDeleted(true);
+                    task.SaveToFile(getApplication().getApplicationContext());
+                    updateTabs = true;
+                }
+
+            }
         }
 
         setContentView(R.layout.activity_main);

@@ -161,4 +161,13 @@
         android:autoLink="web"
         android:text="https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/" />
 
+    <Switch
+        android:id="@+id/switchAutoDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/switchHideCompleted"
+        android:layout_below="@+id/switchHideCompleted"
+        android:layout_marginTop="10dp"
+        android:text="Auto-delete tasks when DL passes" />
+
 </RelativeLayout>

@@ -205,6 +205,7 @@
                     });
 
                     ArrayAdapter<String> adapter = new ArrayAdapter(layout.getContext(), android.R.layout.simple_spinner_item, Task.Priority.values());
+                    adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice);
                     prioritySpinner.setAdapter(adapter);
 
                     // Category
@@ -220,7 +221,9 @@
                         }
                     });
 
-                    categorySpinner.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, Task.TaskCategory.values()));
+                    ArrayAdapter<String> adapter2 = new ArrayAdapter(layout.getContext(), android.R.layout.simple_spinner_item, Task.TaskCategory.values());
+                    adapter2.setDropDownViewResource(android.R.layout.select_dialog_multichoice);
+                    categorySpinner.setAdapter(adapter2);
 
                     // Description
                     final EditText txtDescription = layout.findViewById(R.id.taskDescription);
@@ -593,7 +596,7 @@
                                                         .stream(300, 5000L);
 
                                             } konfetti = false;
-                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Well done, task completed!", Toast.LENGTH_SHORT);
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Well done, you nailed the task!", Toast.LENGTH_SHORT);
                                             toast.show();
                                         }
                                         else {

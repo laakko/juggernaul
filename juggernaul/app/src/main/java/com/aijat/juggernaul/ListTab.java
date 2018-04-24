@@ -303,7 +303,7 @@
                     } else {
                         // Loop "other"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
-                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.OTHER && taskArrayAdapter.getItem(i).getStatus() != Task.Status.DONE) {
                                 taskArrayAdapter.restoreItem(i);
                                 hiddenCategories.remove("OTHER");
                             }
@@ -326,7 +326,7 @@
                     } else {
                         // Loop "school"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
-                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.SCHOOL && taskArrayAdapter.getItem(i).getStatus() != Task.Status.DONE) {
                                 taskArrayAdapter.restoreItem(i);
                                 hiddenCategories.remove("SCHOOL");
                                 try { // Epic workaround to prevent duplicates
@@ -353,7 +353,7 @@
                     } else {
                         // Loop "work"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
-                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK) {
+                            if(taskArrayAdapter.getItem(i).getCategory() == Task.TaskCategory.WORK && taskArrayAdapter.getItem(i).getStatus() != Task.Status.DONE) {
                                 taskArrayAdapter.restoreItem(i);
                                 hiddenCategories.remove("WORK");
 

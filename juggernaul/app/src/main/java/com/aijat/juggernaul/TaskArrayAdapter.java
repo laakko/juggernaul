@@ -91,6 +91,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
     public final void clearHiddenItems() {
         hiddenTasks.clear();
+        notifyDataSetChanged();
     }
 
     @Override

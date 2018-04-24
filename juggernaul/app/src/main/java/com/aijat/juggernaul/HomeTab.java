@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static com.aijat.juggernaul.ListTab.hiddenCategories;
 import static com.aijat.juggernaul.ListTab.updateTabs;
@@ -160,6 +161,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             }
 
 
+
             taskArrayHomeAdapter2 = new TaskArrayHomeAdapter(getContext().getApplicationContext(), thisweeksTasks);
 
             gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -173,6 +175,15 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             });
 
             gridView2.setAdapter(taskArrayHomeAdapter2);
+            taskArrayHomeAdapter2.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+
+                    return task.getDeadline().compareTo(t1.getDeadline());
+
+                }
+            });
+
         } else {
             textView2.setVisibility(View.INVISIBLE);
             linearLayout1.removeView(gridView2);
@@ -299,6 +310,14 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             thisweeksTasks = TaskService.GetThisWeeksTasks(getActivity().getApplication());
             taskArrayHomeAdapter2.clear();
             taskArrayHomeAdapter2.addAll(thisweeksTasks);
+            taskArrayHomeAdapter2.sort(new Comparator<Task>() {
+                @Override
+                public int compare(Task task, Task t1) {
+
+                    return task.getDeadline().compareTo(t1.getDeadline());
+
+                }
+            });
             taskArrayHomeAdapter2.notifyDataSetChanged();
             hideCompletedTasks(taskArrayHomeAdapter2, thisweeksTasks);
            // updateHiddenCategories(taskArrayHomeAdapter2, thisweeksTasks);

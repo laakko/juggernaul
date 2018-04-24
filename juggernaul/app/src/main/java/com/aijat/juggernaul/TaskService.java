@@ -124,7 +124,10 @@ public class TaskService extends FileService {
                 if (    oneTask.daysUntilDeadline() < 3 ||
                         oneTask.getPriority() == Task.Priority.HIGH ||
                         oneTask.getPriority() == Task.Priority.MEDIUM) {
-                    importantNotDeletedTasks.add(oneTask);
+                    if(importantNotDeletedTasks.size() < 5) {
+                        importantNotDeletedTasks.add(oneTask);
+                    }
+
                 }
             }
 

@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (sharedPrefs.getBoolean("dark",true)) {
             SettingsActivity.this.setTheme(R.style.Dark);
         } else {
-            SettingsActivity.this.setTheme(R.style.AppTheme);
+            SettingsActivity.this.setTheme(R.style.light);
         }
         setContentView(R.layout.activity_settings);
         darkSwitch = findViewById(R.id.switchDark);

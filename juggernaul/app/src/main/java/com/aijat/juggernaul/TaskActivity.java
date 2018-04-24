@@ -63,7 +63,7 @@ public class TaskActivity extends AppCompatActivity {
         if (sharedPrefs.getBoolean("dark",true)) {
             TaskActivity.this.setTheme(R.style.Dark);
         } else {
-            TaskActivity.this.setTheme(R.style.AppTheme);
+            TaskActivity.this.setTheme(R.style.light);
         }
         setContentView(R.layout.activity_task);
         final int taskId = getIntent().getIntExtra("taskId", -1);

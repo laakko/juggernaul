@@ -257,7 +257,22 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                     linearLayout1.addView(textView3);
                     linearLayout1.addView(gridView3);
                 }
-                textView1.setText("No important, due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                if(!importanttasks && duetasks && scheduledtasks) {
+                    textView1.setText("No due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else if(importanttasks && !duetasks && scheduledtasks) {
+                    textView1.setText("No important or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else if(importanttasks && duetasks && !scheduledtasks) {
+                    textView1.setText("No important or due tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else if(!importanttasks && !duetasks && scheduledtasks) {
+                    textView1.setText("No scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else if(importanttasks && !duetasks && !scheduledtasks) {
+                    textView1.setText("No important tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else if(!importanttasks && duetasks && !scheduledtasks) {
+                    textView1.setText("No due tasks. \n Enjoy your light schedule! \n\n\n ");
+                } else {
+                    textView1.setText("No important, due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                }
+
             } else {
                 textView1.setText("Your most important tasks:");
             }
@@ -415,10 +430,10 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                         // Delete the task and go back to MainMenu
                         task.setScheduled(false);
                         task.SaveToFile(getContext());
-                        refreshContent();
                         updateTabs = true;
                         Toast toast = Toast.makeText(getContext().getApplicationContext(), "Task removed from your schedule.", Toast.LENGTH_SHORT);
                         toast.show();
+                        refreshContent();
 
                     }
                 })

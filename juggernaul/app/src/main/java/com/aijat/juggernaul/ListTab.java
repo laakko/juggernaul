@@ -596,9 +596,8 @@
                                                         .stream(300, 5000L);
 
                                             } konfetti = false;
-                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Well done, you JuggerNaul'd the task!", Toast.LENGTH_LONG);
+                                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "\n Well done, \n you JuggerNaul'd the task! \n *Finlandia plays* \n", Toast.LENGTH_LONG);
                                             View view = toast.getView();
-                                            view.setBackgroundResource(R.color.colorPrimary);
                                             toast.show();
                                         }
                                         else {

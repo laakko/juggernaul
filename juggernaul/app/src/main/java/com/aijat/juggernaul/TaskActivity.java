@@ -327,7 +327,7 @@ public class TaskActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(positive_value, new DialogInterface.OnClickListener() {
+                .setNegativeButton(positive_value, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
                         // Delete the task and go back to MainMenu
@@ -343,7 +343,7 @@ public class TaskActivity extends AppCompatActivity {
 
                     }
                 })
-                .setNegativeButton(negative_value, new DialogInterface.OnClickListener() {
+                .setPositiveButton(negative_value, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

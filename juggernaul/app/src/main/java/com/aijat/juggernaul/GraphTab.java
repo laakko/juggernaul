@@ -59,7 +59,7 @@ public class GraphTab extends Fragment {
             LineChartView chart = view.findViewById(R.id.linechart);
             chart.addData(dataset);
             chart = CustomizeChart(chart, sharedPrefs, maxValue);
-            Animation anim = new Animation(500).setInterpolator(new BounceInterpolator()).fromAlpha(0);
+            Animation anim = new Animation(1500).setInterpolator(new BounceInterpolator()).fromAlpha(0);
             chart.show(anim);
             chart.show();
         }

@@ -292,7 +292,6 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
         // Hide sort options in HomeTab
-        /*
         MenuItem sort1 = menu.findItem(R.id.sort1); sort1.setVisible(false);
         MenuItem sort2 = menu.findItem(R.id.sort2); sort2.setVisible(false);
         MenuItem sort3 = menu.findItem(R.id.sort3); sort3.setVisible(false);
@@ -300,7 +299,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         MenuItem check1 = menu.findItem(R.id.checkOther); check1.setVisible(false);
         MenuItem check2 = menu.findItem(R.id.checkWork); check2.setVisible(false);
         MenuItem check3 = menu.findItem(R.id.checkSchool); check3.setVisible(false);
-        */
+
 
     } @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -424,7 +423,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Remove scheduled item?")
                 .setCancelable(false)
-                .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Remove", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
                         // Delete the task and go back to MainMenu
@@ -437,7 +436,7 @@ public class HomeTab extends Fragment implements View.OnClickListener {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

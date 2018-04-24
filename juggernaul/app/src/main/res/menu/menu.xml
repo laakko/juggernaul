@@ -9,13 +9,13 @@
         app:showAsAction="always|collapseActionView"></item>
     <item
         android:id="@+id/joingroup"
-        android:enabled="false"
+        android:enabled="true"
         android:title="Join Group"></item>
     <item
         android:id="@+id/sort1"
         android:title="Sort by Title"></item>
     <item android:title="Sort by DL" android:id="@+id/sort2"></item>
-    <item android:title="Sort by PRIO" android:id="@+id/sort3"></item>
+    <item android:title="Sort by Priority" android:id="@+id/sort3"></item>
     <item android:title="Sort by Status" android:id="@+id/sort4"></item>
     <item
         android:id="@+id/checkOther"

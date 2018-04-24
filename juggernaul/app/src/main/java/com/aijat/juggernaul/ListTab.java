@@ -36,6 +36,7 @@
     import android.widget.ListView;
     import android.widget.PopupWindow;
     import android.widget.Spinner;
+    import android.widget.TextView;
     import android.widget.Toast;
 
     import java.util.ArrayList;
@@ -65,6 +66,7 @@
         public Task.Priority tempPriority;
         public static List<String> hiddenCategories = new ArrayList<String>();
         public boolean konfetti;
+        public static boolean workcategory, schoolcategory, othercategory;
         public static boolean updateTabs = false;
 
         @Override
@@ -110,7 +112,6 @@
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                     // i is not a valid index if there are hidden tasks -> calculate new indexes
                     if(!hiddenCategories.isEmpty() || hidecompleted) {
                         for(Integer hiddenId : TaskArrayAdapter.hiddenTasks) {
@@ -122,6 +123,7 @@
                         }
                     }
                     longClickAlert2(taskArrayAdapter.getItem(i), getView());
+
                     return true;
                 }
             });
@@ -263,10 +265,20 @@
         }
 
 
+        MenuItem menucategory,menuschool,menuother;
         // Handle action menu
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             inflater.inflate(R.menu.menu, menu);
+            menucategory = menu.findItem(R.id.checkWork);
+            menuschool = menu.findItem(R.id.checkSchool);
+            menuother = menu.findItem(R.id.checkOther);
+            if(workcategory)
+                menucategory.setChecked(false);
+            if(schoolcategory)
+                menuschool.setChecked(false);
+            if(othercategory)
+                menuother.setChecked(false);
             super.onCreateOptionsMenu(menu, inflater);
         } @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -287,6 +299,7 @@
                                 hiddenCategories.add("OTHER");
                             }
                         }
+                        othercategory = true;
                     } else {
                         // Loop "other"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
@@ -295,6 +308,8 @@
                                 hiddenCategories.remove("OTHER");
                             }
                         }
+
+                        othercategory = false;
                     }
                     return true;
                 case R.id.checkSchool:
@@ -307,6 +322,7 @@
                                 hiddenCategories.add("SCHOOL");
                             }
                         }
+                        schoolcategory = true;
                     } else {
                         // Loop "school"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
@@ -320,6 +336,7 @@
                                 }
                             }
                         }
+                        schoolcategory = false;
                     }
                     return true;
                 case R.id.checkWork:
@@ -332,6 +349,7 @@
                                 hiddenCategories.add("WORK");
                             }
                         }
+                        workcategory = true;
                     } else {
                         // Loop "work"-category tasks -> restore items to ListView
                         for(int i=0; i<allTasks.size(); ++i) {
@@ -341,6 +359,7 @@
 
                             }
                         }
+                        workcategory = false;
                     }
                     return true;
                 case R.id.joingroup:

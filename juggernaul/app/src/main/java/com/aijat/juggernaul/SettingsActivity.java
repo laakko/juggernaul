@@ -272,7 +272,7 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to reset? This will delete all tasks")
                 .setCancelable(false)
-                .setPositiveButton("Yes, reset everything", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Yes, reset everything", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
                         TaskService.ResetEverything(getApplicationContext());
@@ -281,7 +281,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -295,7 +295,7 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Delete all completed tasks?")
                 .setCancelable(false)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
                         ArrayList<Task> alltasks = TaskService.GetAllNotDeletedTasks(getApplication().getApplicationContext());
@@ -311,7 +311,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

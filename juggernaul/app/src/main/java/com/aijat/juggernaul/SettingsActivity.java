@@ -194,11 +194,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         // Auto Delete when DL passes - switch
-        switchHideCompleted.setOnClickListener(new View.OnClickListener() {
+        switchAutoDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(switchHideCompleted.isChecked()){
+                if(switchAutoDelete.isChecked()){
                     SharedPreferences.Editor editor = getSharedPreferences("com.aijat.juggernaul", MODE_PRIVATE).edit();
                     editor.putBoolean("autodelete", true);
                     editor.commit();

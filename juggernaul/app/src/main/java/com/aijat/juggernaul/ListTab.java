@@ -65,7 +65,7 @@
         public Task.Priority tempPriority;
         public static List<String> hiddenCategories = new ArrayList<String>();
         public boolean konfetti;
-        public static boolean updateTabs;
+        public static boolean updateTabs = false;
 
         @Override
         public void onResume() {

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPrefs.getBoolean("dark",true)) {
             MainActivity.this.setTheme(R.style.Dark);
         } else {
-            MainActivity.this.setTheme(R.style.AppTheme);
+            MainActivity.this.setTheme(R.style.light);
         }
 
 

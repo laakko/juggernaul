@@ -14,24 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnDeleteCompleted"
         android:layout_alignBottom="@+id/btnDeleteCompleted"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
+        android:layout_alignStart="@+id/textView12"
         android:background="@drawable/rounded_button"
         android:text="Reset" />
-
-    <Button
-        android:id="@+id/loadMockButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/resetButton"
-        android:layout_alignBottom="@+id/resetButton"
-        android:layout_toStartOf="@+id/textView"
-        android:background="@drawable/rounded_button"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginBottom="17dp"
-        android:text="Load mock data" />
 
     <Switch
         android:id="@+id/switchDark"
@@ -73,15 +58,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/btnDeleteCompleted"
-        android:layout_marginStart="39dp"
+        android:layout_toEndOf="@+id/switchCompleted"
         android:text="© Aijat 2018" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/loadMockButton"
+        android:layout_alignStart="@+id/textView12"
         android:layout_below="@+id/textView12"
         android:text="App version: 1.0.0" />
 
@@ -145,13 +129,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView12"
-        android:layout_marginBottom="17dp"
-        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignEnd="@+id/textView12"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/rounded_button"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="delete completed "
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/textView12"

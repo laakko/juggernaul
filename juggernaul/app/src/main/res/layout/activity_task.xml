@@ -215,7 +215,7 @@
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"
         fab:menu_labels_colorNormal="@color/colorPrimary"
-        fab:menu_labels_colorPressed="@color/colorPrimaryDark"
+        fab:menu_labels_colorPressed="@color/colorAccent"
         fab:menu_labels_colorRipple="@color/colorPrimaryDark"
         fab:menu_labels_cornerRadius="3dp"
         fab:menu_labels_ellipsize="none"

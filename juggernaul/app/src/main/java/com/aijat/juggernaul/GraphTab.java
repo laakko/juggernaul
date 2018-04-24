@@ -12,7 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 
+import com.db.chart.animation.Animation;
 import com.db.chart.model.LineSet;
 import com.db.chart.view.LineChartView;
 
@@ -56,6 +59,8 @@ public class GraphTab extends Fragment {
             LineChartView chart = view.findViewById(R.id.linechart);
             chart.addData(dataset);
             chart = CustomizeChart(chart, sharedPrefs, maxValue);
+            Animation anim = new Animation(500).setInterpolator(new BounceInterpolator()).fromAlpha(0);
+            chart.show(anim);
             chart.show();
         }
 

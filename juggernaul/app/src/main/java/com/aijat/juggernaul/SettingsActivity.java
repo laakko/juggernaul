@@ -227,12 +227,13 @@ public class SettingsActivity extends AppCompatActivity {
                 resetAlert();
             }
         });
-        generateMockDataBtn = findViewById(R.id.loadMockButton);
+
+        /*generateMockDataBtn = findViewById(R.id.loadMockButton);
         generateMockDataBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 generateMockDataButtonClicked(v);
             }
-        });
+        });*/
 
         backBtn = findViewById(R.id.backButton);
         backBtn.setOnClickListener(new View.OnClickListener() {

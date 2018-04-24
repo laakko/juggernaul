@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,6 +106,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             });
 
             gridView.setAdapter(taskArrayHomeAdapter);
+            try {
+                expandGridView(gridView);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
         } else {
             linearLayout1.removeView(gridView);
             linearLayout1.removeView(textView1);
@@ -141,6 +147,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                 });
 
                 gridView4.setAdapter(taskArrayHomeAdapter4);
+            try {
+                expandGridView(gridView4);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
 
 
         } else {
@@ -175,6 +186,12 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             });
 
             gridView2.setAdapter(taskArrayHomeAdapter2);
+            try {
+                expandGridView(gridView2);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+
             taskArrayHomeAdapter2.sort(new Comparator<Task>() {
                 @Override
                 public int compare(Task task, Task t1) {
@@ -216,6 +233,11 @@ public class HomeTab extends Fragment implements View.OnClickListener {
             });
 
             gridView3.setAdapter(taskArrayHomeAdapter3);
+            try {
+                expandGridView(gridView3);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
         } else {
             linearLayout1.removeView(gridView3);
             linearLayout1.removeView(textView3);
@@ -408,6 +430,36 @@ public class HomeTab extends Fragment implements View.OnClickListener {
         AlertDialog alert = builder.create();
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(230, 68, 88, 120))); // ColorPrimary
         alert.show();
+    }
+
+
+    public void expandGridView(GridView gridView) {
+        int columns = 1;
+        ListAdapter listAdapter = gridView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int items = listAdapter.getCount();
+        int rows = 0;
+
+        View listItem = listAdapter.getView(0, null, gridView);
+        listItem.measure(0, 0);
+        totalHeight = listItem.getMeasuredHeight();
+
+        float x = 1;
+        if( items > columns ){
+            x = items/columns;
+            rows = (int) (x + 1);
+            totalHeight *= rows;
+        }
+
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight;
+        gridView.setLayoutParams(params);
+
     }
 
 

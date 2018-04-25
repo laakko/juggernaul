@@ -52,11 +52,16 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
 
         TextView titleTextView = listItem.findViewById(R.id.homeTaskTitle);
         titleTextView.setText(currentTask.getTitle());
-
         TextView deadlineTextView = listItem.findViewById(R.id.homeTaskDeadline);
 
         deadlineTextView.setText("DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.daysUntilDeadline() + " days left");
-        deadlineTextView.setTextColor(Color.DKGRAY);
+
+        SharedPreferences prefs = this.getContext().getSharedPreferences("com.aijat.juggernaul", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("dark", true)) {
+            deadlineTextView.setTextColor(Color.LTGRAY);
+        } else {
+            deadlineTextView.setTextColor(Color.DKGRAY);
+        }
 
         setPriorityColor(currentTask.getPriority(), titleTextView);
 

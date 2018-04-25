@@ -258,19 +258,19 @@ public class HomeTab extends Fragment implements View.OnClickListener {
                     linearLayout1.addView(gridView3);
                 }
                 if(!importanttasks && duetasks && scheduledtasks) {
-                    textView1.setText("No due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                    textView1.setText("Nothing due this week, \n no scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
                 } else if(importanttasks && !duetasks && scheduledtasks) {
-                    textView1.setText("No important or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                    textView1.setText(" No important or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
                 } else if(importanttasks && duetasks && !scheduledtasks) {
-                    textView1.setText("No important or due tasks. \n Enjoy your light schedule! \n\n\n ");
+                    textView1.setText("No important tasks, \n and nothing due this week. \n Enjoy your light schedule! \n\n\n ");
                 } else if(!importanttasks && !duetasks && scheduledtasks) {
                     textView1.setText("No scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
                 } else if(importanttasks && !duetasks && !scheduledtasks) {
                     textView1.setText("No important tasks. \n Enjoy your light schedule! \n\n\n ");
                 } else if(!importanttasks && duetasks && !scheduledtasks) {
-                    textView1.setText("No due tasks. \n Enjoy your light schedule! \n\n\n ");
+                    textView1.setText("Nothing due this week. \n Enjoy your light schedule! \n\n\n ");
                 } else {
-                    textView1.setText("No important, due or scheduled tasks. \n Enjoy your light schedule! \n\n\n ");
+                    textView1.setText("No important or scheduled tasks, \n  and nothing due this week. \n Enjoy your light schedule! \n\n\n ");
                 }
 
             } else {

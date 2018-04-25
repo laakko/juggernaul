@@ -1,6 +1,7 @@
 package com.aijat.juggernaul;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +27,7 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
     private SortedSet<Integer> hiddenTasks = new TreeSet<>();
 
     public TaskArrayHomeAdapter(@NonNull Context context, ArrayList<Task> list) {
-        super(context, 0 , list);
+        super(context, 0, list);
         mContext = context;
         taskList = list;
     }
@@ -35,12 +36,12 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
-        if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_task_home,parent,false);
+        if (listItem == null)
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.layout_task_home, parent, false);
 
         // Handle hidden tasks
-        for(Integer hiddenId : hiddenTasks) {
-            if(hiddenId <= position) {
+        for (Integer hiddenId : hiddenTasks) {
+            if (hiddenId <= position) {
                 position += 1;
             } else {
                 break;
@@ -89,14 +90,24 @@ public class TaskArrayHomeAdapter extends ArrayAdapter<Task> {
 
     // Function to change task color based on priority
     public void setPriorityColor(Task.Priority priority, TextView title) {
-        if (priority == LOW) {
-            title.setTextColor(Color.parseColor("#66bb6a"));
-        } else if (priority == MEDIUM) {
-            title.setTextColor(Color.parseColor("#ffa726"));
-        } else if (priority == HIGH) {
-            title.setTextColor(Color.parseColor("#bf360c"));
+        SharedPreferences prefs = this.getContext().getSharedPreferences("com.aijat.juggernaul", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("dark", true)) {
+            if (priority == LOW) {
+                title.setTextColor(Color.parseColor("#66bb6a"));
+            } else if (priority == MEDIUM) {
+                title.setTextColor(Color.parseColor("#ffa726"));
+            } else if (priority == HIGH) {
+                title.setTextColor(Color.parseColor("#bf360c"));
+            }
         } else {
-            title.setBackgroundColor(Color.GRAY);
+            if (priority == LOW) {
+                title.setTextColor(Color.parseColor("#509753"));
+            } else if (priority == MEDIUM) {
+                title.setTextColor(Color.parseColor("#dc8c16"));
+            } else if (priority == HIGH) {
+                title.setTextColor(Color.parseColor("#bf360c"));
+
+            }
         }
     }
 }

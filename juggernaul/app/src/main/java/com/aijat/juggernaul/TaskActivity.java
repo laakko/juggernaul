@@ -143,6 +143,7 @@ public class TaskActivity extends AppCompatActivity {
                 Task.Status selectedStatus = Task.Status.values()[i];
                 if (selectedStatus != taskInEditing.getStatus()) {
                     taskInEditing.setStatus(selectedStatus);
+                    ListTab.konfetti = true;
                 }
             }
 
@@ -200,8 +201,15 @@ public class TaskActivity extends AppCompatActivity {
                 }
                 boolean saved = taskInEditing.SaveToFile(getApplication().getApplicationContext());
                 if (saved) {
-                    Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully saved!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    if(taskInEditing.getStatus() != Task.Status.DONE) {
+                        ListTab.konfetti=false;
+                        Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Task successfully saved!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "\n Well done, \n you JuggerNaul'd the task! \n *Finlandia plays* \n", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext().getApplicationContext(), "Saving failed!", Toast.LENGTH_SHORT);
                     toast.show();

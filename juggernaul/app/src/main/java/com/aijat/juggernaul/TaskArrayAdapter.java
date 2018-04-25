@@ -103,14 +103,24 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
     // Function to change task color based on priority
     public void setPriorityColor(Task.Priority priority, TextView title) {
-        if(priority == LOW) {
-            title.setTextColor(Color.parseColor("#66bb6a"));
-        } else if(priority == MEDIUM) {
-            title.setTextColor(Color.parseColor("#ffa726"));
-        } else if(priority == HIGH) {
-            title.setTextColor(Color.parseColor("#bf360c"));
-        } else {
-            title.setBackgroundColor(Color.GRAY);
+        SharedPreferences prefs = this.getContext().getSharedPreferences("com.aijat.juggernaul", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("dark", true)) {
+            if (priority == LOW) {
+                title.setTextColor(Color.parseColor("#66bb6a"));
+            } else if (priority == MEDIUM) {
+                title.setTextColor(Color.parseColor("#ffa726"));
+            } else if (priority == HIGH) {
+                title.setTextColor(Color.parseColor("#bf360c"));
+            }
+        }else {
+            if(priority == LOW) {
+                title.setTextColor(Color.parseColor("#509753"));
+            } else if(priority == MEDIUM) {
+                title.setTextColor(Color.parseColor("#dc8c16"));
+            } else if(priority == HIGH) {
+                title.setTextColor(Color.parseColor("#bf360c"));
+
+            }
         }
     }
 

@@ -65,7 +65,7 @@
         public Task.TaskCategory tempCategory;
         public Task.Priority tempPriority;
         public static List<String> hiddenCategories = new ArrayList<String>();
-        public boolean konfetti;
+        public static boolean konfetti;
         public static boolean workcategory, schoolcategory, othercategory;
         public static boolean updateTabs = false;
 
@@ -601,20 +601,7 @@
                                         else if(task.getStatus() == Task.Status.INPROGRESS) {
                                             task.setStatus(Task.Status.DONE);
                                             konfetti = true;
-                                            final KonfettiView konfettiView = (KonfettiView)view.findViewById(R.id.viewKonfetti);
-                                            if(konfetti) {
-                                                konfettiView.build()
-                                                        .addColors(Color.rgb(146,205,207), Color.rgb(49,53,61), Color.rgb(68,88,120))
-                                                        .setDirection(0.0, 359.0)
-                                                        .setSpeed(2f,7f)
-                                                        .setFadeOutEnabled(true)
-                                                        .setTimeToLive(1000L)
-                                                        .addShapes(Shape.RECT, Shape.CIRCLE)
-                                                        .addSizes(new Size(13, 5f))
-                                                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-                                                        .stream(300, 5000L);
 
-                                            } konfetti = false;
                                             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "\n Well done, \n you JuggerNaul'd the task! \n *Finlandia plays* \n", Toast.LENGTH_LONG);
                                             View view = toast.getView();
                                             toast.show();
@@ -704,6 +691,29 @@
             updateHiddenCategories();
             updateTabs = true;
             taskArrayAdapter.notifyDataSetChanged();
+            if(konfetti){
+                konfettiburst(getView());
+            }
+
+        }
+
+
+        public void konfettiburst(final View view) {
+
+            final KonfettiView konfettiView = (KonfettiView)view.findViewById(R.id.viewKonfetti);
+
+            konfettiView.build()
+                        .addColors(Color.rgb(146,205,207), Color.rgb(49,53,61), Color.rgb(68,88,120))
+                        .setDirection(0.0, 359.0)
+                        .setSpeed(2f,7f)
+                        .setFadeOutEnabled(true)
+                        .setTimeToLive(1000L)
+                        .addShapes(Shape.RECT, Shape.CIRCLE)
+                        .addSizes(new Size(13, 5f))
+                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                        .stream(300, 5000L);
+
+            konfetti = false;
 
         }
 

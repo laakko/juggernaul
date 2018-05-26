@@ -7,7 +7,8 @@ Task list
 
 ## Front-end
 - [ ] Lagisuus bugin korjaus (hoida refreshaus background threadeilla)
-- [ ] Widgetti, jossa List-tabin ListView. Skrollattavissa ja klikattavissa.
+- [x] Widgetti, jossa List-tabin ListView. Skrollattavissa ja klikattavissa.
+    - [ ] mahdollisuus lisätä taski suoraan widgetistä 
 - [ ] Taskien exporttaus kalenteriin
 - [ ] Graafissa mahdollisuus klikata pallukkaa -> näyttää taskien nimet
 - [ ] Tunnit mukaan DL:ään

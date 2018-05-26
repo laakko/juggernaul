@@ -1,0 +1,134 @@
+package com.aijat.juggernaul;
+
+
+import android.app.LauncherActivity;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
+import android.widget.RemoteViewsService.RemoteViewsFactory;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.aijat.juggernaul.Task.Priority.HIGH;
+import static com.aijat.juggernaul.Task.Priority.LOW;
+import static com.aijat.juggernaul.Task.Priority.MEDIUM;
+
+public class WidgetService extends RemoteViewsService {
+
+    @Override
+    public RemoteViewsFactory onGetViewFactory(Intent intent){
+        return (new ListProvider(this.getApplicationContext(), intent));
+    }
+}
+
+class ListProvider implements RemoteViewsFactory {
+
+    private List<Task> widgetTaskList = new ArrayList<>();
+    private Context context;
+    private int appWidgetId;
+
+    public ListProvider(Context context, Intent intent) {
+        this.context = context;
+        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+        Log.d("AppWidgetId", String.valueOf(appWidgetId));
+
+    }
+
+    private void updateWidgetList(){
+        widgetTaskList.clear();
+        try {
+            widgetTaskList = TaskService.GetAllNotDeletedTasks(context);
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
+        /*
+        try {
+            for (Task task : ListTab.allTasks) {
+                widgetTaskList.add(task);
+            }
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+        */
+    }
+
+    @Override
+    public void onCreate(){
+        updateWidgetList();
+    }
+
+    @Override
+    public void onDataSetChanged(){
+        updateWidgetList();
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+
+    public void onDestroy(){
+        widgetTaskList.clear();
+    }
+
+
+    public RemoteViews getLoadingView(){
+        return null;
+    }
+
+    @Override
+    public final boolean hasStableIds() {
+        return true;
+    }
+    @Override
+    public int getCount() {
+        return widgetTaskList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public RemoteViews getViewAt(int position){
+        final RemoteViews remoteView = new RemoteViews(
+                context.getPackageName(), R.layout.layout_task_home);
+
+      Task currentTask = widgetTaskList.get(position);
+      remoteView.setTextViewText(R.id.homeTaskTitle, currentTask.getTitle());
+      remoteView.setTextViewText(R.id.homeTaskDeadline, "DL: " + currentTask.getDeadlinePretty() + ", " + currentTask.daysUntilDeadline() + " days left");
+
+
+        if (currentTask.getPriority() == LOW) {
+            remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#66bb6a"));
+        } else if (currentTask.getPriority() == MEDIUM) {
+            remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#ffa726"));
+        } else if (currentTask.getPriority() == HIGH) {
+            remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#bf360c"));
+        }
+
+
+
+        // Set intent for handling clicks
+        Bundle extras = new Bundle();
+        extras.putInt(NewAppWidget.EXTRA_ITEM, position);
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+        remoteView.setOnClickFillInIntent(R.id.homeTaskTitle, fillInIntent);
+
+
+
+      return remoteView;
+    }
+}

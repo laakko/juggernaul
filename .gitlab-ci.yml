@@ -29,5 +29,5 @@ build:
     - ./gradlew assembleRelease
   artifacts:
     paths:
-    - app/build/outputs/
+    - juggernaul/app/build/outputs/
 

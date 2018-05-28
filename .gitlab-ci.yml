@@ -22,12 +22,21 @@ before_script:
 
 stages:
   - build
+  - release
 
 build:
+  stage: build
+  except:
+    refs:
+      - release
+  script:
+    - ./gradlew assembleDebug
+
+release:
   only:
     refs:
-      - master
-  stage: build
+      - release
+  stage: release
   script:
     - ./gradlew assembleRelease
   artifacts:

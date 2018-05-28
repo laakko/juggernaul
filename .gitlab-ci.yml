@@ -17,7 +17,8 @@ before_script:
   - android-sdk-linux/tools/bin/sdkmanager "platforms;android-26" "build-tools;24.0.0" "extras;google;m2repository" "extras;android;m2repository" > installPlatform.log
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-  - chmod +x juggernaul/gradlew
+  - cd juggernaul
+  - chmod +x ./gradlew
 
 stages:
   - build

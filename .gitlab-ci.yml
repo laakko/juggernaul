@@ -26,8 +26,8 @@ stages:
 build:
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew assembleRelease
   artifacts:
     paths:
-    - app/build/outputs/
+    - juggernaul/app/build/outputs/
 

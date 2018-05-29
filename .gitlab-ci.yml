@@ -36,6 +36,7 @@ release:
   script:
     - mv ~/vaf-bot/res/releases/*.apk ~/vaf-bot/res/releases/archive
     - ./gradlew assembleRelease
+    - chmod +x app/build/outputs/apk/release/*.apk
     - cp app/build/outputs/apk/release/*.apk ~/vaf-bot/res/releases/juggernaul_$(date +%s).apk
   artifacts:
     paths:

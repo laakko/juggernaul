@@ -35,7 +35,7 @@ release:
   stage: release
   script:
     - ./gradlew assembleRelease
-    - cp juggernaul/app/build/outputs/apk/release/*.apk ~/vaf-bot/res/juggernaul_$(date +%s).apk
+    - cp app/build/outputs/apk/release/*.apk ~/vaf-bot/res/juggernaul_$(date +%s).apk
   artifacts:
     paths:
     - juggernaul/app/build/outputs/

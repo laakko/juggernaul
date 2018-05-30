@@ -5,6 +5,8 @@
     import android.app.NotificationChannel;
     import android.app.NotificationManager;
     import android.app.PendingIntent;
+    import android.appwidget.AppWidgetManager;
+    import android.content.ComponentName;
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
@@ -248,7 +250,7 @@
                             newTask.setScheduled(false);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
-
+                            updateWidget();
 
                             popup.dismiss();
                         }
@@ -694,6 +696,15 @@
             if(konfetti){
                 konfettiburst(getView());
             }
+
+        }
+
+
+        public void updateWidget() {
+            // Update widget
+            int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(getContext(), NewAppWidget.class));
+            NewAppWidget myWidget = new NewAppWidget();
+            myWidget.onUpdate(getActivity().getApplicationContext(), AppWidgetManager.getInstance(getActivity().getApplicationContext()),ids);
 
         }
 

@@ -104,6 +104,7 @@ public class TaskService extends FileService {
         return allTasksList;
     }
 
+
     public static ArrayList<Task> GetAllNotDeletedTasks(Context ctx) {
         ArrayList<Task> allTasksList = GetAllTasks(ctx);
         ArrayList<Task> notDeletedTasksList = new ArrayList<>();

@@ -250,7 +250,7 @@
                             newTask.setScheduled(false);
                             TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
-                            updateWidget();
+
 
                             popup.dismiss();
                         }
@@ -696,6 +696,7 @@
             if(konfetti){
                 konfettiburst(getView());
             }
+            updateWidget();
 
         }
 

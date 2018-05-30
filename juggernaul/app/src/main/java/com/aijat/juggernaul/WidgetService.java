@@ -134,7 +134,8 @@ class ListProvider implements RemoteViewsFactory {
         } else if (currentTask.getPriority() == MEDIUM) {
             remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#ffa726"));
         } else if (currentTask.getPriority() == HIGH) {
-            remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#bf360c"));
+           // remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#bf360c"));
+            remoteView.setTextColor(R.id.homeTaskTitle, Color.parseColor("#750c0c"));
         }
 
 

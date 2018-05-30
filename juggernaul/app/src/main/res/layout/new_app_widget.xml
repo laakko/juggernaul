@@ -18,7 +18,7 @@
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:text=" ToDo:"
+            android:text=" Your Tasks:"
             android:textAlignment="center"
             android:textSize="22sp"
             android:textStyle="bold" />

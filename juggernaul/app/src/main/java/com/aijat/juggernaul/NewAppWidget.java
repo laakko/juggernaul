@@ -56,21 +56,15 @@ public class NewAppWidget extends AppWidgetProvider {
             Log.i("touched:", Integer.toString(position));
 
 
+            // TODO Fix click to open item.
             /*
-            TaskArrayAdapter taskArrayAdapter = new TaskArrayAdapter(context, allTasks);
-            taskArrayAdapter.addAll(allTasks);
-
-            // Click event intent
-            int selectedTaskId = taskArrayAdapter.getItem(position).getId();
-            */
-
             wTaskList.clear();
             wTaskList = TaskService.GetAllNotDeletedTasks(context);
-
             int selectedTaskId = wTaskList.get(position).getId();
-            Intent intentTask = new Intent (context, TaskActivity.class);
+            */
+            Intent intentTask = new Intent (context, MainActivity.class);
             intentTask.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-            intentTask.putExtra("taskId", selectedTaskId);
+            //intentTask.putExtra("taskId", selectedTaskId);
             context.startActivity (intentTask);
 
         }

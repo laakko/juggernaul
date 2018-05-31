@@ -10,7 +10,8 @@ Task list
 - [ ] Lagisuus bugin korjaus (hoida refreshaus background threadeilla)
 - [x] Widgetti, jossa List-tabin ListView. Skrollattavissa ja klikattavissa.
     - [ ] mahdollisuus lisätä taski suoraan widgetistä 
-- [ ] Taskien exporttaus kalenteriin
+- [x] Yksittäisen taskin exporttaus kalenteriin
+- [ ] Kaikkien taskien exporttaus kalenteriin (Asetuksiin toggle automaattiselle exporttaukselle ja painike manuaaliselle exporttaukselle)
 - [ ] Graafissa mahdollisuus klikata pallukkaa -> näyttää taskien nimet
 - [ ] Tunnit mukaan DL:ään
 - [ ] Deksriptioniin voi lisätä sub-kategorioita

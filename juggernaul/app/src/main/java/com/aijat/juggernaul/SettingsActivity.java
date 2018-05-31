@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button resetBtn;
     private Button generateMockDataBtn;
     private Button deleteCompletedBtn;
-    private ImageButton backBtn;
+   // private ImageButton backBtn;
     private Switch darkSwitch, completedSwitch, dueSwitch, importantSwitch, scheduleSwitch, switchHideCompleted, switchAutoDelete;
     public static boolean completedtasks, duetasks, importanttasks, scheduledtasks;
     // Handle back button
@@ -235,14 +236,21 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });*/
 
+        /*
         backBtn = findViewById(R.id.backButton);
         backBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(SettingsActivity.this, MainActivity.class));
             }
         });
+        */
+
+        TextView txtVersion = (TextView) findViewById(R.id.textAppVersion);
+        txtVersion.setText("App version: " + BuildConfig.VERSION_NAME);
 
     }
+
+
 
 
     public void generateMockDataButtonClicked(View v) {

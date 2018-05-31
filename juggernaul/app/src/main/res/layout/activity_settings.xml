@@ -6,154 +6,175 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/resetButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnDeleteCompleted"
-        android:layout_alignBottom="@+id/btnDeleteCompleted"
-        android:layout_alignStart="@+id/textView12"
-        android:background="@drawable/rounded_button"
-        android:text="Reset" />
 
-    <Switch
-        android:id="@+id/switchDark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchImportant"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="49dp"
-        android:checked="false"
-        android:gravity="center"
-        android:text="Dark Mode " />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:gravity="center"
-        android:text="Settings"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:gravity="center"
+            android:text="Settings"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_marginStart="22dp"
-        android:alpha="1"
-        android:background="@null"
-        app:srcCompat="@mipmap/back_arrow" />
+        <Switch
+            android:id="@+id/switchDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:checked="false"
+            android:gravity="center"
+            android:text="Dark Mode " />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/switchCompleted"
-        android:text="© Aijat 2018" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Modify Home-tab" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView12"
-        android:layout_below="@+id/textView12"
-        android:text="App version: 1.0.0" />
+        <Switch
+            android:id="@+id/switchImportant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text='"Your most important tasks" ' />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/switchImportant"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="Modify Home-tab" />
+        <Switch
+            android:id="@+id/switchSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text='"Your Schedule" ' />
 
-    <Switch
-        android:id="@+id/switchDueWeek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchCompleted"
-        android:layout_below="@+id/switchSchedule"
-        android:layout_marginTop="15dp"
-        android:text='"Due This Week" ' />
+        <Switch
+            android:id="@+id/switchDueWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text='"Due This Week" ' />
 
-    <Switch
-        android:id="@+id/switchCompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/switchDueWeek"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text='"Completed tasks" ' />
+        <Switch
+            android:id="@+id/switchCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:text='"Completed tasks" ' />
 
-    <Switch
-        android:id="@+id/switchImportant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchSchedule"
-        android:layout_centerVertical="true"
-        android:text='"Your most important tasks" ' />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="More"
+            android:textAlignment="center" />
 
-    <Switch
-        android:id="@+id/switchSchedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchDueWeek"
-        android:layout_below="@+id/switchImportant"
-        android:layout_marginTop="16dp"
-        android:text='"Your Schedule" ' />
+        <Switch
+            android:id="@+id/switchAutoDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Auto-delete tasks when DL passes" />
 
-    <Switch
-        android:id="@+id/switchHideCompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchDark"
-        android:layout_below="@+id/switchDark"
-        android:layout_marginTop = "10dp"
-        android:text="Hide completed tasks " />
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Auto-export to Calendar" />
 
-    <Button
-        android:id="@+id/btnDeleteCompleted"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView12"
-        android:layout_alignEnd="@+id/textView12"
-        android:layout_marginBottom="13dp"
-        android:background="@drawable/rounded_button"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="delete completed "
-        android:textSize="14sp" />
+        <Switch
+            android:id="@+id/switchHideCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Hide completed tasks " />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView9"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:autoLink="web"
-        android:text="https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/" />
 
-    <Switch
-        android:id="@+id/switchAutoDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/switchHideCompleted"
-        android:layout_below="@+id/switchHideCompleted"
-        android:layout_marginTop="10dp"
-        android:text="Auto-delete tasks when DL passes" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/resetButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:text="Reset" />
+
+            <Button
+                android:id="@+id/btnDeleteCompleted"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_marginLeft="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="delete completed "
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Contribute: "
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:autoLink="web"
+            android:text="https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/"
+            android:textAlignment="center" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="© Aijat 2018     " />
+
+            <TextView
+                android:id="@+id/textAppVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:text="App version: 1.0.0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

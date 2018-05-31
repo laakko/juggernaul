@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "98426038317",
+    "firebase_url": "https://juggernaul-backend.firebaseio.com",
+    "project_id": "juggernaul-backend",
+    "storage_bucket": "juggernaul-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98426038317:android:0f5196e5ae7f0626",
+        "android_client_info": {
+          "package_name": "com.aijat.juggernaul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98426038317-639p6d04gh6uivrig5qv4clf3g7sq23r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aijat.juggernaul",
+            "certificate_hash": "e6f92d66298be6e33006ad32e26b1ddd39da33df"
+          }
+        },
+        {
+          "client_id": "98426038317-a8rdeefpfkqob3c6c6a1v37c51uo8ubm.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "98426038317-a8rdeefpfkqob3c6c6a1v37c51uo8ubm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArbF4QlQfCAnyGlQQK4CJ8e2eN1w3FWsQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98426038317-a8rdeefpfkqob3c6c6a1v37c51uo8ubm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

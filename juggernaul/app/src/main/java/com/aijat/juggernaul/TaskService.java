@@ -3,6 +3,9 @@ package com.aijat.juggernaul;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,14 +33,17 @@ public class TaskService extends FileService {
         JSONObject newTask = task.JSONify();
         JSONObject newObject = new JSONObject();
 
+        int newTaskId1 = 0;
+
         try {
             int newTaskId = Integer.parseInt(newTask.get("id").toString());
             if (newTaskId == -1) {
                 newTaskId = TaskService.getNextId(allTasks);
+                task.setId(newTaskId);
                 newTask.put("id", newTaskId);
                 allTasks.put(newTask);
-
                 newObject.put("tasks", allTasks);
+                newTaskId1 = newTaskId;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -54,6 +60,9 @@ public class TaskService extends FileService {
             return false;
         }
         if (deleted) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("users");
+            myRef.child("ilmarivikstrom").child("tasks").child(Integer.toString(newTaskId1)).setValue(task);
             return FileService.renameFile(ctx, "temp.json", "tasks.json");
         }
         return false;
@@ -84,6 +93,9 @@ public class TaskService extends FileService {
             return false;
         }
         if (deleted) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("users");
+            myRef.child("ilmarivikstrom").child("tasks").child(Integer.toString(updatedTask.getId())).setValue(updatedTask);
             return FileService.renameFile(ctx, "temp.json", "tasks.json");
         }
         return false;

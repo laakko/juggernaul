@@ -248,7 +248,8 @@
                             newTask.setCategory(tempCategory);
                             newTask.setPriority(tempPriority);
                             newTask.setScheduled(false);
-                            TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
+                            newTask.SaveToFile(getActivity().getApplication());
+                            // TaskService.CreateNewTask(getActivity().getApplicationContext(), newTask);
                             refreshContent();
 
 

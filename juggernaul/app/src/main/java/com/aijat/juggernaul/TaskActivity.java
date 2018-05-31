@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import static com.aijat.juggernaul.ListTab.allTasks;
@@ -55,6 +57,7 @@ public class TaskActivity extends AppCompatActivity {
     private FloatingActionButton deleteButton;
     private FloatingActionButton notificationButton;
     private FloatingActionButton scheduleButton;
+    private FloatingActionButton calendarButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,7 +300,28 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        // Export to Calendar button
+        calendarButton = findViewById(R.id.fab_calendar);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, taskInEditing.getDeadline().getTime())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, taskInEditing.getDeadline().getTime())
+                        .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                        .putExtra(CalendarContract.Events.TITLE, taskInEditing.getTitle())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, taskInEditing.getDescription());
+
+                startActivity(intent);
+            }
+
+
+        });
+
     }
+
+
 
 
     public void priority_dialog(final Task task) {

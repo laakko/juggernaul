@@ -257,6 +257,16 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorAccent"
+            android:src="@android:drawable/ic_menu_my_calendar"
+            fab:fab_label="Export to Calendar"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

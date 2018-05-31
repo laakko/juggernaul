@@ -15,6 +15,7 @@
     import android.graphics.drawable.ColorDrawable;
     import android.os.Build;
     import android.os.Bundle;
+    import android.provider.CalendarContract;
     import android.support.design.widget.FloatingActionButton;
     import android.support.v4.app.Fragment;
     import android.support.v4.app.NotificationCompat;
@@ -534,7 +535,7 @@
         // Popup for long click of a list item
         public void longClickAlert2(final Task task, final View view) {
             final String[] actions = new String[] {
-                    "Pin As Notification", "Change Status", "Add to Schedule", "Delete Task"
+                    "Pin As Notification", "Change Status", "Add to Schedule", "Export to Calendar", "Delete Task"
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -640,6 +641,8 @@
                                         task.SaveToFile(getActivity().getApplicationContext());
                                         refreshContent();
 
+                                    } else if(actions[i] == "Export to Calendar"){
+                                        addTaskToCalendar(task.getTitle(), task.getDescription(), task.getDeadline());
                                     }
 
                                 }
@@ -697,6 +700,21 @@
                 konfettiburst(getView());
             }
             updateWidget();
+
+        }
+
+
+        public void addTaskToCalendar(String calTitle, String calDescription, Date begin){
+
+            Intent intent = new Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin.getTime())
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, begin.getTime())
+                    .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                    .putExtra(CalendarContract.Events.TITLE, calTitle)
+                    .putExtra(CalendarContract.Events.DESCRIPTION, calDescription);
+
+            startActivity(intent);
 
         }
 

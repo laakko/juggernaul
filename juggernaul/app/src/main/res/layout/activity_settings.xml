@@ -33,14 +33,16 @@
             android:layout_marginTop="35dp"
             android:checked="false"
             android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:text="Dark Mode " />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="22dp"
             android:gravity="center"
             android:text="Modify Home-tab" />
 
@@ -49,13 +51,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text='"Your most important tasks" ' />
 
         <Switch
             android:id="@+id/switchSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text='"Your Schedule" ' />
 
         <Switch
@@ -63,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text='"Due This Week" ' />
 
         <Switch
@@ -70,7 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text='"Completed tasks" ' />
 
         <TextView
@@ -85,21 +95,27 @@
             android:id="@+id/switchAutoDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text="Auto-delete tasks when DL passes" />
 
         <Switch
             android:id="@+id/switch1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text="Auto-export to Calendar" />
 
         <Switch
             android:id="@+id/switchHideCompleted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text="Hide completed tasks " />
 
 
@@ -112,18 +128,25 @@
             <Button
                 android:id="@+id/resetButton"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_marginLeft="20dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button"
                 android:text="Reset" />
+            
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/btnDeleteCompleted"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_marginLeft="100dp"
+                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/rounded_button"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -141,6 +164,8 @@
             android:layout_marginTop="20dp"
             android:text="Contribute: "
             android:textAlignment="center" />
+
+
 
         <TextView
             android:id="@+id/textView12"
@@ -163,14 +188,21 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
                 android:text="© Aijat 2018     " />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/textAppVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
                 android:text="App version: 1.0.0" />
         </LinearLayout>
     </LinearLayout>

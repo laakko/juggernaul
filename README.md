@@ -1,26 +1,33 @@
 [![pipeline status](https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/badges/master/pipeline.svg)](https://version.aalto.fi/gitlab/laakkoj2/CS-E4170/commits/master)
 
-Task list
+
+ 
+
+Juggernaul
 ======
 
+
+Nail your tasks with Juggernaul, an android taskmanager app!  
+Features:
+  - Create tasks with DL, priority, category and description information
+  - Create subtasks with priority colors for individual tasks
+  - Export tasks to Google Calendar
+  - Linear graph for comprehensive view of upcoming tasks
+  - Home tab auto-suggests tasks, shows current week's tasks and more
+  - Includes an android homescreen widget for quick glance of tasks
   
-## Juggernaul 1.1:
-
-## Front-end
-- [ ] Lagisuus bugin korjaus (hoida refreshaus background threadeilla)
-- [x] Widgetti, jossa List-tabin ListView. Skrollattavissa ja klikattavissa.
-    - [ ] mahdollisuus lisätä taski suoraan widgetistä 
-- [x] Yksittäisen taskin exporttaus kalenteriin
-- [ ] Kaikkien taskien exporttaus kalenteriin (Asetuksiin toggle automaattiselle exporttaukselle ja painike manuaaliselle exporttaukselle)
-- [ ] Graafissa mahdollisuus klikata pallukkaa -> näyttää taskien nimet
-- [ ] Tunnit mukaan DL:ään
-- [ ] Deksriptioniin voi lisätä sub-kategorioita
-- [ ] Notifikaatio lähestyvästä DL. Asetuksiin toggle jolla notskut saa pois
-- [ ] Android N kontekstivalikko, jossa "Add a new task"
+  
+  
+<img src="Screenshot_20180425-003428.png" alt="drawing" width="200"/>
+<img src="Screenshot_20180425-003453.png" alt="drawing" width="200"/>
+<img src="Screenshot_20180425-003800.png" alt="drawing" width="200"/>
 
 
+  
+  
 
-## Back-end
-
-- [ ] Offline JSON setille daily backup (backup.txt tms.)
-- [ ] Firebase backend? 
+## Juggernaul V2.0 tasklist:
+- [ ] Redo the app to use Firebase as db and backup
+- [ ] Have in-progress icon scale according to subtasks / done_subtasks
+- [ ] UI Refinements, especially the graph
+- [ ] Group/sharing functionality
